@@ -35,8 +35,8 @@ const ArticleConnector = connect(mapStateToProps, mapDispatchToProps)(
 				// set expiry in 7 days
 				let expire = (new Date().getTime() / 1000) + 604800;
 				this.props.loadLocationData(DataTypes.CURRENT_LOCATION);
-				this.props.current_location && this.props.loadTrendsData(DataTypes.TRENDS, {country: this.props.current_location['country_code']});
-				this.props.current_location && cookies.set("country_code", this.props.current_location['country_code'], {path: "/", expires: new Date(expire * 1000)});
+				this.props.loadTrendsData(DataTypes.TRENDS, {country: this.props.current_location['country_code']});
+				cookies.set("country_code", this.props.current_location['country_code'], {path: "/", expires: new Date(expire * 1000)});
 			}
 		}
 	}

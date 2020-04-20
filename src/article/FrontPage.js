@@ -66,8 +66,8 @@ export class FrontPage extends Component {
 			let expire = (new Date().getTime() / 1000) + 604800;
 			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES);
 			this.props.loadLocationData && this.props.loadLocationData(DataTypes.CURRENT_LOCATION);
-			this.props.current_location && this.props.loadData(DataTypes.ARTICLES, {country: this.props.current_location['country_code'].toLowerCase(), page: 1});
-			this.props.current_location && cookies.set("country_code", this.props.current_location['country_code'], {path: "/", expires: new Date(expire * 1000)});
+			this.props.loadData(DataTypes.ARTICLES, {country: this.props.current_location['country_code'].toLowerCase(), page: 1});
+			cookies.set("country_code", this.props.current_location['country_code'], {path: "/", expires: new Date(expire * 1000)});
 		}
 	}
 
