@@ -4,9 +4,13 @@ const axios = require('axios');
 // if location data not found or an error occurs
 // send a default
 exports.find = async (req, res) => {
+	let ip = req.ip;
 	const getLocationData = async () => {
 		try {
 			// return await axios({url: 'https://geolocation-db.com/json', method: 'get'});
+			if (ip) {
+				return await axios({url: `https://ipinfo.io/${ip}?token=0756059bdf42d5`, method: 'get'});
+			}
 			return await axios({url: 'https://ipinfo.io?token=0756059bdf42d5', method: 'get'});
 		}
 		catch (error) {
