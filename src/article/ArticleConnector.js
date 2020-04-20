@@ -27,16 +27,26 @@ const ArticleConnector = connect(mapStateToProps, mapDispatchToProps)(
 			let { cookies } = this.props;
 			let countryCode = cookies.get("country_code");
 
+			this.props.loadLocationData(DataTypes.CURRENT_LOCATION);
+
+
 			if (countryCode) {
 				this.props.loadTrendsData(DataTypes.TRENDS, {country: countryCode});
 
 			}
-			else if (!countryCode) {
+		}
+
+		componentDidUpdate(prevProps) {
+			let { cookies } = this.props;
+			let countryCode = cookies.get("country_code");
+
+			if ((prevProps.current_location !== this.props.current_location) && !countryCode) {
 				// set expiry in 7 days
 				let expire = (new Date().getTime() / 1000) + 604800;
-				this.props.loadLocationData(DataTypes.CURRENT_LOCATION);
-				this.props.loadTrendsData(DataTypes.TRENDS, {country: this.props.current_location['country_code']});
-				cookies.set("country_code", this.props.current_location['country_code'], {path: "/", expires: new Date(expire * 1000)});
+
+				this.props.current_location && this.props.loadTrendsData(DataTypes.TRENDS, {country: this.props.current_location['country_code']});
+
+				this.props.current_location && cookies.set("country_code", this.props.current_location['country_code'], {path: "/", expires: new Date(expire * 1000)});
 			}
 		}
 	}

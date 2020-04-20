@@ -65,13 +65,15 @@ export class FrontPage extends Component {
 			// set expiry in 7 days
 			let expire = (new Date().getTime() / 1000) + 604800;
 			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES);
-			this.props.loadLocationData && this.props.loadLocationData(DataTypes.CURRENT_LOCATION);
-			this.props.loadData(DataTypes.ARTICLES, {country: this.props.current_location['country_code'].toLowerCase(), page: 1});
-			cookies.set("country_code", this.props.current_location['country_code'], {path: "/", expires: new Date(expire * 1000)});
+			this.props.current_location && this.props.loadData(DataTypes.ARTICLES, {country: this.props.current_location['country_code'].toLowerCase(), page: 1});
+			this.props.current_location && cookies.set("country_code", this.props.current_location['country_code'], {path: "/", expires: new Date(expire * 1000)});
 		}
 	}
 
 	componentDidUpdate(prevProps) { 
+
+		let { cookies } = this.props;
+		let countryCode = cookies.get("country_code");
 
 		if (this.props.articles === null && (prevProps.articles !== null && prevProps.articles !== undefined)) {
 			let { cookies } = this.props;
@@ -79,6 +81,17 @@ export class FrontPage extends Component {
 
 			// this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES);
 			// this.props.loadData(DataTypes.ARTICLES, {country: countryCode.toLowerCase(), page: 1});
+		}
+
+		if ((prevProps.current_location !== this.props.current_location) && !countryCode) {
+			// set expiry in 7 days
+			let expire = (new Date().getTime() / 1000) + 604800;
+
+			this.props.current_location && this.props.loadTrendsData(DataTypes.TRENDS, {country: this.props.current_location['country_code']});
+
+			this.props.current_location && this.props.loadData(DataTypes.ARTICLES, {country: this.props.current_location['country_code'].toLowerCase(), page: 1});
+
+			this.props.current_location && cookies.set("country_code", this.props.current_location['country_code'], {path: "/", expires: new Date(expire * 1000)});
 		}
 	}
 }

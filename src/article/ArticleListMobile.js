@@ -93,7 +93,7 @@ export class ArticleListMobile extends Component {
 			</div>}
 
 			{otherArticles && <ArticleCardsMobile items={otherArticles} />}
-			{otherArticles && <div className="center">
+			{(otherArticles && this.props.current_location) && <div className="center">
 				<p><Link to={`/headlines/${this.props.current_location['country_code'].toLowerCase()}`} className="teal-text text-darken-2"><strong>Read more stories from Headlines</strong></Link></p>
 				<div className="divider frontPageDivider"></div>
 			</div>}
