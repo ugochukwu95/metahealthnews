@@ -34,7 +34,7 @@ export class ArticleListMobile extends Component {
 				// get articles from the us if not a us citizen
 				(this.props.articles_search_results && (this.props.cookies.get('country_code').toLowerCase()) !== "us") && this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadArticlesForUSData(DataTypes.ARTICLES, {country: "us", page: 1}))
 
-				(this.props.articles_search_results && (this.props.cookies.get('country_code').toLowerCase()) === "us") && this.setState({loading:true, page: Number(this.state.page) + 1});
+				(this.props.articles_search_results && (this.props.cookies.get('country_code').toLowerCase()) === "us") && this.setState({loading:false, page: 4}, () => this.props.loadArticlesForUKData(DataTypes.ARTICLES, {country: "gb", page: 1}));
 			}
 
 			if (scrolledToBottom && (this.state.page === 3)) {
