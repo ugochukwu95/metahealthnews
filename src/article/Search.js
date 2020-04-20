@@ -59,6 +59,8 @@ export class Search extends Component {
 	}
 
 	componentDidMount() {
+		this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES_SEARCH_RESULTS);
+		
 		(this.props.match && this.props.loadSearchResults) && this.props.loadSearchResults(DataTypes.ARTICLES_SEARCH_RESULTS, {country: this.props.cookies.get('country_code').toLowerCase(), page: 1, searchString: this.props.match.params['searchstring']});
 
 		this.props.articles_search_results && this.setState({page: this.props.articles_search_results['page'], pages: this.props.articles_search_results['pages'], SearchString: this.props.match.params['searchstring']})
