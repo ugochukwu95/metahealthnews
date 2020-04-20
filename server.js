@@ -13,6 +13,7 @@ app.use("/", express.static("./build"));
 app.use(cors());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
+app.set('trust proxy',true); 
 
 // Configuring the database
 const dbConfig = require('./config/database.config.js');
