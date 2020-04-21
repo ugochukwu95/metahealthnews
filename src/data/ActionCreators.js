@@ -99,3 +99,27 @@ export const loadSearchResults = (dataType, params) => ({
 		error: "Network Error! Kindly check your internet connection"
 	}))*/
 })
+
+export const loadCancerSearchResults = (dataType, params) => ({
+	type: ActionTypes.CANCER_LOAD,
+	payload: dataSource.GetData(dataType, params).then(response => ({
+		dataType,
+		data: {data: response.data['docs'], total: response.data['total'], page: response.data['page'], pages: response.data['pages']},
+	}))
+})
+
+export const loadDiabetesSearchResults = (dataType, params) => ({
+	type: ActionTypes.DIABETES_LOAD,
+	payload: dataSource.GetData(dataType, params).then(response => ({
+		dataType,
+		data: {data: response.data['docs'], total: response.data['total'], page: response.data['page'], pages: response.data['pages']},
+	}))
+})
+
+export const loadHeartDiseaseSearchResults = (dataType, params) => ({
+	type: ActionTypes.HEART_DISEASE_LOAD,
+	payload: dataSource.GetData(dataType, params).then(response => ({
+		dataType,
+		data: {data: response.data['docs'], total: response.data['total'], page: response.data['page'], pages: response.data['pages']},
+	}))
+})

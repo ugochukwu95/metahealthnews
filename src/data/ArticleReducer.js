@@ -94,6 +94,58 @@ export const ArticleReducer = (storeData, action) => {
 					[action.payload.dataType]: {error: action.payload.error}
 				}
 			}
+
+		case ActionTypes.CANCER_LOAD:
+			if (!action.payload.error) {
+				let newData = ((storeData[action.payload.dataType] === undefined || storeData[action.payload.dataType] === null) ? [] : storeData[action.payload.dataType]['data']);
+				newData.push(...action.payload.data.data);
+				let store = {
+					...storeData,
+					[action.payload.dataType]: {data: newData, total: action.payload.data.total, page: action.payload.data.page, pages: action.payload.data.pages},
+				};
+				return store; 
+			}
+			else {
+				return {
+					...storeData,
+					[action.payload.dataType]: {error: action.payload.error}
+				}
+			}
+
+		case ActionTypes.DIABETES_LOAD:
+			if (!action.payload.error) {
+				let newData = ((storeData[action.payload.dataType] === undefined || storeData[action.payload.dataType] === null) ? [] : storeData[action.payload.dataType]['data']);
+				newData.push(...action.payload.data.data);
+				let store = {
+					...storeData,
+					[action.payload.dataType]: {data: newData, total: action.payload.data.total, page: action.payload.data.page, pages: action.payload.data.pages},
+				};
+				return store; 
+			}
+			else {
+				return {
+					...storeData,
+					[action.payload.dataType]: {error: action.payload.error}
+				}
+			}
+
+		case ActionTypes.HEART_DISEASE_LOAD:
+			if (!action.payload.error) {
+				let newData = ((storeData[action.payload.dataType] === undefined || storeData[action.payload.dataType] === null) ? [] : storeData[action.payload.dataType]['data']);
+				newData.push(...action.payload.data.data);
+				let store = {
+					...storeData,
+					[action.payload.dataType]: {data: newData, total: action.payload.data.total, page: action.payload.data.page, pages: action.payload.data.pages},
+				};
+				return store; 
+			}
+			else {
+				return {
+					...storeData,
+					[action.payload.dataType]: {error: action.payload.error}
+				}
+			}
+
 		default:
 			return storeData || {};
 	}

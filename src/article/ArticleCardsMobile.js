@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import ReactTimeAgo from 'react-time-ago';
 import { Link } from "react-router-dom";
+import M from 'materialize-css';
 
 export class ArticleCardsMobile extends Component {
 	render() {
@@ -20,13 +21,22 @@ export class ArticleCardsMobile extends Component {
 					</div>
 				</div>
 				<div>
-					<small className="grey-text text-darken-2"><span><ReactTimeAgo date={item.publishedAt}/></span></small><small className="grey-text text-darken-2 right"><i className="fas fa-ellipsis-v"></i></small>
+					<small className="grey-text text-darken-2"><span><ReactTimeAgo date={item.publishedAt}/></span></small><small data-target={`dropdown_${item._id}`} className="grey-text text-darken-2 right dropdown-trigger"><i className="fas fa-ellipsis-v"></i></small>
 				</div>
 			</div>
+			
+			<ul id={`dropdown_${item._id}`} className="dropdown-content">
+    			<li><a href="#!" className="grey-text text-darken-2"><i className="fas fa-bookmark"></i> Save for later</a></li>
+    			<li><a href={item.url} className="grey-text text-darken-2" target="_blank" rel="noopener noreferrer"><i className="fas fa-link"></i> Go to {item.source.name || "Unidentified source"}</a></li>
+  			</ul>
 		</div>)
 	}
 
 	componentDidMount() {
+		let elems = document.querySelectorAll('.dropdown-trigger');
+		let options = {constrainWidth: false, coverTrigger: false};
+    	M.Dropdown.init(elems, options);
+
 		var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
 
 		  if ("IntersectionObserver" in window) {
@@ -88,63 +98,65 @@ export class ArticleCardsMobile extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
-		if (prevProps.items.page !== this.props.items.page) {
-			var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+		let elems = document.querySelectorAll('.dropdown-trigger');
+		let options = {constrainWidth: false, coverTrigger: false};
+    	M.Dropdown.init(elems, options);
 
-			  if ("IntersectionObserver" in window) {
-			    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
-			      entries.forEach(function(entry) {
-			        if (entry.isIntersecting) {
-			          let lazyImage = entry.target;
-			          lazyImage.src = lazyImage.dataset.src;
-			          lazyImage.srcset = lazyImage.dataset.srcset;
-			          lazyImage.classList.remove("lazy");
-			          lazyImageObserver.unobserve(lazyImage);
-			        }
-			      });
-			    });
+		var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
 
-			    lazyImages.forEach(function(lazyImage) {
-			      lazyImageObserver.observe(lazyImage);
-			    });
-			  } else {
-			    // Possibly fall back to a more compatible method here
-			    let lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
-				  let active = false;
+		  if ("IntersectionObserver" in window) {
+		    let lazyImageObserver = new IntersectionObserver(function(entries, observer) {
+		      entries.forEach(function(entry) {
+		        if (entry.isIntersecting) {
+		          let lazyImage = entry.target;
+		          lazyImage.src = lazyImage.dataset.src;
+		          lazyImage.srcset = lazyImage.dataset.srcset;
+		          lazyImage.classList.remove("lazy");
+		          lazyImageObserver.unobserve(lazyImage);
+		        }
+		      });
+		    });
 
-				  const lazyLoad = function() {
-				    if (active === false) {
-				      active = true;
+		    lazyImages.forEach(function(lazyImage) {
+		      lazyImageObserver.observe(lazyImage);
+		    });
+		  } else {
+		    // Possibly fall back to a more compatible method here
+		    let lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+			  let active = false;
 
-				      setTimeout(function() {
-				        lazyImages.forEach(function(lazyImage) {
-				          if ((lazyImage.getBoundingClientRect().top <= window.innerHeight && lazyImage.getBoundingClientRect().bottom >= 0) && getComputedStyle(lazyImage).display !== "none") {
-				            lazyImage.src = lazyImage.dataset.src;
-				            lazyImage.srcset = lazyImage.dataset.srcset;
-				            lazyImage.classList.remove("lazy");
+			  const lazyLoad = function() {
+			    if (active === false) {
+			      active = true;
 
-				            lazyImages = lazyImages.filter(function(image) {
-				              return image !== lazyImage;
-				            });
+			      setTimeout(function() {
+			        lazyImages.forEach(function(lazyImage) {
+			          if ((lazyImage.getBoundingClientRect().top <= window.innerHeight && lazyImage.getBoundingClientRect().bottom >= 0) && getComputedStyle(lazyImage).display !== "none") {
+			            lazyImage.src = lazyImage.dataset.src;
+			            lazyImage.srcset = lazyImage.dataset.srcset;
+			            lazyImage.classList.remove("lazy");
 
-				            if (lazyImages.length === 0) {
-				              document.removeEventListener("scroll", lazyLoad);
-				              window.removeEventListener("resize", lazyLoad);
-				              window.removeEventListener("orientationchange", lazyLoad);
-				            }
-				          }
-				        });
+			            lazyImages = lazyImages.filter(function(image) {
+			              return image !== lazyImage;
+			            });
 
-				        active = false;
-				      }, 200);
-				    }
-				  };
+			            if (lazyImages.length === 0) {
+			              document.removeEventListener("scroll", lazyLoad);
+			              window.removeEventListener("resize", lazyLoad);
+			              window.removeEventListener("orientationchange", lazyLoad);
+			            }
+			          }
+			        });
 
-				  document.addEventListener("scroll", lazyLoad);
-				  window.addEventListener("resize", lazyLoad);
-				  window.addEventListener("orientationchange", lazyLoad);
-			  }
-			window.addEventListener('scroll', this.handleOnScroll);
-		}
+			        active = false;
+			      }, 200);
+			    }
+			  };
+
+			  document.addEventListener("scroll", lazyLoad);
+			  window.addEventListener("resize", lazyLoad);
+			  window.addEventListener("orientationchange", lazyLoad);
+		  }
+		window.addEventListener('scroll', this.handleOnScroll);
 	}
 }

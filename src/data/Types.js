@@ -5,7 +5,10 @@ export const DataTypes = {
 	ARTICLES_SEARCH_RESULTS: "articles_search_results",
 	WEATHER: "weather",
 	ARTICLES_FOR_UK: "articles_for_uk",
-	ARTICLES_FOR_US: "articles_for_us"
+	ARTICLES_FOR_US: "articles_for_us",
+	CANCER: "cancer",
+	DIABETES: "diabetes",
+	HEART_DISEASE: "heart_disease"
 }
 
 export const ActionTypes = {
@@ -16,5 +19,8 @@ export const ActionTypes = {
 	LOCATION_LOAD: "LOCATION_LOAD",
 	WEATHER_LOAD: "weather_load",
 	TRENDS_LOAD: "trends_load",
-	SEARCH_RESULTS_LOAD: "search_results_load"
+	SEARCH_RESULTS_LOAD: "search_results_load",
+	CANCER_LOAD: "cancer_load",
+	DIABETES_LOAD: "diabetes_load",
+	HEART_DISEASE_LOAD: "heart_disease_load"
 }

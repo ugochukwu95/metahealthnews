@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import {Preloader} from "../utilities/Preloader";
 import { DataTypes } from "../data/Types";
 import {ArticleCardsMobile} from "./ArticleCardsMobile";
+import M from 'materialize-css';
 
 export class ArticleListMobile extends Component {
 	constructor(props) {
@@ -25,24 +26,39 @@ export class ArticleListMobile extends Component {
 	 		let clientHeight = document.documentElement.clientHeight || window.innerHeight;
 	  		let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= (scrollHeight - 300);
 
+	  		// Load search results for coronavirus
 	  		if (scrolledToBottom && (this.state.page === 1)) {
 	     		
 	     		this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadSearchResults(DataTypes.ARTICLES_SEARCH_RESULTS, {country: this.props.cookies.get('country_code').toLowerCase(), page: 1, searchString: "Coronavirus"}))
 			}
 
+			// load search results for cancer
 			if (scrolledToBottom && (this.state.page === 2)) {
+				this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadCancerSearchResults(DataTypes.CANCER, {country: this.props.cookies.get('country_code').toLowerCase(), page: 1, searchString: "Cancer"}))
+			}
+
+			// load search results for DIABETES
+			if (scrolledToBottom && (this.state.page === 3)) {
+				this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadDiabetesSearchResults(DataTypes.DIABETES, {country: this.props.cookies.get('country_code').toLowerCase(), page: 1, searchString: "Diabetes"}))
+			}
+
+			// load search results for Heart Disease
+			if (scrolledToBottom && (this.state.page === 4)) {
+				this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadHeartDiseaseSearchResults(DataTypes.HEART_DISEASE, {country: this.props.cookies.get('country_code').toLowerCase(), page: 1, searchString: "Heart Disease"}))
+			}
+
+			if (scrolledToBottom && (this.state.page === 5)) {
 				// get articles from the us if not a us citizen
 				(this.props.articles_search_results) && this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadArticlesForUSData(DataTypes.ARTICLES, {country: "us", page: 1}))
 
 			}
 
-			if (scrolledToBottom && (this.state.page === 3)) {
+			if (scrolledToBottom && (this.state.page === 6)) {
 				// get articles from the uk if not a uk citizen
-
 				(this.props.articles_search_results && this.props.articles_for_us) && this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadArticlesForUKData(DataTypes.ARTICLES, {country: "gb", page: 1}))
 			}
 
-			if (scrolledToBottom && this.state.page > 3) {
+			if (scrolledToBottom && (this.state.page > 6)) {
      			this.setState({loading:false});
      			return;
      		}
@@ -86,18 +102,25 @@ export class ArticleListMobile extends Component {
 								<a href={firstArticle.url} target="_blank" rel="noopener noreferrer" className="grey-text text-darken-2 ugCardLink"><strong>{firstArticle.title}</strong></a>
 							</h5>
 							<div>
-								<small className="grey-text text-darken-2"><span><ReactTimeAgo date={firstArticle.publishedAt}/></span></small><small className="grey-text text-darken-2 right"><i className="fas fa-ellipsis-v"></i></small>
+								<small className="grey-text text-darken-2"><span><ReactTimeAgo date={firstArticle.publishedAt}/></span></small><small data-target={`dropdown_${firstArticle._id}`} className="grey-text text-darken-2 right dropdown-trigger"><i className="fas fa-ellipsis-v"></i></small>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>}
 
+				<ul id={`dropdown_${firstArticle._id}`} className="dropdown-content">
+	    			<li><a href="#!" className="grey-text text-darken-2"><i className="fas fa-bookmark"></i> Save for later</a></li>
+	    			<li><a href={firstArticle.url} className="grey-text text-darken-2" target="_blank" rel="noopener noreferrer"><i className="fas fa-link"></i> Go to {firstArticle.source.name || "Unidentified source"}</a></li>
+	  			</ul>
+			</div>}
+			
 			{otherArticles && <ArticleCardsMobile items={otherArticles} />}
 			{(otherArticles && this.props.current_location) && <div className="center">
 				<p><Link to={`/headlines/${this.props.current_location['country_code'].toLowerCase()}`} className="teal-text text-darken-2"><strong>Read more stories from Headlines</strong></Link></p>
 				<div className="divider frontPageDivider"></div>
 			</div>}
+
+
 
 			{(this.props.articles_search_results && this.props.articles_search_results.data) && <React.Fragment>
 				<br />
@@ -112,6 +135,52 @@ export class ArticleListMobile extends Component {
 				<div className="divider frontPageDivider"></div>
 			</div>}
 
+
+
+			{(this.props.cancer && this.props.cancer.data) && <React.Fragment>
+				<br />
+				<h5 className="grey-text text-darken-2 ugBigFont titleCardSamePadding">
+					<b>Cancer</b>
+				</h5>
+				<br />
+				<ArticleCardsMobile items={this.props.cancer.data} />
+			</React.Fragment>}
+			{(this.props.cancer && this.props.cancer.data) && <div className="center">
+				<p><Link to="/search/cancer" onClick={this.clearSearchData} className="teal-text text-darken-2"><strong>Read more stories about Cancer</strong></Link></p>
+				<div className="divider frontPageDivider"></div>
+			</div>}
+
+
+			{(this.props.diabetes && this.props.diabetes.data) && <React.Fragment>
+				<br />
+				<h5 className="grey-text text-darken-2 ugBigFont titleCardSamePadding">
+					<b>Diabetes</b>
+				</h5>
+				<br />
+				<ArticleCardsMobile items={this.props.diabetes.data} />
+			</React.Fragment>}
+			{(this.props.diabetes && this.props.diabetes.data) && <div className="center">
+				<p><Link to="/search/diabetes" onClick={this.clearSearchData} className="teal-text text-darken-2"><strong>Read more stories about Diabetes</strong></Link></p>
+				<div className="divider frontPageDivider"></div>
+			</div>}
+
+
+
+			{(this.props.heart_disease && this.props.heart_disease.data) && <React.Fragment>
+				<br />
+				<h5 className="grey-text text-darken-2 ugBigFont titleCardSamePadding">
+					<b>Heart Disease</b>
+				</h5>
+				<br />
+				<ArticleCardsMobile items={this.props.heart_disease.data} />
+			</React.Fragment>}
+			{(this.props.heart_disease && this.props.heart_disease.data) && <div className="center">
+				<p><Link to="/search/heart%20disease" onClick={this.clearSearchData} className="teal-text text-darken-2"><strong>Read more stories about Heart Diseases</strong></Link></p>
+				<div className="divider frontPageDivider"></div>
+			</div>}
+
+
+
 			{(this.props.articles_for_us && this.props.articles_for_us.data) && <React.Fragment>
 				<br />
 				<h5 className="grey-text text-darken-2 ugBigFont titleCardSamePadding">
@@ -124,6 +193,9 @@ export class ArticleListMobile extends Component {
 				<p><Link to="/headlines/us" className="teal-text text-darken-2"><strong>Read more health news from the United States of America</strong></Link></p>
 				<div className="divider frontPageDivider"></div>
 			</div>}
+
+
+
 
 			{(this.props.articles_for_uk && this.props.articles_for_uk.data) && <React.Fragment>
 				<br />
@@ -138,11 +210,18 @@ export class ArticleListMobile extends Component {
 				<div className="divider frontPageDivider"></div>
 			</div>}
 
+
+
+
 			{this.state.loading && <Preloader />}
 		</React.Fragment>
 	}
 
 	componentDidMount() {
+		let elems = document.querySelectorAll('.dropdown-trigger');
+		let options = {constrainWidth: false, coverTrigger: false};
+    	M.Dropdown.init(elems, options);
+
 		var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
 
 		  if ("IntersectionObserver" in window) {
@@ -204,6 +283,10 @@ export class ArticleListMobile extends Component {
 	}
 
 	componentDidUpdate(prevProps) {
+		let elems = document.querySelectorAll('.dropdown-trigger');
+		let options = {constrainWidth: false, coverTrigger: false};
+    	M.Dropdown.init(elems, options);
+
 		if ((prevProps.articles_search_results !== this.props.articles_search_results) || (prevProps.articles_for_us !== this.props.articles_for_us) || (prevProps.articles_for_uk !== this.props.articles_for_uk)) {
 			var lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
 

@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { loadData, loadLocationData, loadTrendsData, loadSearchResults, loadArticlesForUSData, loadArticlesForUKData, loadWeatherData, clearArticlesData } from "../data/ActionCreators";
+import * as ArticleActions from "../data/ActionCreators";
 import { DataTypes } from "../data/Types";
 import { Article } from "./Article";
 import { withCookies } from 'react-cookie';
@@ -11,7 +11,7 @@ const mapStateToProps = (dataStore) => ({
 })
 
 const mapDispatchToProps = {
-	loadData, loadLocationData, loadTrendsData, loadSearchResults, loadArticlesForUSData, loadArticlesForUKData, loadWeatherData, clearArticlesData
+	...ArticleActions
 }
 
 const ArticleConnector = connect(mapStateToProps, mapDispatchToProps)(

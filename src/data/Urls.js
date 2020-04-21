@@ -9,5 +9,8 @@ export const RestUrls = {
 	[DataTypes.CURRENT_LOCATION]: `/api/getlocation`,
 	[DataTypes.TRENDS]: `/api/trends`,
 	[DataTypes.ARTICLES_SEARCH_RESULTS]: `/api/articles/search`,
+	[DataTypes.CANCER]: `/api/articles/search`,
+	[DataTypes.DIABETES]: `/api/articles/search`,
+	[DataTypes.HEART_DISEASE]: `/api/articles/search`,
 	[DataTypes.WEATHER]: `/api/getWeather`,
 }

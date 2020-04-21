@@ -55,6 +55,9 @@ export class FrontPage extends Component {
 			// this.props.loadLocationData(DataTypes.CURRENT_LOCATION);
 			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES);
 			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES_SEARCH_RESULTS);
+			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.CANCER);
+			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.DIABETES);
+			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.HEART_DISEASE);
 			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES_FOR_UK);
 			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES_FOR_US);
 			this.props.loadData && this.props.loadData(DataTypes.ARTICLES, {country: countryCode.toLowerCase(), page: 1});

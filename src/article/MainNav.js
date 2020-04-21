@@ -13,6 +13,8 @@ export class MainNav extends Component {
 			SearchString: "",
 			ShowSearchBox: false
 		}
+
+		this.nameRef = React.createRef();
 	}
 	
 	openWeatherNav = (ev) => {
@@ -41,9 +43,7 @@ export class MainNav extends Component {
 
 	openSearchBox = (ev) => {
 		ev.preventDefault();
-		this.setState({ShowSearchBox: !this.state.ShowSearchBox}, () => {
-			document.getElementById("search_box").focus();
-		});
+		this.setState({ShowSearchBox: !this.state.ShowSearchBox}, () => this.nameRef.current.focus());
 	}
 
 	handleChange = (ev) => {
@@ -95,7 +95,7 @@ export class MainNav extends Component {
 			</div>
 
 			{(/Mobi|Android/i.test(navigator.userAgent)) && <div id="search_box" className={`${(this.state.ShowSearchBox) ? "show" : "hide"}`}>
-				<input type="text" className="browser-default ugInputField" max-length="140" autoComplete="off" placeholder="Search for health articles, headlines, news outlets..." name="SearchString" onChange={this.handleChange} value={this.state.SearchString} /> 
+				<input type="text" className="browser-default ugInputField" max-length="140" autoComplete="off" placeholder="Search for health articles, headlines, news outlets..." name="SearchString" onChange={this.handleChange} value={this.state.SearchString} autoFocus={ true } ref={ this.nameRef } /> 
 			</div>}
 
 			{this.props.current_location && <div className="row hide-on-large-only">
