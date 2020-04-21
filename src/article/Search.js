@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import { DataTypes } from "../data/Types";
 import {ArticleCardsMobile} from "./ArticleCardsMobile";
 import {Preloader} from "../utilities/Preloader";
+import { uuid } from 'uuidv4';
+import M from 'materialize-css';
 
 export class Search extends Component {
 	constructor(props) {
@@ -27,8 +29,64 @@ export class Search extends Component {
 		}
 	}
 
+	handleSaveForLater = id => ev => {
+		ev.preventDefault();
+		let articleId = id;
+		let { cookies } = this.props;
+		let userId = cookies.get("user_id");
+
+		if (userId) {
+			this.props.saveArticle && this.props.saveArticle(DataTypes.SAVED_ARTICLES_ID, {userId: userId, articleId: articleId});
+			document.getElementById(`save_${articleId}`).classList.remove("show");
+			document.getElementById(`remove_${articleId}`).classList.add("show");
+
+			document.getElementById(`save_${articleId}`).classList.add("hide");
+			document.getElementById(`remove_${articleId}`).classList.remove("hide");
+		}
+		else {
+			// set expiry in 7 days
+			let expire = (new Date().getTime() / 1000) + 31536000;
+
+			// create unique id 
+			userId = uuid();
+
+			// Set cookie for user
+			cookies.set("user_id", userId, {path: "/", expires: new Date(expire * 1000)});
+			this.props.saveArticle && this.props.saveArticle(DataTypes.SAVED_ARTICLES_ID, {userId: userId, articleId: articleId});
+
+			document.getElementById(`save_${articleId}`).classList.remove("show");
+			document.getElementById(`remove_${articleId}`).classList.add("show");
+
+			document.getElementById(`save_${articleId}`).classList.add("hide");
+			document.getElementById(`remove_${articleId}`).classList.remove("hide");
+		}
+	}
+
+	handleRemoveSavedArticle = id => ev => {
+		ev.preventDefault();
+		let articleId = id;
+		let { cookies } = this.props;
+		let userId = cookies.get("user_id");
+
+		if (userId) {
+			this.props.removeSavedArticle && this.props.removeSavedArticle(DataTypes.SAVED_ARTICLES_ID, {userId: userId, articleId: articleId});
+
+			document.getElementById(`save_${articleId}`).classList.remove("hide");
+			document.getElementById(`remove_${articleId}`).classList.add("hide");
+
+			document.getElementById(`save_${articleId}`).classList.add("show");
+			document.getElementById(`remove_${articleId}`).classList.remove("show");
+	    	
+	    	let toastHTML = "<span>Removed successfully.</span>";
+	    	M.toast({html: toastHTML});
+		}
+	}
+
 	render() {
 		let otherArticles = (this.props.articles_search_results  && this.props.articles_search_results.data) && this.props.articles_search_results.data;
+
+		// unique user id
+		let userId = this.props.cookies && this.props.cookies.get("user_id");
 
 		return <React.Fragment>
 			<div className="">
@@ -37,7 +95,7 @@ export class Search extends Component {
 				</h5>
 				{otherArticles && <div className="row">
 					<div className="col l6 offset-l3 m8 offset-m2 s12">
-						<ArticleCardsMobile items={otherArticles} />
+						<ArticleCardsMobile userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={otherArticles} />
 					</div>
 				</div>}
 
