@@ -146,6 +146,31 @@ export const ArticleReducer = (storeData, action) => {
 				}
 			}
 
+		case ActionTypes.SAVE_ARTICLE:
+			if (!action.payload.data['error']) {
+				let newData = ((storeData[action.payload.dataType] === undefined || storeData[action.payload.dataType] === null) ? [] : storeData[action.payload.dataType]);
+				newData.push(action.payload.data);
+
+				return {
+					...storeData,
+					[action.payload.dataType]: newData
+				}
+			}
+			break;
+
+		case ActionTypes.SAVED_ARTICLES_LOAD:
+			if (!action.payload.error) {
+				let newData = ((storeData[action.payload.dataType] === undefined || storeData[action.payload.dataType] === null) ? [] : storeData[action.payload.dataType]['data']);
+				newData.push(...action.payload.data.data);
+				let store = {
+					...storeData,
+					[action.payload.dataType]: {data: newData, total: action.payload.data.total, page: action.payload.data.page, pages: action.payload.data.pages},
+				};
+				return store; 
+			}
+			break;
+
+		case ActionTypes.REMOVE_SAVED_ARTICLE:
 		default:
 			return storeData || {};
 	}

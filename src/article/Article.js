@@ -1,11 +1,10 @@
 import React, {Component} from "react";
 import {MainNav} from "./MainNav";
-import {Preloader} from "../utilities/Preloader";
 import {FrontPage} from "./FrontPage";
 import {Headlines} from "./Headlines";
 import {Search} from "./Search";
 import {About} from "./About";
-import { DataTypes } from "../data/Types";
+import {SavedArticles} from "./SavedArticles";
 
 export class Article extends Component {
 	render() {
@@ -24,6 +23,9 @@ export class Article extends Component {
 		}
 		else if (this.props.match.path === "/about") {
 			comp = <About {...this.props} />;
+		}
+		else if (this.props.match.path === "/saved-articles") {
+			comp = <SavedArticles {...this.props} />;
 		}
 
 		return <React.Fragment>

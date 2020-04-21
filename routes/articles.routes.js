@@ -3,6 +3,15 @@ module.exports = (app) => {
 
 	app.post('/api/articles', articles.create);
 
+	// Save userid in article
+	app.post('/api/articles/save', articles.saveUserInArticle);
+
+	// Retrieve saved articles
+	app.get('/api/articles/save', articles.findSavedArticles);
+
+	// Remove user from articles
+	app.delete('/api/articles/save', articles.deleteUserFromArticle);
+
 	// Retrieve all articles
 	app.get('/api/articles', articles.findAll);
 

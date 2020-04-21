@@ -18,7 +18,7 @@ const ArticleConnector = connect(mapStateToProps, mapDispatchToProps)(
 	class extends Component {
 		render() {
 			return <Switch>
-				<Route path={["/", "/headlines/:countryCode", "/search/:searchstring", "/about"]} exact={true} render={ (routeProps) => <Article { ...this.props } { ...routeProps } cookies={this.props.cookies} />} />
+				<Route path={["/", "/headlines/:countryCode", "/search/:searchstring", "/about", "/saved-articles"]} exact={true} render={ (routeProps) => <Article { ...this.props } { ...routeProps } cookies={this.props.cookies} />} />
 				<Redirect to="/" />
 			</Switch>
 		}

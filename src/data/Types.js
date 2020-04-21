@@ -8,7 +8,9 @@ export const DataTypes = {
 	ARTICLES_FOR_US: "articles_for_us",
 	CANCER: "cancer",
 	DIABETES: "diabetes",
-	HEART_DISEASE: "heart_disease"
+	HEART_DISEASE: "heart_disease",
+	SAVED_ARTICLES_ID: "saved_articles_id",
+	SAVED_ARTICLES: "saved_articles",
 }
 
 export const ActionTypes = {
@@ -22,5 +24,8 @@ export const ActionTypes = {
 	SEARCH_RESULTS_LOAD: "search_results_load",
 	CANCER_LOAD: "cancer_load",
 	DIABETES_LOAD: "diabetes_load",
-	HEART_DISEASE_LOAD: "heart_disease_load"
+	HEART_DISEASE_LOAD: "heart_disease_load",
+	SAVE_ARTICLE: "save_article",
+	REMOVE_SAVED_ARTICLE: "remove_saved_article",
+	SAVED_ARTICLES_LOAD: "saved_articles_load"
 }

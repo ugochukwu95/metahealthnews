@@ -35,7 +35,7 @@ export class WeatherDesktop extends Component {
 							<p className="grey-text text-darken-2 center ugTitle"><strong>Weather {(this.props.current_location && this.props.weather) && (`in ${this.props.weather.location || this.props.current_location['city']}`)}</strong></p>
 							<br />
 							<div className="textContainer">
-								<img src={WeatherImage(this.props.weather.weather)} className="responsive-img" />
+								<img alt="weather today" src={WeatherImage(this.props.weather.weather)} className="responsive-img" />
 								<div className="centered">
 									<h4><strong>{this.props.weather.weather}</strong></h4>
 									<h4><strong>{Math.round(this.props.weather.temperature)}&deg;C</strong></h4>
@@ -65,7 +65,6 @@ export class WeatherDesktop extends Component {
 	}
 	componentDidMount() {
 		// Loads location data
-		(this.props.loadLocationData && this.props.loadLocationData(DataTypes.CURRENT_LOCATION));
 	}
 
 	componentDidUpdate(prevProps) {

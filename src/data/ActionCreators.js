@@ -123,3 +123,39 @@ export const loadHeartDiseaseSearchResults = (dataType, params) => ({
 		data: {data: response.data['docs'], total: response.data['total'], page: response.data['page'], pages: response.data['pages']},
 	}))
 })
+
+export const saveArticle = (dataType, params) => ({
+	type: ActionTypes.SAVE_ARTICLE,
+	payload: dataSource.StoreData(dataType, params).then(response => ({
+		dataType,
+		data: response.data,
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: err.message}
+	}))
+})
+
+export const removeSavedArticle = (dataType, params) => ({
+	type: ActionTypes.REMOVE_SAVED_ARTICLE,
+	payload: dataSource.RemoveData(dataType, params).then(response => ({
+		dataType,
+		data: response.data,
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: err.message}
+	}))
+})
+
+export const loadSavedArticles = (dataType, params) => ({
+	type: ActionTypes.SAVED_ARTICLES_LOAD,
+	payload: dataSource.GetData(dataType, params).then(response => ({
+		dataType,
+		data: {data: response.data['docs'], total: response.data['total'], page: response.data['page'], pages: response.data['pages']},
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: err.message}
+	}))
+})

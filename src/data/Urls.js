@@ -13,4 +13,6 @@ export const RestUrls = {
 	[DataTypes.DIABETES]: `/api/articles/search`,
 	[DataTypes.HEART_DISEASE]: `/api/articles/search`,
 	[DataTypes.WEATHER]: `/api/getWeather`,
+	[DataTypes.SAVED_ARTICLES_ID]: `/api/articles/save`,
+	[DataTypes.SAVED_ARTICLES]: `/api/articles/save`
 }

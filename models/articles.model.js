@@ -3,14 +3,14 @@ const SchemaTypes = mongoose.Schema;
 const mongoosePaginate = require('mongoose-paginate');
 
 const ArticleSchema = mongoose.Schema({
-	source: {
+    source: {
         type: SchemaTypes.Types.Mixed,
     },
-	author: {
+    author: {
         type: String,
     },
     title: {
-    	type: String,
+        type: String,
         index: true,
         unique: true
     },
@@ -35,6 +35,9 @@ const ArticleSchema = mongoose.Schema({
     },
     content: {
         type: String
+    },
+    savedBy: {
+        type: [{userId: String, dateSaved: Date}]
     }
 });
 

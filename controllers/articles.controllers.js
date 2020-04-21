@@ -3,30 +3,30 @@ const axios = require('axios');
 
 // Create and save a new article
 exports.create = (req, res) => {
-	// Validate request
-	if (!req.body.author) {
-		return res.status(400).send({
-			error: "Article author cannot be empty"
-		})
-	}
+    // Validate request
+    if (!req.body.author) {
+        return res.status(400).send({
+            error: "Article author cannot be empty"
+        })
+    }
 
-	// create an article
-	const article = new Article({
-		source: req.body.source,
-		author: req.body.author,
-		title: req.body.title,
-		description: req.body.description,
-		url: req.body.url,
-		urlToImage: req.body.urlToImage,
-		publishedAt: req.body.publishedAt,
-		content: req.body.content
-	});
+    // create an article
+    const article = new Article({
+        source: req.body.source,
+        author: req.body.author,
+        title: req.body.title,
+        description: req.body.description,
+        url: req.body.url,
+        urlToImage: req.body.urlToImage,
+        publishedAt: req.body.publishedAt,
+        content: req.body.content
+    });
 
-	// Save article in the database
-	article.save()
-	.then(data => {
-		res.send(data);
-	}).catch(err => {
+    // Save article in the database
+    article.save()
+    .then(data => {
+        res.send(data);
+    }).catch(err => {
         res.status(500).send({
             error: err.message || "Some error occurred while creating the Article."
         });
@@ -132,6 +132,103 @@ exports.findAll = async (req, res) => {
         });
     }
 };
+
+exports.findSavedArticles = (req, res) => {
+    // Validate the request
+    if (!req.query.userId) {
+        return res.status(400).send({
+            error: "userId cannot be empty"
+        })
+    } 
+
+    Article.paginate({"savedBy.userId": req.query.userId}, { page: req.query.page, limit: 10, sort: { 'savedBy.dateSaved': 'desc' }})
+    .then(article => {
+        res.send(article);
+    }).catch(err => {
+        res.status(500).send({
+            error: err.message || "Some error occurred while retrieving Saved Articles."
+        });
+    });
+}
+
+exports.saveUserInArticle = (req, res) => {
+
+    // Validate the request
+    if (!req.body.userId) {
+        return res.status(400).send({
+            error: "userId cannot be empty"
+        })
+    } 
+
+    if (!req.body.articleId) {
+        return res.status(400).send({
+            error: "articleId cannot be empty"
+        })
+    } 
+
+    let articleId = req.body.articleId;
+    let userId = req.body.userId;
+
+    Article.findByIdAndUpdate(articleId, {
+        "$push": { "savedBy": {"userId": userId, dateSaved: Date.now()} }
+    }, {new: true})
+    .then(article => {
+        if(!article) {
+            return res.status(404).send({
+                error: "Article not found with id " + req.body.articleId
+            });
+        }
+        res.send(articleId);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                error: "Article not found with id " + req.body.articleId
+            });                
+        }
+        return res.status(500).send({
+            error: err.message
+        });
+    });
+}
+
+exports.deleteUserFromArticle = (req, res) => {
+    // Validate the request
+    if (!req.body.userId) {
+        return res.status(400).send({
+            error: "userId cannot be empty"
+        })
+    } 
+
+    if (!req.body.articleId) {
+        return res.status(400).send({
+            error: "articleId cannot be empty"
+        })
+    } 
+
+    let articleId = req.body.articleId;
+    let userId = req.body.userId;
+
+    Article.findByIdAndUpdate(articleId, {
+        "$pull": { "savedBy": {userId: userId} } 
+    }, {new: true})
+    .then(article => {
+        if(!article) {
+            return res.status(404).send({
+                error: "Article not found with id " + req.body.articleId
+            });
+        }
+        res.send(articleId);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                error: "Article not found with id " + req.body.articleId
+            });                
+        }
+        return res.status(500).send({
+            error: "Error updating Article with id " + req.body.articleId
+        });
+    });
+}
 
 // searching the database 
 exports.search = async (req, res) => {
@@ -245,7 +342,7 @@ exports.search = async (req, res) => {
 
 // Find a single article with a articleId
 exports.findOne = (req, res) => {
-	Article.findById(req.params.articleId)
+    Article.findById(req.params.articleId)
     .then(article => {
         if(!article) {
             return res.status(404).send({
@@ -267,14 +364,14 @@ exports.findOne = (req, res) => {
 
 // Update an article identified by the articleId in the request
 exports.update = (req, res) => {
-	// Validate Request
+    // Validate Request
     if(!req.body.name) {
         return res.status(400).send({
             error: "Article name cannot be empty"
         });
     }
     else if (!req.body.description) {
-    	return res.status(400).send({
+        return res.status(400).send({
             error: "Article description cannot be empty"
         });
     }
@@ -311,7 +408,7 @@ exports.update = (req, res) => {
 
 // Delete an article with the specified articleId in the request
 exports.delete = (req, res) => {
-	Article.findByIdAndRemove(req.params.articleId)
+    Article.findByIdAndRemove(req.params.articleId)
     .then(article => {
         if(!article) {
             return res.status(404).send({

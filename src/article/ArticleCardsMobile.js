@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import ReactTimeAgo from 'react-time-ago';
-import { Link } from "react-router-dom";
+//import { Link } from "react-router-dom";
 import M from 'materialize-css';
 
 export class ArticleCardsMobile extends Component {
@@ -16,18 +16,27 @@ export class ArticleCardsMobile extends Component {
 					</div>
 					<div className="col s4">
 						<a href={item.url} target="_blank" rel="noopener noreferrer">
-							<img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" data-src={item.urlToImage} data-srcset={`${item.urlToImage} 1x`} className="lazy responsive-img cardImageMobile" />
+							<img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" data-src={item.urlToImage} alt={item.source.name || "Unidentified source"} data-srcset={`${item.urlToImage} 1x`} className="lazy responsive-img cardImageMobile" />
 						</a>
 					</div>
 				</div>
 				<div>
-					<small className="grey-text text-darken-2"><span><ReactTimeAgo date={item.publishedAt}/></span></small><small data-target={`dropdown_${item._id}`} className="grey-text text-darken-2 right dropdown-trigger"><i className="fas fa-ellipsis-v"></i></small>
+					<small className="grey-text text-darken-2"><span><ReactTimeAgo date={Date.parse(item.publishedAt)}/></span></small><small data-target={`dropdown_${item._id}`} className="grey-text text-darken-2 right dropdown-trigger"><i className="fas fa-ellipsis-v"></i></small>
 				</div>
 			</div>
 			
 			<ul id={`dropdown_${item._id}`} className="dropdown-content">
-    			<li><a href="#!" className="grey-text text-darken-2"><i className="fas fa-bookmark"></i> Save for later</a></li>
-    			<li><a href={item.url} className="grey-text text-darken-2" target="_blank" rel="noopener noreferrer"><i className="fas fa-link"></i> Go to {item.source.name || "Unidentified source"}</a></li>
+    			<li id={`save_${item._id}`} onClick={this.props.saveArticle(item._id)} className={((item.savedBy.find(val => val.userId === this.props.userId)) ? "hide" : "show")}>
+    				<a href="#!" className="grey-text text-darken-2"><i className="far fa-bookmark"></i> Save for later</a>
+    			</li>
+
+    			<li id={`remove_${item._id}`} className={((item.savedBy.find(val => val.userId === this.props.userId)) ? "show" : "hide")} onClick={this.props.removeSavedArticle(item._id)}>
+    				<a href="#!" className="grey-text text-darken-2"><i className="fas fa-bookmark"></i> Saved</a>
+    			</li>
+
+    			<li><a href={item.url} className="grey-text text-darken-2" target="_blank" rel="noopener noreferrer"><i className="fas fa-link"></i> Go to {item.source.name || "Unidentified source"}</a></li>	
+
+    			<li><a href="#!" className="grey-text text-darken-2" target="_blank" rel="noopener noreferrer"><i className="fas fa-ban red-text"></i> Hide stories from {item.source.name || "Unidentified source"}</a></li>
   			</ul>
 		</div>)
 	}

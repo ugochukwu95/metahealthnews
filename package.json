@@ -28,7 +28,8 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-time-ago": "^5.0.8",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "uuidv4": "^6.0.7"
   },
   "scripts": {
     "start": "node server.js",

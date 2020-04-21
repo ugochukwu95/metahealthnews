@@ -78,13 +78,13 @@ export class FrontPage extends Component {
 		let { cookies } = this.props;
 		let countryCode = cookies.get("country_code");
 
-		if (this.props.articles === null && (prevProps.articles !== null && prevProps.articles !== undefined)) {
+		/*if (this.props.articles === null && (prevProps.articles !== null && prevProps.articles !== undefined)) {
 			let { cookies } = this.props;
 			let countryCode = cookies.get("country_code");
 
 			// this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES);
 			// this.props.loadData(DataTypes.ARTICLES, {country: countryCode.toLowerCase(), page: 1});
-		}
+		}*/
 
 		if ((prevProps.current_location !== this.props.current_location) && !countryCode) {
 			// set expiry in 7 days

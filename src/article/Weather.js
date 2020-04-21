@@ -29,7 +29,7 @@ export class Weather extends Component {
 		return <div id="myWeatherNav" className="weatherNav grey lighten-5">
 			<div id="weather-details-nav" className="weather-details-nav">
 				<p className="center grey-text text-darken-2">Weather {(this.props.current_location && this.props.weather) && (`at ${this.props.weather.location || this.props.current_location['city']}`)}</p>
-				<a href="#" className="closebtn teal-text text-darken-2" onClick={this.props.closeNav}>Back</a>
+				<a href="#!" className="closebtn teal-text text-darken-2" onClick={this.props.closeNav}>Back</a>
 				<div className="divider"></div>
 			</div>
 			<br /><br /><br />
@@ -38,7 +38,7 @@ export class Weather extends Component {
 					<div className="card white z-depth-0 weatherCard">
 						<div className="card-content">
 							<div className="textContainer">
-								<img src={WeatherImage(this.props.weather.weather)} className="responsive-img" />
+								<img src={WeatherImage(this.props.weather.weather)} alt="get the weather today" className="responsive-img" />
 								<div className="centered">
 									<h4><strong>{this.props.weather.weather}</strong></h4>
 									<h4><strong>{Math.round(this.props.weather.temperature)}&deg;C</strong></h4>
@@ -84,7 +84,6 @@ export class Weather extends Component {
 
 	componentDidMount() {
 		// Loads location data
-		(this.props.loadLocationData && (/Mobi|Android/i.test(navigator.userAgent))) && this.props.loadLocationData(DataTypes.CURRENT_LOCATION);
 	}
 
 	componentDidUpdate(prevProps) {
