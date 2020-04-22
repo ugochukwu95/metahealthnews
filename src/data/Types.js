@@ -1,5 +1,6 @@
 export const DataTypes = {
 	ARTICLES: "articles",
+	ARTICLE: "article",
 	TRENDS: "trends",
 	CURRENT_LOCATION: "current_location",
 	ARTICLES_SEARCH_RESULTS: "articles_search_results",
@@ -11,10 +12,13 @@ export const DataTypes = {
 	HEART_DISEASE: "heart_disease",
 	SAVED_ARTICLES_ID: "saved_articles_id",
 	SAVED_ARTICLES: "saved_articles",
+	BAN_SOURCE: "ban_source",
+	BANNED_SOURCES: "banned_sources"
 }
 
 export const ActionTypes = {
 	DATA_LOAD: "data_load",
+	ARTICLE_LOAD: "article_load",
 	CLEAR_ARTICLES: "clear_articles",
 	ARTICLES_FOR_US_LOAD: "articles_for_us_load",
 	ARTICLES_FOR_UK_LOAD: "articles_for_uk_load",
@@ -27,5 +31,7 @@ export const ActionTypes = {
 	HEART_DISEASE_LOAD: "heart_disease_load",
 	SAVE_ARTICLE: "save_article",
 	REMOVE_SAVED_ARTICLE: "remove_saved_article",
-	SAVED_ARTICLES_LOAD: "saved_articles_load"
+	SAVED_ARTICLES_LOAD: "saved_articles_load",
+	BAN_SOURCE: "ban_source",
+	BANNED_SOURCES_LOAD: "banned_sources_load"
 }

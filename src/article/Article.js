@@ -5,6 +5,8 @@ import {Headlines} from "./Headlines";
 import {Search} from "./Search";
 import {About} from "./About";
 import {SavedArticles} from "./SavedArticles";
+import {ArticleDetails} from "./ArticleDetails";
+import {HiddenSources} from "./HiddenSources";
 
 export class Article extends Component {
 	render() {
@@ -26,6 +28,12 @@ export class Article extends Component {
 		}
 		else if (this.props.match.path === "/saved-articles") {
 			comp = <SavedArticles {...this.props} />;
+		}
+		else if (this.props.match.path === "/article/:title/:id") {
+			comp = <ArticleDetails {...this.props} />;
+		}
+		else if (this.props.match.path === "/hidden-sources") {
+			comp = <HiddenSources {...this.props} />;
 		}
 
 		return <React.Fragment>

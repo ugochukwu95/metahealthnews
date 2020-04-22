@@ -60,6 +60,9 @@ export class MainNav extends Component {
 	}
 
 	render() {
+		let {cookies} = this.props;
+		let userId = cookies.get("user_id") || null;
+
 		return <React.Fragment>
 			<div className="navbar-fixed">
 				<nav className="blue darken-1">
@@ -82,13 +85,14 @@ export class MainNav extends Component {
 
 				    	<ul className="hide-on-large-only">
 				    		<li>
-				    			<Link to="/" className="logoFont myLogo" onClick={this.clearHomeData}>MetaHealth News</Link>
+				    			<Link to="/" className="logoFont myLogo" onClick={this.clearHomeData}><strong>MetaHealth News</strong></Link>
 				    		</li>
 				    	</ul>
 				    	<ul className="hide-on-large-only right">
 							<li><Link to="/top-searches" onClick={this.openSearchBox}><span className="fas fa-search"></span></Link></li>
 							<li><Link to="/saved-articles"><span className="fas fa-bookmark"></span></Link></li>
-							<li><Link to="#" onClick={this.openWeatherNav}><span className="fas fa-sun"></span></Link></li>
+							<li><Link to="#!" onClick={this.openWeatherNav}><span className="fas fa-sun"></span></Link></li>
+							{userId && <li><Link to="/hidden-sources"><span className="fas fa-ban"></span></Link></li>}
 							<li><Link to="/about"><span className="fas fa-comment-alt"></span></Link></li>
 				    	</ul>
 				    </div>

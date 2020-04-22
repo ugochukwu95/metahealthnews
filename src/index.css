@@ -162,6 +162,14 @@ nav {
 	border-bottom: 1px solid lightgrey;
 }
 
+.ugMoreLinks li {
+    margin-bottom: 9px;
+}
+
+.ugMoreLinks li i {
+    font-size: 13px !important;
+}
+
 .ugCard .card-content, .weatherCard .card-content {
 	padding: 16px !important;
 }
@@ -209,6 +217,14 @@ nav {
 	box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 -1px 1px rgba(0,0,0,0.05);
 	line-height: 25px;
 	height: 35px !important;
+}
+
+.ugArticleDetailsBtn {
+    text-transform: none !important;
+    padding: 5px !important;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 -1px 1px rgba(0,0,0,0.05) !important;
+    line-height: 25px !important;
+    height: 35px !important;
 }
 
 .ugTabs .btn:active {
@@ -308,6 +324,14 @@ a.btn.disabled, a.btn.disabled:active, a.btn.disabled:focus {
     position: fixed;
     z-index: 2;
     width: 100%;
+}
+
+table {
+    width: 100% !important;
+}
+
+.ugIconBan {
+    width: 10% !important;
 }
 
 @media only screen and (max-width: 1024px) {

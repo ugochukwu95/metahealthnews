@@ -18,6 +18,13 @@ export const ArticleReducer = (storeData, action) => {
 					[action.payload.dataType]: {error: action.payload.error}
 				}
 			}
+
+		case ActionTypes.ARTICLE_LOAD:
+			return {
+				...storeData,
+				[action.payload.dataType]: action.payload.data	
+			}
+
 		case ActionTypes.CLEAR_ARTICLES:
 			return {
 				...storeData,
@@ -169,6 +176,18 @@ export const ArticleReducer = (storeData, action) => {
 				return store; 
 			}
 			break;
+
+		case ActionTypes.BAN_SOURCE:
+			return {
+				...storeData,
+				[action.payload.dataType]: action.payload.data
+			}
+
+		case ActionTypes.BANNED_SOURCES_LOAD:
+			return {
+				...storeData,
+				[action.payload.dataType]: action.payload.data
+			}
 
 		case ActionTypes.REMOVE_SAVED_ARTICLE:
 		default:

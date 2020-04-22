@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import ReactTimeAgo from 'react-time-ago';
 //import { Link } from "react-router-dom";
 import M from 'materialize-css';
+import {cleanUrlText} from "../utilities/cleanUrlText";
+import { Link } from "react-router-dom";
 
 export class ArticleCardsMobile extends Component {
 	render() {
@@ -11,13 +13,15 @@ export class ArticleCardsMobile extends Component {
 					<div className="col s8">
 						<strong>{item.source.name || "Unidentified source"}</strong>
 						<h5 className="ugTitleMobile">
-							<a href={item.url} target="_blank" rel="noopener noreferrer" className="grey-text text-darken-2 ugCardLink"><strong>{item.title}</strong></a>
+							<Link to={`/article/${cleanUrlText(item.title)}/${item._id}`} className="grey-text text-darken-2 ugCardLink">
+								<strong>{item.title}</strong>
+							</Link>
 						</h5>
 					</div>
 					<div className="col s4">
-						<a href={item.url} target="_blank" rel="noopener noreferrer">
+						<Link to={`/article/${cleanUrlText(item.title)}/${item._id}`}>
 							<img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" data-src={item.urlToImage} alt={item.source.name || "Unidentified source"} data-srcset={`${item.urlToImage} 1x`} className="lazy responsive-img cardImageMobile" />
-						</a>
+						</Link>
 					</div>
 				</div>
 				<div>
@@ -36,7 +40,19 @@ export class ArticleCardsMobile extends Component {
 
     			<li><a href={item.url} className="grey-text text-darken-2" target="_blank" rel="noopener noreferrer"><i className="fas fa-link"></i> Go to {item.source.name || "Unidentified source"}</a></li>	
 
-    			<li><a href="#!" className="grey-text text-darken-2" target="_blank" rel="noopener noreferrer"><i className="fas fa-ban red-text"></i> Hide stories from {item.source.name || "Unidentified source"}</a></li>
+    			<li id={`undoBan_${item._id}`} onClick={this.props.handleUndoBanSource(item.source.name, item._id)} className={((item.hiddenBy.find(val => val === this.props.userId)) ? "show" : "hide")}>
+    				<a href="#!" className="grey-text text-darken-2"><i className="fas fa-ban red-text"></i> Undo ban</a>
+    			</li>
+
+    			<li id={`banSource_${item._id}`} onClick={this.props.handleBanSource(item.source.name, item._id)} className={((item.hiddenBy.find(val => val === this.props.userId)) ? "hide" : "show")}>
+    				<a href="#!" className="grey-text text-darken-2"><i className="fas fa-ban red-text"></i> Hide stories from {item.source.name || "Unidentified source"}</a>
+    				<div id={`progress_${item._id}`} className="hide">
+	    				<br />
+						<div className="progress">
+							<div className="indeterminate"></div>
+						</div>
+					</div>
+    			</li>
   			</ul>
 		</div>)
 	}

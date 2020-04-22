@@ -49,6 +49,7 @@ export class FrontPage extends Component {
 	componentDidMount() {
 		let { cookies } = this.props;
 		let countryCode = cookies.get("country_code");
+		let userId = cookies.get("user_id");
 
 		if (countryCode) {
 			// console.log("hi");
@@ -60,7 +61,12 @@ export class FrontPage extends Component {
 			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.HEART_DISEASE);
 			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES_FOR_UK);
 			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES_FOR_US);
-			this.props.loadData && this.props.loadData(DataTypes.ARTICLES, {country: countryCode.toLowerCase(), page: 1});
+			if (userId) {
+				this.props.loadData && this.props.loadData(DataTypes.ARTICLES, {country: countryCode.toLowerCase(), page: 1, userId: userId});
+			}
+			else {
+				this.props.loadData && this.props.loadData(DataTypes.ARTICLES, {country: countryCode.toLowerCase(), page: 1, });
+			}
 
 			// load google trends
 		}
@@ -68,7 +74,14 @@ export class FrontPage extends Component {
 			// set expiry in 7 days
 			let expire = (new Date().getTime() / 1000) + 604800;
 			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES);
-			this.props.current_location && this.props.loadData(DataTypes.ARTICLES, {country: this.props.current_location['country_code'].toLowerCase(), page: 1});
+
+			if (userId) {
+				this.props.current_location && this.props.loadData(DataTypes.ARTICLES, {country: this.props.current_location['country_code'].toLowerCase(), page: 1, userId: userId});
+			}
+			else {
+				this.props.current_location && this.props.loadData(DataTypes.ARTICLES, {country: this.props.current_location['country_code'].toLowerCase(), page: 1});
+			}
+
 			this.props.current_location && cookies.set("country_code", this.props.current_location['country_code'], {path: "/", expires: new Date(expire * 1000)});
 		}
 	}
@@ -77,6 +90,7 @@ export class FrontPage extends Component {
 
 		let { cookies } = this.props;
 		let countryCode = cookies.get("country_code");
+		let userId = cookies.get("user_id");
 
 		/*if (this.props.articles === null && (prevProps.articles !== null && prevProps.articles !== undefined)) {
 			let { cookies } = this.props;
@@ -92,7 +106,12 @@ export class FrontPage extends Component {
 
 			this.props.current_location && this.props.loadTrendsData(DataTypes.TRENDS, {country: this.props.current_location['country_code']});
 
-			this.props.current_location && this.props.loadData(DataTypes.ARTICLES, {country: this.props.current_location['country_code'].toLowerCase(), page: 1});
+			if (userId) {
+				this.props.current_location && this.props.loadData(DataTypes.ARTICLES, {country: this.props.current_location['country_code'].toLowerCase(), page: 1, userId: userId});
+			}
+			else {
+				this.props.current_location && this.props.loadData(DataTypes.ARTICLES, {country: this.props.current_location['country_code'].toLowerCase(), page: 1});
+			}
 
 			this.props.current_location && cookies.set("country_code", this.props.current_location['country_code'], {path: "/", expires: new Date(expire * 1000)});
 		}

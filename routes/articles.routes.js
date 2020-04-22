@@ -12,6 +12,15 @@ module.exports = (app) => {
 	// Remove user from articles
 	app.delete('/api/articles/save', articles.deleteUserFromArticle);
 
+	// get sources hidden by user
+	app.get('/api/articles/hide', articles.findHiddenSources);
+
+	// Hide article from user
+	app.post('/api/articles/hide', articles.hideArticleFromUser);
+
+	// Remove user hidden article
+	app.delete('/api/articles/hide', articles.deleteHiddenArticleByUser);
+
 	// Retrieve all articles
 	app.get('/api/articles', articles.findAll);
 
@@ -19,7 +28,7 @@ module.exports = (app) => {
 	app.get('/api/articles/search', articles.search);
 
 	// Retrieve a single article with articleId
-	app.get('/api/articles/:articleId', articles.findOne);
+	app.get('/api/article', articles.findOne);
 
 	// Update an article with articleId
 	app.put('/api/articles/:articleId', articles.update);

@@ -7,6 +7,8 @@ import { DataTypes } from "../data/Types";
 import CountryData from "../utilities/CountryData";
 import M from 'materialize-css';
 import { uuid } from 'uuidv4';
+import {cleanUrlText} from "../utilities/cleanUrlText";
+import { Link } from "react-router-dom";
 
 export class Headlines extends Component {
 	constructor(props) {
@@ -15,28 +17,36 @@ export class Headlines extends Component {
 			page: null,
 			loading: false,
 			pages: null,
+			bannedId: null
 		}
 	}
 
 	handleOnScroll = () => {
+		let { cookies } = this.props;
+		let userId = cookies.get("user_id") || null;
+
   		let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
   		let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
  		let clientHeight = document.documentElement.clientHeight || window.innerHeight;
   		let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= scrollHeight;
+
 
   		if (scrolledToBottom) {
      		if (this.state.page >= this.state.pages) {
      			this.setState({loading:false});
      			return;
      		}
-     		this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadData(DataTypes.ARTICLES, {country: this.props.match.params['countryCode'], page: Number(this.state.page)}))
+     		this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadData(DataTypes.ARTICLES, {country: this.props.match.params['countryCode'], page: Number(this.state.page), userId: userId}))
 		}
 	}
 
 	handleTryAgain = (ev) => {
+		let { cookies } = this.props;
+		let userId = cookies.get("user_id") || null;
+
 		ev.preventDefault();
 		this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES);
-		this.props.loadData && this.props.loadData(DataTypes.ARTICLES, {country: this.props.match.params['countryCode'], page: 1});
+		this.props.loadData && this.props.loadData(DataTypes.ARTICLES, {country: this.props.match.params['countryCode'], page: 1, userId: userId});
 	}
 
 	handleSaveForLater = id => ev => {
@@ -92,6 +102,48 @@ export class Headlines extends Component {
 		}
 	}
 
+	handleBanSource = (source, id) => ev => {
+		ev.preventDefault();
+		let sourceName = source;
+		let { cookies } = this.props;
+		let userId = cookies.get("user_id");
+		this.setState({bannedId: id});
+
+		if (userId) {
+			document.getElementById(`progress_${id}`).classList.add("show");
+			document.getElementById(`progress_${id}`).classList.remove("hide");
+
+			this.props.banSource && this.props.banSource(DataTypes.BAN_SOURCE, {userId: userId, sourceName: sourceName});
+		}
+		else {
+			document.getElementById(`progress_${id}`).classList.add("show");
+			document.getElementById(`progress_${id}`).classList.remove("hide");
+
+			// set expiry in 7 days
+			let expire = (new Date().getTime() / 1000) + 31536000;
+
+			// create unique id 
+			userId = uuid();
+
+			// Set cookie for user
+			cookies.set("user_id", userId, {path: "/", expires: new Date(expire * 1000)});
+
+			this.props.banSource && this.props.banSource(DataTypes.BAN_SOURCE, {userId: userId, sourceName: sourceName});
+		}
+	}
+
+	handleUndoBanSource = (source, id) => ev => {
+		ev.preventDefault();
+		let sourceName = source;
+		let { cookies } = this.props;
+		let userId = cookies.get("user_id");
+		this.setState({bannedId: id});
+
+		this.props.undoBanSource && this.props.undoBanSource(DataTypes.BAN_SOURCE, {userId: userId, sourceName: sourceName});
+		document.getElementById(`progress_${id}`).classList.add("show");
+		document.getElementById(`progress_${id}`).classList.remove("hide");
+	}
+
 	render() {
 		let firstArticle = (this.props.articles && this.props.articles.data) && this.props.articles.data.slice(0,1)[0];
 		let otherArticles = (this.props.articles  && this.props.articles.data) && this.props.articles.data.slice(1);
@@ -131,38 +183,54 @@ export class Headlines extends Component {
 				</div>
 			</div>}
 
-			{firstArticle && <div className="card white z-depth-0 ugMobileCard">
-				<div className="card-content">
-					<div className="row">
-						<div className="col s12">
-							<a href={firstArticle.url} target="_blank" rel="noopener noreferrer">
-								<img alt={firstArticle.source.name} src={firstArticle.urlToImage} className="responsive-img cardImageMobile" />
-							</a>
-							<p><strong>{firstArticle.source.name || "Unidentified source"}</strong></p>
-							<h5 className="ugTitle">
-								<a href={firstArticle.url} target="_blank" rel="noopener noreferrer" className="grey-text text-darken-2 ugCardLink"><strong>{firstArticle.title}</strong></a>
-							</h5>
-							<div>
-								<small className="grey-text text-darken-2"><span><ReactTimeAgo date={Date.parse(firstArticle.publishedAt)}/></span></small><small data-target={`dropdown_${firstArticle._id}`} className="grey-text text-darken-2 right dropdown-trigger"><i className="fas fa-ellipsis-v"></i></small>
+			{
+				firstArticle && <div className="card white z-depth-0 ugMobileCard">
+					<div className="card-content">
+						<div className="row">
+							<div className="col s12">
+								<Link to={`/article/${cleanUrlText(firstArticle.title)}/${firstArticle._id}`}>
+									<img alt={firstArticle.source.name} src={firstArticle.urlToImage} className="responsive-img cardImageMobile" />
+								</Link>
+								<p><strong>{firstArticle.source.name || "Unidentified source"}</strong></p>
+								<h5 className="ugTitle">
+									<Link to={`/article/${cleanUrlText(firstArticle.title)}/${firstArticle._id}`} className="grey-text text-darken-2 ugCardLink">
+										<strong>{firstArticle.title}</strong>
+									</Link>
+								</h5>
+								<div>
+									<small className="grey-text text-darken-2"><span><ReactTimeAgo date={Date.parse(firstArticle.publishedAt)}/></span></small><small data-target={`dropdown_${firstArticle._id}`} className="grey-text text-darken-2 right dropdown-trigger"><i className="fas fa-ellipsis-v"></i></small>
+								</div>
 							</div>
 						</div>
 					</div>
+
+					<ul id={`dropdown_${firstArticle._id}`} className="dropdown-content">
+		    			<li id={`save_${firstArticle._id}`} onClick={this.handleSaveForLater(firstArticle._id)} className={((firstArticle.savedBy.find(val => val.userId === userId)) ? "hide" : "show")}>
+		    				<a href="#!" className="grey-text text-darken-2"><i className="far fa-bookmark"></i> Save for later</a>
+		    			</li>
+
+		    			<li id={`remove_${firstArticle._id}`} className={((firstArticle.savedBy.find(val => val.userId === userId)) ? "show" : "hide")} onClick={this.handleRemoveSavedArticle(firstArticle._id)}>
+		    				<a href="#!" className="grey-text text-darken-2"><i className="fas fa-bookmark"></i> Saved</a>
+		    			</li>
+
+		    			<li><a href={firstArticle.url} className="grey-text text-darken-2" target="_blank" rel="noopener noreferrer"><i className="fas fa-link"></i> Go to {firstArticle.source.name || "Unidentified source"}</a></li>	
+
+		    			<li id={`undoBan_${firstArticle._id}`} onClick={this.handleUndoBanSource(firstArticle.source.name, firstArticle._id)} className={((firstArticle.hiddenBy.find(val => val === userId)) ? "show" : "hide")}>
+		    				<a href="#!" className="grey-text text-darken-2"><i className="fas fa-ban grey-text text-darken-2"></i> Undo ban</a>
+		    			</li>
+
+		    			<li id={`banSource_${firstArticle._id}`} onClick={this.handleBanSource(firstArticle.source.name, firstArticle._id)} className={((firstArticle.hiddenBy.find(val => val === userId)) ? "hide" : "show")}>
+		    				<a href="#!" className="grey-text text-darken-2"><i className="fas fa-ban red-text"></i> Hide stories from {firstArticle.source.name || "Unidentified source"}</a>
+		    				<div id={`progress_${firstArticle._id}`} className="hide">
+			    				<br />
+								<div className="progress">
+									<div className="indeterminate"></div>
+								</div>
+							</div>
+		    			</li>
+		  			</ul>
 				</div>
-
-				<ul id={`dropdown_${firstArticle._id}`} className="dropdown-content">
-	    			<li id={`save_${firstArticle._id}`} onClick={this.handleSaveForLater(firstArticle._id)} className={((firstArticle.savedBy.find(val => val === userId)) ? "hide" : "show")}>
-	    				<a href="#!" className="grey-text text-darken-2"><i className="far fa-bookmark"></i> Save for later</a>
-	    			</li>
-
-	    			<li id={`remove_${firstArticle._id}`} className={((firstArticle.savedBy.find(val => val === userId)) ? "show" : "hide")} onClick={this.handleRemoveSavedArticle(firstArticle._id)}>
-	    				<a href="#!" className="grey-text text-darken-2"><i className="fas fa-bookmark"></i> Saved</a>
-	    			</li>
-
-	    			<li><a href={firstArticle.url} className="grey-text text-darken-2" target="_blank" rel="noopener noreferrer"><i className="fas fa-link"></i> Go to {firstArticle.source.name || "Unidentified source"}</a></li>	
-
-	    			<li><a href="#!" className="grey-text text-darken-2" target="_blank" rel="noopener noreferrer"><i className="fas fa-ban red-text"></i> Hide stories from {firstArticle.source.name || "Unidentified source"}</a></li>
-	  			</ul>
-			</div>}
+			}
 
 			{otherArticles && <div className="row">
 				<div className="col l6 offset-l3 m8 offset-m2 s12">
@@ -170,7 +238,7 @@ export class Headlines extends Component {
 						<strong>{CountryData.find(obj => obj.code === this.props.match.params['countryCode'].toUpperCase())['value']} Health News.</strong>
 						<br />
 					</h5>
-					<ArticleCardsMobile userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={otherArticles} />
+					<ArticleCardsMobile handleBanSource={this.handleBanSource} handleUndoBanSource={this.handleUndoBanSource} userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={otherArticles} />
 				</div>
 			</div>}
 
@@ -183,9 +251,12 @@ export class Headlines extends Component {
 		let options = {constrainWidth: false, coverTrigger: false};
     	M.Dropdown.init(elems, options);
 
+    	let { cookies } = this.props;
+		let userId = cookies.get("user_id") || null;
+
 		// get articles if articles do not already exist
 		this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES);
-		this.props.loadData(DataTypes.ARTICLES, {country: this.props.match.params['countryCode'], page: 1});
+		this.props.loadData(DataTypes.ARTICLES, {country: this.props.match.params['countryCode'], page: 1, userId: userId});
 
 		// Create scroll event
 		window.addEventListener('scroll', this.handleOnScroll);
@@ -196,9 +267,12 @@ export class Headlines extends Component {
 		let options = {constrainWidth: false, coverTrigger: false};
     	M.Dropdown.init(elems, options);
 
+    	let { cookies } = this.props;
+		let userId = cookies.get("user_id") || null;
+
 		if (prevProps.match.params['countryCode'] !== this.props.match.params['countryCode']) {
 			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES);
-			this.props.loadData(DataTypes.ARTICLES, {country: this.props.match.params['countryCode'], page: 1});
+			this.props.loadData(DataTypes.ARTICLES, {country: this.props.match.params['countryCode'], page: 1, userId: userId});
 			window.addEventListener('scroll', this.handleOnScroll);
 		}
 
@@ -268,6 +342,36 @@ export class Headlines extends Component {
 				let toastHTML = '<span>Saved successfully.</span>';
 	    		M.toast({html: toastHTML});
 	    	}
+		}
+
+		if (prevProps.ban_source !== this.props.ban_source) {
+			if (!this.props.ban_source.error && !this.props.ban_source.undone) {
+				document.getElementById(`progress_${this.state.bannedId}`).classList.add("hide");
+				document.getElementById(`progress_${this.state.bannedId}`).classList.remove("show");
+
+				document.getElementById(`undoBan_${this.state.bannedId}`).classList.add("show");
+				document.getElementById(`undoBan_${this.state.bannedId}`).classList.remove("hide");
+
+				document.getElementById(`banSource_${this.state.bannedId}`).classList.add("hide");
+				document.getElementById(`banSource_${this.state.bannedId}`).classList.remove("show");
+
+				let toastHTML = '<span>Successfully hidden.</span>';
+		    	M.toast({html: toastHTML});
+		    }
+
+	    	if (this.props.ban_source.undone) {
+		    	document.getElementById(`progress_${this.state.bannedId}`).classList.add("hide");
+				document.getElementById(`progress_${this.state.bannedId}`).classList.remove("show");
+
+				document.getElementById(`undoBan_${this.state.bannedId}`).classList.add("hide");
+				document.getElementById(`undoBan_${this.state.bannedId}`).classList.remove("show");
+
+				document.getElementById(`banSource_${this.state.bannedId}`).classList.add("show");
+				document.getElementById(`banSource_${this.state.bannedId}`).classList.remove("hide");
+
+				let toastHTML = '<span>Successfully undone.</span>';
+		    	M.toast({html: toastHTML});	
+		    }
 		}
 
 	}

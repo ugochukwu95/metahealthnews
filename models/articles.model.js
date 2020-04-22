@@ -38,6 +38,9 @@ const ArticleSchema = mongoose.Schema({
     },
     savedBy: {
         type: [{userId: String, dateSaved: Date}]
+    },
+    hiddenBy: {
+        type: [String]
     }
 });
 

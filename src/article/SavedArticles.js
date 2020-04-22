@@ -3,6 +3,7 @@ import {Preloader} from "../utilities/Preloader";
 import { DataTypes } from "../data/Types";
 import {ArticleCardsMobile} from "./ArticleCardsMobile";
 import M from 'materialize-css';
+import { uuid } from 'uuidv4';
 
 export class SavedArticles extends Component {
 
@@ -12,6 +13,7 @@ export class SavedArticles extends Component {
 			page: null,
 			loading: false,
 			pages: null,
+			bannedId: null
 		}
 	}
 
@@ -69,6 +71,48 @@ export class SavedArticles extends Component {
 		}
 	}
 
+	handleBanSource = (source, id) => ev => {
+		ev.preventDefault();
+		let sourceName = source;
+		let { cookies } = this.props;
+		let userId = cookies.get("user_id");
+		this.setState({bannedId: id});
+
+		if (userId) {
+			document.getElementById(`progress_${id}`).classList.add("show");
+			document.getElementById(`progress_${id}`).classList.remove("hide");
+
+			this.props.banSource && this.props.banSource(DataTypes.BAN_SOURCE, {userId: userId, sourceName: sourceName});
+		}
+		else {
+			document.getElementById(`progress_${id}`).classList.add("show");
+			document.getElementById(`progress_${id}`).classList.remove("hide");
+
+			// set expiry in 7 days
+			let expire = (new Date().getTime() / 1000) + 31536000;
+
+			// create unique id 
+			userId = uuid();
+
+			// Set cookie for user
+			cookies.set("user_id", userId, {path: "/", expires: new Date(expire * 1000)});
+
+			this.props.banSource && this.props.banSource(DataTypes.BAN_SOURCE, {userId: userId, sourceName: sourceName});
+		}
+	}
+
+	handleUndoBanSource = (source, id) => ev => {
+		ev.preventDefault();
+		let sourceName = source;
+		let { cookies } = this.props;
+		let userId = cookies.get("user_id");
+		this.setState({bannedId: id});
+
+		this.props.undoBanSource && this.props.undoBanSource(DataTypes.BAN_SOURCE, {userId: userId, sourceName: sourceName});
+		document.getElementById(`progress_${id}`).classList.add("show");
+		document.getElementById(`progress_${id}`).classList.remove("hide");
+	}
+
 	render() {
 		let {cookies} = this.props;
 		let userId = cookies.get("user_id");
@@ -82,7 +126,7 @@ export class SavedArticles extends Component {
 								<strong>You have {this.props.saved_articles.data.length} articles saved</strong>
 							</h5>
 
-							<ArticleCardsMobile userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={this.props.saved_articles['data']} />
+							<ArticleCardsMobile handleBanSource={this.handleBanSource} handleUndoBanSource={this.handleUndoBanSource} userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={this.props.saved_articles['data']} />
 						</div>
 					</div>
 				</React.Fragment>
@@ -126,5 +170,35 @@ export class SavedArticles extends Component {
 		let elems = document.querySelectorAll('.dropdown-trigger');
 		let options = {constrainWidth: false, coverTrigger: false};
     	M.Dropdown.init(elems, options);
+
+    	if (prevProps.ban_source !== this.props.ban_source) {
+			if (!this.props.ban_source.error && !this.props.ban_source.undone) {
+				document.getElementById(`progress_${this.state.bannedId}`).classList.add("hide");
+				document.getElementById(`progress_${this.state.bannedId}`).classList.remove("show");
+
+				document.getElementById(`undoBan_${this.state.bannedId}`).classList.add("show");
+				document.getElementById(`undoBan_${this.state.bannedId}`).classList.remove("hide");
+
+				document.getElementById(`banSource_${this.state.bannedId}`).classList.add("hide");
+				document.getElementById(`banSource_${this.state.bannedId}`).classList.remove("show");
+
+				let toastHTML = '<span>Successfully hidden.</span>';
+		    	M.toast({html: toastHTML});
+		    }
+
+	    	if (this.props.ban_source.undone) {
+		    	document.getElementById(`progress_${this.state.bannedId}`).classList.add("hide");
+				document.getElementById(`progress_${this.state.bannedId}`).classList.remove("show");
+
+				document.getElementById(`undoBan_${this.state.bannedId}`).classList.add("hide");
+				document.getElementById(`undoBan_${this.state.bannedId}`).classList.remove("show");
+
+				document.getElementById(`banSource_${this.state.bannedId}`).classList.add("show");
+				document.getElementById(`banSource_${this.state.bannedId}`).classList.remove("hide");
+
+				let toastHTML = '<span>Successfully undone.</span>';
+		    	M.toast({html: toastHTML});	
+		    }
+		}
 	}
 }

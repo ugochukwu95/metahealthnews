@@ -39,6 +39,7 @@ exports.findAll = async (req, res) => {
     let data = []; 
     const country = req.query.country || "us";
     const page = req.query.page;
+    const userId = req.query.userId
     if (page == 1) {
         // Code to get articles from api
         const getArticles = async () => {
@@ -46,15 +47,27 @@ exports.findAll = async (req, res) => {
                 return await axios({url: `https://newsapi.org/v2/top-headlines?apiKey=c9eb75a0e19345ccb50fe95a6d25a8af&category=health&country=${country}&pageSize=100`, method: 'get'});
             } catch(error) {
 
-                // If an error occurs get articles from db instead
-                Article.paginate({country: country}, { page: page, limit: 10, sort: { publishedAt: -1 } })
-                .then(article => {
-                    res.send(article);
-                }).catch(err => {
-                    res.status(500).send({
-                        error: err.message || "Some error occurred while retrieving Articles."
+                if (userId) {
+                    // If an error occurs get articles from db instead
+                    Article.paginate({country: country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
+                    .then(article => {
+                        res.send(article);
+                    }).catch(err => {
+                        res.status(500).send({
+                            error: err.message || "Some error occurred while retrieving Articles."
+                        });
                     });
-                });
+                }
+                else {
+                    Article.paginate({country: country}, { page: page, limit: 10, sort: { publishedAt: -1 } })
+                    .then(article => {
+                        res.send(article);
+                    }).catch(err => {
+                        res.status(500).send({
+                            error: err.message || "Some error occurred while retrieving Articles."
+                        });
+                    });
+                }
             }
         }
 
@@ -69,14 +82,27 @@ exports.findAll = async (req, res) => {
         // We have issues with the api
         // We simply get articles from db
         else if (headlines.data['status'] === "error") {
-            Article.paginate({country: country}, { page: page, limit: 10, sort: { publishedAt: -1 } })
-            .then(article => {
-                res.send(article);
-            }).catch(err => {
-                res.status(500).send({
-                    error: err.message || "Some error occurred while retrieving Articles."
+            if (userId) {
+                // If an error occurs get articles from db instead
+                Article.paginate({country: country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
+                .then(article => {
+                    res.send(article);
+                }).catch(err => {
+                    res.status(500).send({
+                        error: err.message || "Some error occurred while retrieving Articles."
+                    });
                 });
-            });
+            }
+            else {
+                Article.paginate({country: country}, { page: page, limit: 10, sort: { publishedAt: -1 } })
+                .then(article => {
+                    res.send(article);
+                }).catch(err => {
+                    res.status(500).send({
+                        error: err.message || "Some error occurred while retrieving Articles."
+                    });
+                });
+            }
         }
         
 
@@ -112,24 +138,50 @@ exports.findAll = async (req, res) => {
             }
         }
 
-        Article.paginate({country: country}, { page: page, limit: 10, sort: { publishedAt: -1 } })
-        .then(article => {
-            res.send(article);
-        }).catch(err => {
-            res.status(500).send({
-                error: err.message || "Some error occurred while retrieving Articles."
+        if (userId) {
+            // If an error occurs get articles from db instead
+            Article.paginate({country: country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
+            .then(article => {
+                res.send(article);
+            }).catch(err => {
+                res.status(500).send({
+                    error: err.message || "Some error occurred while retrieving Articles."
+                });
             });
-        });
+        }
+        else {
+            Article.paginate({country: country}, { page: page, limit: 10, sort: { publishedAt: -1 } })
+            .then(article => {
+                res.send(article);
+            }).catch(err => {
+                res.status(500).send({
+                    error: err.message || "Some error occurred while retrieving Articles."
+                });
+            });
+        }
     }
     else if (page > 1) {
-        Article.paginate({country: country}, { page: page, limit: 10, sort: { publishedAt: -1 } })
-        .then(article => {
-            res.send(article);
-        }).catch(err => {
-            res.status(500).send({
-                error: err.message || "Some error occurred while retrieving Articles."
+        if (userId) {
+            // If an error occurs get articles from db instead
+            Article.paginate({country: country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
+            .then(article => {
+                res.send(article);
+            }).catch(err => {
+                res.status(500).send({
+                    error: err.message || "Some error occurred while retrieving Articles."
+                });
             });
-        });
+        }
+        else {
+            Article.paginate({country: country}, { page: page, limit: 10, sort: { publishedAt: -1 } })
+            .then(article => {
+                res.send(article);
+            }).catch(err => {
+                res.status(500).send({
+                    error: err.message || "Some error occurred while retrieving Articles."
+                });
+            });
+        }
     }
 };
 
@@ -141,7 +193,7 @@ exports.findSavedArticles = (req, res) => {
         })
     } 
 
-    Article.paginate({"savedBy.userId": req.query.userId}, { page: req.query.page, limit: 10, sort: { 'savedBy.dateSaved': 'desc' }})
+    Article.paginate({"savedBy.userId": req.query.userId, hiddenBy: {$nin: [req.query.userId]}}, { page: req.query.page, limit: 10, sort: { 'savedBy.dateSaved': 'desc' }})
     .then(article => {
         res.send(article);
     }).catch(err => {
@@ -230,6 +282,102 @@ exports.deleteUserFromArticle = (req, res) => {
     });
 }
 
+exports.findHiddenSources = (req, res) => {
+    // Validate the request
+    if (!req.query.userId) {
+        return res.status(400).send({
+            error: "userId cannot be empty"
+        })
+    } 
+
+    Article.find({"hiddenBy": {$in: [req.query.userId]}}).distinct('source.name')
+    .then(article => {
+        res.send(article);
+    }).catch(err => {
+        res.status(500).send({
+            error: err.message || "Some error occurred while retrieving hidden sources."
+        });
+    });
+}
+
+exports.hideArticleFromUser = (req, res) => {
+    // Validate the request
+    if (!req.body.userId) {
+        return res.status(400).send({
+            error: "userId cannot be empty"
+        })
+    } 
+
+    if (!req.body.sourceName) {
+        return res.status(400).send({
+            error: "sourceName cannot be empty"
+        })
+    } 
+
+    let sourceName = req.body.sourceName;
+    let userId = req.body.userId;
+
+    Article.updateMany({"source.name": sourceName}, {
+        "$push": { "hiddenBy": userId}
+    })
+    .then(article => {
+        if(!article) {
+            return res.status(404).send({
+                error: "Article not found with sourceName"
+            });
+        }
+        res.send(sourceName);
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                error: "Article not found with sourceName "
+            });                
+        }
+        return res.status(500).send({
+            error: err.message
+        });
+    });
+}
+
+exports.deleteHiddenArticleByUser = (req, res) => {
+    // Validate the request
+    if (!req.body.userId) {
+        return res.status(400).send({
+            error: "userId cannot be empty"
+        })
+    } 
+
+    if (!req.body.sourceName) {
+        return res.status(400).send({
+            error: "articleId cannot be empty"
+        })
+    } 
+
+    let sourceName = req.body.sourceName;
+    let userId = req.body.userId;
+
+    Article.updateMany({"source.name": sourceName}, {
+        "$pull": { "hiddenBy": userId}
+    }, {new: true})
+    .then(article => {
+        if(!article) {
+            return res.status(404).send({
+                error: "Article not found with id " + req.body.articleId
+            });
+        }
+        res.send("successfully undone");
+    }).catch(err => {
+        if(err.kind === 'ObjectId') {
+            return res.status(404).send({
+                error: "Article not found with id " + req.body.articleId
+            });                
+        }
+        return res.status(500).send({
+            error: "Error updating Article with id " + req.body.articleId
+        });
+    });
+}
+
 // searching the database 
 exports.search = async (req, res) => {
     
@@ -244,6 +392,7 @@ exports.search = async (req, res) => {
     const searchString = req.query.searchString;
     const country = req.query.country || "us";
     const page = Number(req.query.page);
+    const userId = req.query.userId;
 
     if (page == 1) {
         // Code to get articles from api
@@ -251,15 +400,29 @@ exports.search = async (req, res) => {
             try {
                 return await axios({url: `https://newsapi.org/v2/top-headlines?apiKey=c9eb75a0e19345ccb50fe95a6d25a8af&q=${searchString}&country=${country}&category=health&pageSize=100`, method: 'get'});
             } catch(error) {
-                // If an error occurs get articles from db instead
-                Article.paginate({$text: {$search: searchString}, country: country}, { page: page, limit: 10, sort: { publishedAt: -1 } })
-                .then(article => {
-                    res.send(article);
-                }).catch(err => {
-                    res.status(500).send({
-                        error: err.message || "Some error occurred while retrieving Articles."
+
+                if (userId) {
+                    // If an error occurs get articles from db instead
+                    Article.paginate({$text: {$search: searchString}, country: country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, /*sort: { publishedAt: -1 }*/ })
+                    .then(article => {
+                        res.send(article);
+                    }).catch(err => {
+                        res.status(500).send({
+                            error: err.message || "Some error occurred while retrieving Articles."
+                        });
                     });
-                });
+                }
+                else {
+                    // If an error occurs get articles from db instead
+                    Article.paginate({$text: {$search: searchString}, country: country}, { page: page, limit: 10, /*sort: { publishedAt: -1 }*/ })
+                    .then(article => {
+                        res.send(article);
+                    }).catch(err => {
+                        res.status(500).send({
+                            error: err.message || "Some error occurred while retrieving Articles."
+                        });
+                    });
+                }
             }
         }
 
@@ -274,14 +437,28 @@ exports.search = async (req, res) => {
         // We have issues with the api
         // We simply get articles from db
         else if (headlines.data['status'] === "error") {
-            Article.paginate({$text: {$search: searchString}, country: country}, { page: page, limit: 10, sort: { publishedAt: -1 } })
-            .then(article => {
-                res.send(article);
-            }).catch(err => {
-                res.status(500).send({
-                    error: err.message || "Some error occurred while retrieving Articles."
+            if (userId) {
+                // If an error occurs get articles from db instead
+                Article.paginate({$text: {$search: searchString}, country: country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, /*sort: { publishedAt: -1 }*/ })
+                .then(article => {
+                    res.send(article);
+                }).catch(err => {
+                    res.status(500).send({
+                        error: err.message || "Some error occurred while retrieving Articles."
+                    });
                 });
-            });
+            }
+            else {
+                // If an error occurs get articles from db instead
+                Article.paginate({$text: {$search: searchString}, country: country}, { page: page, limit: 10, /*sort: { publishedAt: -1 }*/ })
+                .then(article => {
+                    res.send(article);
+                }).catch(err => {
+                    res.status(500).send({
+                        error: err.message || "Some error occurred while retrieving Articles."
+                    });
+                });
+            }
         }
         
 
@@ -317,24 +494,52 @@ exports.search = async (req, res) => {
             }
         }
 
-        Article.paginate({$text: {$search: searchString}, country: country}, { page: page, limit: 10, sort: { publishedAt: -1 } })
-        .then(article => {
-            res.send(article);
-        }).catch(err => {
-            res.status(500).send({
-                error: err.message || "Some error occurred while retrieving Articles."
+       if (userId) {
+            // If an error occurs get articles from db instead
+            Article.paginate({$text: {$search: searchString}, country: country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, /*sort: { publishedAt: -1 }*/ })
+            .then(article => {
+                res.send(article);
+            }).catch(err => {
+                res.status(500).send({
+                    error: err.message || "Some error occurred while retrieving Articles."
+                });
             });
-        });
+        }
+        else {
+            // If an error occurs get articles from db instead
+            Article.paginate({$text: {$search: searchString}, country: country}, { page: page, limit: 10, /*sort: { publishedAt: -1 }*/ })
+            .then(article => {
+                res.send(article);
+            }).catch(err => {
+                res.status(500).send({
+                    error: err.message || "Some error occurred while retrieving Articles."
+                });
+            });
+        }
     }
     else if (page > 1) {
-        Article.paginate({$text: {$search: searchString}, country: country}, { page: page, limit: 10, sort: { publishedAt: -1 } })
-        .then(article => {
-            res.send(article);
-        }).catch(err => {
-            res.status(500).send({
-                error: err.message || "Some error occurred while retrieving Articles."
+        if (userId) {
+            // If an error occurs get articles from db instead
+            Article.paginate({$text: {$search: searchString}, country: country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, /*sort: { publishedAt: -1 }*/ })
+            .then(article => {
+                res.send(article);
+            }).catch(err => {
+                res.status(500).send({
+                    error: err.message || "Some error occurred while retrieving Articles."
+                });
             });
-        });
+        }
+        else {
+            // If an error occurs get articles from db instead
+            Article.paginate({$text: {$search: searchString}, country: country}, { page: page, limit: 10, /*sort: { publishedAt: -1 }*/ })
+            .then(article => {
+                res.send(article);
+            }).catch(err => {
+                res.status(500).send({
+                    error: err.message || "Some error occurred while retrieving Articles."
+                });
+            });
+        }
     }
 
 
@@ -342,22 +547,22 @@ exports.search = async (req, res) => {
 
 // Find a single article with a articleId
 exports.findOne = (req, res) => {
-    Article.findById(req.params.articleId)
+    Article.findById(req.query.articleId)
     .then(article => {
         if(!article) {
             return res.status(404).send({
-                error: "Article not found with id " + req.params.articleId
+                error: "Article not found"
             });            
         }
         res.send(article);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
-                error: "Article not found with id " + req.params.articleId
+                error: "Article not found"
             });                
         }
         return res.status(500).send({
-            error: "Error retrieving article with id " + req.params.articleId
+            error: "Error retrieving article. Please check your network connection"
         });
     });
 };

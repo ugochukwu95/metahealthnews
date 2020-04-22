@@ -17,6 +17,18 @@ export const loadData = (dataType, params) => ({
 	}))*/
 });
 
+export const loadArticle = (dataType, params) => ({
+	type: ActionTypes.ARTICLE_LOAD,
+	payload: dataSource.GetData(dataType, params).then(response => ({
+		dataType, 
+		data: response.data,
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: "Network error. Kindly check your network connection."}
+	}))
+});
+
 export const clearArticlesData = (dataType) => ({
 	type: ActionTypes.CLEAR_ARTICLES,
 	payload: {
@@ -153,6 +165,42 @@ export const loadSavedArticles = (dataType, params) => ({
 	payload: dataSource.GetData(dataType, params).then(response => ({
 		dataType,
 		data: {data: response.data['docs'], total: response.data['total'], page: response.data['page'], pages: response.data['pages']},
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: err.message}
+	}))
+})
+
+export const banSource = (dataType, params) => ({
+	type: ActionTypes.BAN_SOURCE,
+	payload: dataSource.StoreData(dataType, params).then(response => ({
+		dataType,
+		data: response.data,
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: err.message}
+	}))
+})
+
+export const undoBanSource = (dataType, params) => ({
+	type: ActionTypes.BAN_SOURCE,
+	payload: dataSource.RemoveData(dataType, params).then(response => ({
+		dataType,
+		data: {undone: response.data},
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: err.message}
+	}))
+})
+
+export const loadBannedSources = (dataType, params) => ({
+	type: ActionTypes.BANNED_SOURCES_LOAD,
+	payload: dataSource.GetData(dataType, params).then(response => ({
+		dataType,
+		data: response.data,
 	}))
 	.catch(err => ({
 		dataType,
