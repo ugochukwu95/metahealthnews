@@ -133,7 +133,16 @@ export class SavedArticles extends Component {
 			}
 
 			{
-				(!this.props.saved_articles || this.state.loading) && <Preloader />
+				!userId && <div className="container">
+					<div className="card-panel white">
+						<h3 className="center grey-text text-darken-2">:(</h3>
+						<p className="center">You have no saved articles.</p>
+					</div>
+				</div>
+			}
+
+			{
+				((!this.props.saved_articles || this.state.loading) && userId) && <Preloader />
 			}
 
 			{
