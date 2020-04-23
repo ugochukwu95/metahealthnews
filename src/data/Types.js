@@ -13,7 +13,13 @@ export const DataTypes = {
 	SAVED_ARTICLES_ID: "saved_articles_id",
 	SAVED_ARTICLES: "saved_articles",
 	BAN_SOURCE: "ban_source",
-	BANNED_SOURCES: "banned_sources"
+	BANNED_SOURCES: "banned_sources",
+	COMMENTS: "comments",
+	REPLIES: "replies",
+	COMMENTS_LIKE: "comments_like",
+	REPLIES_LIKE: "replies_like",
+	COMMENTS_DISLIKE: "comments_dislike",
+	REPLIES_DISLIKE: "replies_dislike",
 }
 
 export const ActionTypes = {
@@ -33,5 +39,19 @@ export const ActionTypes = {
 	REMOVE_SAVED_ARTICLE: "remove_saved_article",
 	SAVED_ARTICLES_LOAD: "saved_articles_load",
 	BAN_SOURCE: "ban_source",
-	BANNED_SOURCES_LOAD: "banned_sources_load"
+	BANNED_SOURCES_LOAD: "banned_sources_load",
+	COMMENTS_LOAD: "comments_load",
+	REPLIES_LOAD: "replies_load",
+	COMMENTS_LIKE_ACTION: "comments_like_action",
+	REPLIES_LIKE_ACTION: "replies_like_action",
+	COMMENTS_DISLIKE_ACTION: "comments_dislike_action",
+	REPLIES_DISLIKE_ACTION: "replies_dislike_action",
+	CREATE_COMMENT: "create_comment",
+	CREATE_REPLY: "create_reply",
+	DELETE_COMMENT: "delete_comment",
+	DELETE_REPLY: "delete_reply",
+	UPDATE_COMMENT: "update_comment",
+	UPDATE_REPLY: "update_reply",
+	DELETE_LIKE_COMMENT: "delete_like_comment",
+	DELETE_DISLIKE_COMMENT: "delete_dislike_comment"
 }

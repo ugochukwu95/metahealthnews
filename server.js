@@ -44,6 +44,12 @@ require('./routes/trends.routes.js')(app);
 // Weather data routes
 require('./routes/weather.routes.js')(app);
 
+// Comments routes
+require('./routes/comments.routes.js')(app);
+
+// Replies routes
+require('./routes/replies.routes.js')(app);
+
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
 });

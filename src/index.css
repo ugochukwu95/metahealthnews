@@ -178,11 +178,11 @@ nav {
 	padding: 0 !important;
 }
 
-.ugMobileCard .card-content {
+.ugMobileCard .card-content, .ugDetailsCard .card-content {
 	padding: 16px 10px 10px 10px !important;
 }
 
-.ugMobileCard .card-content .row {
+.ugMobileCard .card-content .row, .ugDetailsCard .card-content .row {
 	margin-bottom: 0px !important;
 }
 
@@ -225,6 +225,7 @@ nav {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 -1px 1px rgba(0,0,0,0.05) !important;
     line-height: 25px !important;
     height: 35px !important;
+    white-space: nowrap !important;
 }
 
 .ugTabs .btn:active {
@@ -333,6 +334,78 @@ table {
 .ugIconBan {
     width: 10% !important;
 }
+
+.ugStartCommentBtn {
+    text-transform: none !important;
+    white-space: nowrap;
+    border: 1px solid lightgrey !important;
+    border-radius: 22px !important;
+    color: #00796b !important;
+}
+
+.ugStartCommentBtn:hover {
+    color: white !important;
+    background-color: #00796b !important;
+}
+
+.ugCommentName {
+    width: 100%;
+    padding: 12px;
+    margin: 3px 0 0px 0 !important;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+}
+
+.ugCommentBox {
+    width: 100%;
+    padding: 12px;
+    height: 100px;
+    margin: 8px 0px 0 0 !important;
+    border: 1px solid lightgrey;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.ugSubmitComment {
+    width: 100%;
+    margin-top: 5px;
+    text-transform: none !important;
+    white-space: nowrap;
+    border-radius: 22px !important;
+    color: #00796b !important;
+}
+
+.ugCancelComment {
+    text-transform: none !important;
+    white-space: nowrap;
+    border: 1px solid lightgrey !important;
+    border-radius: 22px !important;
+    color: #00796b !important;
+    width: 100%;
+    margin-top: 5px;
+}
+
+.collection {
+    border: none !important;
+}
+
+.collection .collection-item.avatar i.circle {
+    font-size: 18px;
+    line-height: 42px;
+    color: #fff;
+    background-color: #999;
+    text-align: center;
+    font-style: normal !important;
+}
+
+.collection .title {
+    font-size: 14px !important;
+}
+
+.collection p {
+    font-size: 16px !important;
+}
+
 
 @media only screen and (max-width: 1024px) {
 	.nav_input_field {

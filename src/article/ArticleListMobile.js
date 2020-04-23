@@ -150,7 +150,7 @@ export class ArticleListMobile extends Component {
 			document.getElementById(`progress_${id}`).classList.add("show");
 			document.getElementById(`progress_${id}`).classList.remove("hide");
 
-			// set expiry in 7 days
+			// set expiry in i year
 			let expire = (new Date().getTime() / 1000) + 31536000;
 
 			// create unique id 

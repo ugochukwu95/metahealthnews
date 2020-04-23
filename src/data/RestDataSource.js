@@ -6,6 +6,8 @@ export class RestDataSource {
 
 	StoreData = (dataType, data) => this.SendRequest("post", RestUrls[dataType], {}, data);
 
+	UpdateData = (dataType, data) => this.SendRequest("put", RestUrls[dataType], {}, data);
+
 	RemoveData = (dataType, data) => this.SendRequest("delete", RestUrls[dataType], {}, data);
 
 	SendRequest = (method, url, params, data) => Axios.request({method, url, params, data});

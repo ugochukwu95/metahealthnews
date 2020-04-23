@@ -29,7 +29,8 @@
     "react-scripts": "3.4.1",
     "react-time-ago": "^5.0.8",
     "redux": "^4.0.5",
-    "uuidv4": "^6.0.7"
+    "uuidv4": "^6.0.7",
+    "validator": "^10.7.1"
   },
   "scripts": {
     "start": "node server.js",

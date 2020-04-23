@@ -18,4 +18,10 @@ export const RestUrls = {
 	[DataTypes.SAVED_ARTICLES]: `/api/articles/save`,
 	[DataTypes.BAN_SOURCE]: `/api/articles/hide`, 
 	[DataTypes.BANNED_SOURCES]: `/api/articles/hide`,
+	[DataTypes.COMMENTS]: `/api/comments`,
+	[DataTypes.REPLIES]: `/api/replies`,
+	[DataTypes.COMMENTS_LIKE]: `/api/comments/like`,
+	[DataTypes.COMMENTS_DISLIKE]: `/api/comments/dislike`,
+	[DataTypes.REPLIES_LIKE]: `/api/replies/like`,
+	[DataTypes.REPLIES_DISLIKE]: `/api/replies/dislike`,
 }

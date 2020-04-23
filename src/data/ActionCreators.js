@@ -207,3 +207,172 @@ export const loadBannedSources = (dataType, params) => ({
 		data: {error: err.message}
 	}))
 })
+
+export const loadComments = (dataType, params) => ({
+	type: ActionTypes.COMMENTS_LOAD,
+	payload: dataSource.GetData(dataType, params).then(response => ({
+		dataType,
+		data: {data: response.data['docs'], total: response.data['total'], page: response.data['page'], pages: response.data['pages']},
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: err.message}
+	}))
+})
+
+export const loadReplies = (dataType, params) => ({
+	type: ActionTypes.REPLIES_LOAD,
+	payload: dataSource.GetData(dataType, params).then(response => ({
+		dataType,
+		data: {data: response.data['docs'], total: response.data['total'], page: response.data['page'], pages: response.data['pages']},
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: err.message}
+	}))
+})
+
+export const createComment = (dataType, params) => ({
+	type: ActionTypes.CREATE_COMMENT,
+	payload: dataSource.StoreData(dataType, params).then(response => ({
+		dataType,
+		data: response.data,
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: err.message}
+	}))
+})
+
+export const createReply = (dataType, params) => ({
+	type: ActionTypes.CREATE_REPLY,
+	payload: dataSource.StoreData(dataType, params).then(response => ({
+		dataType,
+		data: response.data,
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: err.message}
+	}))
+})
+
+export const updateComment = (dataType, params) => ({
+	type: ActionTypes.UPDATE_COMMENT,
+	payload: dataSource.UpdateData(dataType, params).then(response => ({
+		dataType,
+		data: response.data,
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: err.message}
+	}))
+})
+
+export const updateReply = (dataType, params) => ({
+	type: ActionTypes.UPDATE_REPLY,
+	payload: dataSource.UpdateData(dataType, params).then(response => ({
+		dataType,
+		data: response.data,
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: err.message}
+	}))
+})
+
+export const deleteComment = (dataType, params) => ({
+	type: ActionTypes.DELETE_COMMENT,
+	payload: dataSource.RemoveData(dataType, params).then(response => ({
+		dataType,
+		data: response.data,
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: err.message}
+	}))
+})
+
+export const deleteReply = (dataType, params) => ({
+	type: ActionTypes.DELETE_REPLY,
+	payload: dataSource.RemoveData(dataType, params).then(response => ({
+		dataType,
+		data: response.data,
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: err.message}
+	}))
+})
+
+export const likeComment = (dataType, params) => ({
+	type: ActionTypes.COMMENTS_LIKE_ACTION,
+	payload: dataSource.StoreData(dataType, params).then(response => ({
+		dataType,
+		data: response.data,
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: err.message}
+	}))
+})
+
+export const dislikeComment = (dataType, params) => ({
+	type: ActionTypes.COMMENTS_DISLIKE_ACTION,
+	payload: dataSource.StoreData(dataType, params).then(response => ({
+		dataType,
+		data: response.data,
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: err.message}
+	}))
+})
+
+export const deleteLikeComment = (dataType, params) => ({
+	type: ActionTypes.DELETE_LIKE_COMMENT,
+	payload: dataSource.RemoveData(dataType, params).then(response => ({
+		dataType,
+		data: response.data,
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: err.message}
+	}))
+})
+
+export const deleteDislikeComment = (dataType, params) => ({
+	type: ActionTypes.DELETE_DISLIKE_COMMENT,
+	payload: dataSource.RemoveData(dataType, params).then(response => ({
+		dataType,
+		data: response.data,
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: err.message}
+	}))
+})
+
+export const likeReply = (dataType, params) => ({
+	type: ActionTypes.REPLIES_LIKE_ACTION,
+	payload: dataSource.StoreData(dataType, params).then(response => ({
+		dataType,
+		data: response.data,
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: err.message}
+	}))
+})
+
+export const dislikeReply = (dataType, params) => ({
+	type: ActionTypes.REPLIES_DISLIKE_ACTION,
+	payload: dataSource.StoreData(dataType, params).then(response => ({
+		dataType,
+		data: response.data,
+	}))
+	.catch(err => ({
+		dataType,
+		data: {error: err.message}
+	}))
+})
+
