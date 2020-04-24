@@ -121,7 +121,7 @@ export class SavedArticles extends Component {
 			{
 				(this.props.saved_articles) && <React.Fragment>
 					<div className="row">
-						<div className="col s12">
+						<div className="col l6 offset-l3 m8 offset-m2 s12">
 							<h5 className="grey-text text-darken-2 ugBigFont center">
 								<strong>You have {this.props.saved_articles.data.length} articles saved</strong>
 							</h5>

@@ -187,7 +187,7 @@ export class Headlines extends Component {
 				firstArticle && <div className="card white z-depth-0 ugMobileCard">
 					<div className="card-content">
 						<div className="row">
-							<div className="col s12">
+							<div className="col l6 offset-l3 m8 offset-m2 s12">
 								<Link to={`/article/${cleanUrlText(firstArticle.title)}/${firstArticle._id}`}>
 									<img alt={firstArticle.source.name} src={firstArticle.urlToImage} className="responsive-img cardImageMobile" />
 								</Link>
@@ -199,6 +199,11 @@ export class Headlines extends Component {
 								</h5>
 								<div>
 									<small className="grey-text text-darken-2"><span><ReactTimeAgo date={Date.parse(firstArticle.publishedAt)}/></span></small><small data-target={`dropdown_${firstArticle._id}`} className="grey-text text-darken-2 right dropdown-trigger"><i className="fas fa-ellipsis-v"></i></small>
+								</div>
+								<div>
+									<p>
+										{firstArticle.content}
+									</p>
 								</div>
 							</div>
 						</div>

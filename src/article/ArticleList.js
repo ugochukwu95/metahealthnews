@@ -3,6 +3,7 @@ import ReactTimeAgo from 'react-time-ago';
 import { Link } from "react-router-dom";
 import {Preloader} from "../utilities/Preloader";
 import { DataTypes } from "../data/Types";
+import {cleanUrlText} from "../utilities/cleanUrlText";
 
 export class ArticleList extends Component {
 
@@ -51,12 +52,12 @@ export class ArticleList extends Component {
 					<div className="row">
 						<div className="col l8 s7">
 							<h5 className="ugTitle">
-								<Link to="/" className="grey-text text-darken-2 ugCardLink"><strong>{item.title}</strong></Link>
+								<Link to={`/article/${cleanUrlText(item.title)}/${item._id}`} className="grey-text text-darken-2 ugCardLink"><strong>{item.title}</strong></Link>
 							</h5>
 							<small className="grey-text">{item.source.name} - <span><ReactTimeAgo date={item.publishedAt}/></span></small>
 						</div>
 						<div className="col l4 s5">
-							<Link to="/" className="grey-text text-darken-2">
+							<Link to={`/article/${cleanUrlText(item.title)}/${item._id}`} className="grey-text text-darken-2">
 								<img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" data-src={item.urlToImage} data-srcset={`${item.urlToImage} 1x`} className="cover responsive-img cardImage lazy" alt={item.title} />
 							</Link>
 						</div>

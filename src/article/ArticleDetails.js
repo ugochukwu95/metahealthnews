@@ -176,7 +176,7 @@ export class ArticleDetails extends Component {
 					<div className="card white ugDetailsCard z-depth-0">
 						<div className="card-content">
 							<div className="row">
-								<div className="col s12">
+								<div className="col l6 offset-l3 m10 offset-m1 s12">
 									<a href={this.props.article.url} target="_blank" rel="noopener noreferrer">
 										<img alt={this.props.article.source.name} src={this.props.article.urlToImage} className="responsive-img cardImageMobile" />
 									</a>
@@ -233,7 +233,7 @@ export class ArticleDetails extends Component {
 					<div className="card white ugDetailsCard z-depth-0">
 						<div className="card-content">
 							<div className="row">
-								<div className="col s12">
+								<div className="col l6 offset-l3 m10 offset-m1 s12">
 									<h5 className="grey-text text-darken-2 ugBigFont">
 										<strong>Comments - {this.props.comments && this.props.comments.total.toLocaleString("en")}</strong>
 									</h5>
@@ -292,7 +292,7 @@ export class ArticleDetails extends Component {
 
 			{
 				(this.props.article && this.props.article.error) && <div className="row">
-					<div className="col s12">
+					<div className="col l6 offset-l3 m10 offset-m1 s12">
 						<br />
 						<div className="container">
 							<div className="card-panel white">

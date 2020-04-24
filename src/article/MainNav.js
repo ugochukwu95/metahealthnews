@@ -79,7 +79,9 @@ export class MainNav extends Component {
 				    	</ul>
 				    	<ul className="hide-on-med-and-down right">
 				    		{this.props.current_location && <li><Link to={`/headlines/${this.props.current_location['country_code'].toLowerCase()}`}><span className="fas fa-leaf"></span></Link></li>}
+				    		<li><Link to="/saved-articles"><span className="fas fa-bookmark"></span></Link></li>
 							<li><a data-target="desktop-slide-out" href="#!" className="white-text show-on-large text-darken-2 sidenav-trigger"><span className="fas fa-flag"></span></a></li>
+							{userId && <li><Link to="/hidden-sources"><span className="fas fa-ban"></span></Link></li>}
 							<li><Link to="/about"><span className="far fa-comment-alt"></span></Link></li>
 				    	</ul>
 
