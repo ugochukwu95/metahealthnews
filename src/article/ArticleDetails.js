@@ -297,7 +297,7 @@ export class ArticleDetails extends Component {
 						<div className="container">
 							<div className="card-panel white">
 								<h3 className="center grey-text text-darken-2">:(</h3>
-								<p className="center">{this.props.articles.data.error}</p>
+								<p className="center">{this.props.article.data.error}</p>
 								<p className="center">
 									<button onClick={this.handleTryAgain} className="btn btn-small white-text teal darken-2 ugTextTransform">Try again</button>
 								</p>
