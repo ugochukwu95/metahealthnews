@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import { DataTypes } from "../data/Types";
+import {Helmet} from "react-helmet";
 
 export class HiddenSources extends Component {
 	constructor(props) {
@@ -36,6 +37,13 @@ export class HiddenSources extends Component {
 
 	render() {
 		return <React.Fragment>
+			<Helmet>
+                <meta charSet="utf-8" />
+                <title>Blocked sources | MetaHealthNews</title>
+                <meta name="description" content="Find sources you have blocked." />
+                <link rel="canonical" href={`${document.location.host}${this.props.match.url}`} />
+            </Helmet>
+
 			<h5 className="center grey-text text-darken-2 ugBigFont">
 				<strong>Sources you have blocked.</strong>
 			</h5>

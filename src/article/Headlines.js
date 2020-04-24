@@ -9,6 +9,7 @@ import M from 'materialize-css';
 import { uuid } from 'uuidv4';
 import {cleanUrlText} from "../utilities/cleanUrlText";
 import { Link } from "react-router-dom";
+import {Helmet} from "react-helmet";
 
 export class Headlines extends Component {
 	constructor(props) {
@@ -152,7 +153,12 @@ export class Headlines extends Component {
 		let userId = this.props.cookies && this.props.cookies.get("user_id");
 
 		return <React.Fragment>
-
+			<Helmet>
+                <meta charSet="utf-8" />
+                <title>Health news in {CountryData.find(obj => obj.code === this.props.match.params['countryCode'].toUpperCase())['value']} | MetaHealthNews</title>
+                <meta name="description" content={`Get the latest health related news such as the Coronavirus, Cancer research, etc., from ${CountryData.find(obj => obj.code === this.props.match.params['countryCode'].toUpperCase())['value']}.`} />
+                <link rel="canonical" href={`${document.location.host}${this.props.match.url}`} />
+            </Helmet>
 			{(this.props.articles  && this.props.articles.data && this.props.match && (this.props.articles.data.length === 0)) && <div className="row">
 				<div className="col l6 offset-l3 m8 offset-m2 s12">
 					<br />
@@ -262,6 +268,7 @@ export class Headlines extends Component {
 		// get articles if articles do not already exist
 		this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES);
 		this.props.loadData(DataTypes.ARTICLES, {country: this.props.match.params['countryCode'], page: 1, userId: userId});
+		(this.props.articles) && this.setState({page: this.props.articles['page'], pages: this.props.articles['pages']});
 
 		// Create scroll event
 		window.addEventListener('scroll', this.handleOnScroll);
@@ -277,9 +284,11 @@ export class Headlines extends Component {
 
 		window.addEventListener('scroll', this.handleOnScroll);
 
+		// run this if you are switchong betweem headlines components
 		if (prevProps.match.params['countryCode'] !== this.props.match.params['countryCode']) {
 			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES);
 			this.props.loadData(DataTypes.ARTICLES, {country: this.props.match.params['countryCode'], page: 1, userId: userId});
+			(this.props.articles  && this.props.articles.data) && this.setState({page: this.props.articles['page'], pages: this.props.articles['pages']});
 		}
 
 		if ((prevProps.articles === null || prevProps.articles === undefined) && prevProps.articles !== this.props.articles) {

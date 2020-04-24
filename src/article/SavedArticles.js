@@ -4,6 +4,7 @@ import { DataTypes } from "../data/Types";
 import {ArticleCardsMobile} from "./ArticleCardsMobile";
 import M from 'materialize-css';
 import { uuid } from 'uuidv4';
+import {Helmet} from "react-helmet";
 
 export class SavedArticles extends Component {
 
@@ -118,6 +119,12 @@ export class SavedArticles extends Component {
 		let userId = cookies.get("user_id");
 
 		return <React.Fragment>
+			<Helmet>
+                <meta charSet="utf-8" />
+                <title>Saved Articles | MetaHealthNews</title>
+                <meta name="description" content="Find your saved aricles." />
+                <link rel="canonical" href={`${document.location.host}${this.props.match.url}`} />
+            </Helmet>
 			{
 				(this.props.saved_articles) && <React.Fragment>
 					<div className="row">

@@ -11,7 +11,7 @@ export function ValidateData(data, rules) {
 
 		if (!validator.isEmpty(data[field])) {
 			if (rules[field].minlength && !validator.isLength(val, rules[field].minlength)) {
-				fielderrors.push(`Enter at least ${rules[field].minlength}` + " characters");
+				fielderrors.push(`Enter at least ${rules[field].minlength} characters`);
 			}
 		}
 

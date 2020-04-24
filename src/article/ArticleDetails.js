@@ -7,6 +7,7 @@ import ReactTimeAgo from 'react-time-ago';
 import { FormValidator } from "./FormValidator";
 import { ValidationMessage } from "./ValidationMessage";
 import {ArticleComments} from "./ArticleComments";
+import {Helmet} from "react-helmet";
 
 export class ArticleDetails extends Component {
 	constructor(props) {
@@ -171,8 +172,16 @@ export class ArticleDetails extends Component {
 		let userId = this.props.cookies && this.props.cookies.get("user_id");
 
 		return <React.Fragment>
+
 			{
 				(this.props.article && !this.props.article.error) && <React.Fragment>
+					<Helmet>
+		                <meta charSet="utf-8" />
+		                <title>{this.props.article.title} | MetaHealthNews</title>
+		                <meta name="description" content={this.props.article.description} />
+		                <link rel="canonical" href={`${document.location.host}${this.props.match.url}`} />
+		            </Helmet>
+            
 					<div className="card white ugDetailsCard z-depth-0">
 						<div className="card-content">
 							<div className="row">

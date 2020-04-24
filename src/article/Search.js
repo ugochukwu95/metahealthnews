@@ -4,6 +4,7 @@ import {ArticleCardsMobile} from "./ArticleCardsMobile";
 import {Preloader} from "../utilities/Preloader";
 import { uuid } from 'uuidv4';
 import M from 'materialize-css';
+import {Helmet} from "react-helmet";
 
 export class Search extends Component {
 	constructor(props) {
@@ -114,6 +115,12 @@ export class Search extends Component {
 		let userId = cookies.get("user_id");
 
 		return <React.Fragment>
+			<Helmet>
+                <meta charSet="utf-8" />
+                <title>Search results for {this.props.match.params['searchstring']} | MetaHealthNews</title>
+                <meta name="description" content={`Get search results for ${this.props.match.params['searchstring']}, from articles around the world`} />
+                <link rel="canonical" href={`${document.location.host}${this.props.match.url}`} />
+            </Helmet>
 			<div className="">
 				<h5 className="grey-text text-darken-2 ugBigFont searchTitlePadding center">
 					{this.props.match && <strong>Search Results for: {this.props.match.params['searchstring']}</strong>}
@@ -162,12 +169,16 @@ export class Search extends Component {
 		// Create scroll event
 		window.addEventListener('scroll', this.handleOnScroll);
 		
+		if (prevProps.articles_search_results !== this.props.articles_search_results) {
+			this.props.articles_search_results && this.setState({page: this.props.articles_search_results['page'], pages: this.props.articles_search_results['pages'], SearchString: this.props.match.params['searchstring']})
+		}
+
 		if (prevProps.match.params['searchstring'] !== this.props.match.params['searchstring']) {
 			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES_SEARCH_RESULTS);
 
 			(!this.props.articles_search_results && this.props.match && this.props.loadSearchResults) && this.props.loadSearchResults(DataTypes.ARTICLES_SEARCH_RESULTS, {country: this.props.cookies.get('country_code').toLowerCase(), page: 1, searchString: this.props.match.params['searchstring'], userId});
 
-			this.props.articles_search_results && this.setState({page: this.props.articles_search_results['page'], pages: this.props.articles_search_results['pages'], SearchString: this.props.match.params['searchstring']});
+			this.props.articles_search_results && this.setState({page: this.props.articles_search_results['page'], pages: this.props.articles_search_results['pages'], SearchString: this.props.match.params['searchstring']}, () => console.log(this.state));
 		}
 
 		if (prevProps.ban_source !== this.props.ban_source) {

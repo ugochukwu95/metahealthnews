@@ -5,11 +5,18 @@ import {ArticleListMobile} from "./ArticleListMobile";
 import {WeatherDesktop} from "./WeatherDesktop";
 import { DataTypes } from "../data/Types";
 import {Preloader} from "../utilities/Preloader";
+import {Helmet} from "react-helmet";
 
 export class FrontPage extends Component {
 
 	render() {
 		return <React.Fragment>
+			<Helmet>
+                <meta charSet="utf-8" />
+                <title>Health news in one place | MetaHealthNews</title>
+                <meta name="description" content="Get the latest health related news such as the Coronavirus, Cancer research, etc., from 50+ countries from around the world." />
+                <link rel="canonical" href={`${document.location.host}${this.props.match.url}`} />
+            </Helmet>
 			{!this.props.articles && <Preloader />}
 			{this.props.articles && <div className="" id="infinite-list">
 				<div className="row">
