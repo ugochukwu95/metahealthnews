@@ -208,7 +208,9 @@ export class Headlines extends Component {
 								</div>
 								<div>
 									<p>
-										{firstArticle.content}
+										<Link to={`/article/${cleanUrlText(firstArticle.title)}/${firstArticle._id}`} className="grey-text text-darken-2 ugCardLink">
+											{firstArticle.content}
+										</Link>
 									</p>
 								</div>
 							</div>
