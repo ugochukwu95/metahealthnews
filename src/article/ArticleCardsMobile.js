@@ -117,9 +117,6 @@ export class ArticleCardsMobile extends Component {
 			  window.addEventListener("resize", lazyLoad);
 			  window.addEventListener("orientationchange", lazyLoad);
 		  }
-
-		// Create scroll event
-		window.addEventListener('scroll', this.handleOnScroll);
 	}
 
 	componentDidUpdate(prevProps) {
@@ -182,6 +179,5 @@ export class ArticleCardsMobile extends Component {
 			  window.addEventListener("resize", lazyLoad);
 			  window.addEventListener("orientationchange", lazyLoad);
 		  }
-		window.addEventListener('scroll', this.handleOnScroll);
 	}
 }

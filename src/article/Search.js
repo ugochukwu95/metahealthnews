@@ -158,6 +158,9 @@ export class Search extends Component {
 	componentDidUpdate(prevProps) {
 		let {cookies} = this.props;
 		let userId = cookies.get("user_id") || null;
+
+		// Create scroll event
+		window.addEventListener('scroll', this.handleOnScroll);
 		
 		if (prevProps.match.params['searchstring'] !== this.props.match.params['searchstring']) {
 			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES_SEARCH_RESULTS);
@@ -165,9 +168,6 @@ export class Search extends Component {
 			(!this.props.articles_search_results && this.props.match && this.props.loadSearchResults) && this.props.loadSearchResults(DataTypes.ARTICLES_SEARCH_RESULTS, {country: this.props.cookies.get('country_code').toLowerCase(), page: 1, searchString: this.props.match.params['searchstring'], userId});
 
 			this.props.articles_search_results && this.setState({page: this.props.articles_search_results['page'], pages: this.props.articles_search_results['pages'], SearchString: this.props.match.params['searchstring']});
-
-			// Create scroll event
-			window.addEventListener('scroll', this.handleOnScroll);
 		}
 
 		if (prevProps.ban_source !== this.props.ban_source) {

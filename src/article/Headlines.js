@@ -275,10 +275,11 @@ export class Headlines extends Component {
     	let { cookies } = this.props;
 		let userId = cookies.get("user_id") || null;
 
+		window.addEventListener('scroll', this.handleOnScroll);
+
 		if (prevProps.match.params['countryCode'] !== this.props.match.params['countryCode']) {
 			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES);
 			this.props.loadData(DataTypes.ARTICLES, {country: this.props.match.params['countryCode'], page: 1, userId: userId});
-			window.addEventListener('scroll', this.handleOnScroll);
 		}
 
 		if ((prevProps.articles === null || prevProps.articles === undefined) && prevProps.articles !== this.props.articles) {
