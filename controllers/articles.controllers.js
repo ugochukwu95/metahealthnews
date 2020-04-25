@@ -104,7 +104,7 @@ exports.findAll = async (req, res) => {
                 if (userId) {
                     if (country === "ng") {
                         // If an error occurs get articles from db instead
-                        Article.paginate({$or: [{ "source.name": "Thenationonlineng.net" }, { "source.name": "Thisdaylive.com" }, { "source.name": "Aa.com.tr" }, { "source.name": "Pulse.ng" }, { "source.name": "Vanguardngr.com" }, { "source.name": "Naijanews.com" }, { "source.name": "Dailypost.ng" }, { "source.name": "Guardian.ng" }, { "source.name": "Tribuneonlineng.com" }, { "source.name": "Dailytrust.com.ng" }, { "source.name": "Channelstv.com" }, { "source.name": "Premiumtimesng.com" }], hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
+                        Article.paginate({$or: [{ "source.name": "Youtube.com" }, { "source.name": "Thenationonlineng.net" }, { "source.name": "Thisdaylive.com" }, { "source.name": "Aa.com.tr" }, { "source.name": "Pulse.ng" }, { "source.name": "Vanguardngr.com" }, { "source.name": "Naijanews.com" }, { "source.name": "Dailypost.ng" }, { "source.name": "Guardian.ng" }, { "source.name": "Tribuneonlineng.com" }, { "source.name": "Dailytrust.com.ng" }, { "source.name": "Channelstv.com" }, { "source.name": "Premiumtimesng.com" }], country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
                         .then(article => {
                             res.send(article);
                         }).catch(err => {
@@ -127,7 +127,7 @@ exports.findAll = async (req, res) => {
                 else {
                     if (country === "ng") {
                         // If an error occurs get articles from db instead
-                        Article.paginate({$or: [{ "source.name": "Thenationonlineng.net" }, { "source.name": "Thisdaylive.com" }, { "source.name": "Aa.com.tr" }, { "source.name": "Pulse.ng" }, { "source.name": "Vanguardngr.com" }, { "source.name": "Naijanews.com" }, { "source.name": "Dailypost.ng" }, { "source.name": "Guardian.ng" }, { "source.name": "Tribuneonlineng.com" }, { "source.name": "Dailytrust.com.ng" }, { "source.name": "Channelstv.com" }, { "source.name": "Premiumtimesng.com" }], hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
+                        Article.paginate({$or: [{ "source.name": "Youtube.com" }, { "source.name": "Thenationonlineng.net" }, { "source.name": "Thisdaylive.com" }, { "source.name": "Aa.com.tr" }, { "source.name": "Pulse.ng" }, { "source.name": "Vanguardngr.com" }, { "source.name": "Naijanews.com" }, { "source.name": "Dailypost.ng" }, { "source.name": "Guardian.ng" }, { "source.name": "Tribuneonlineng.com" }, { "source.name": "Dailytrust.com.ng" }, { "source.name": "Channelstv.com" }, { "source.name": "Premiumtimesng.com" }], country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
                         .then(article => {
                             res.send(article);
                         }).catch(err => {
@@ -165,7 +165,7 @@ exports.findAll = async (req, res) => {
             if (userId) {
                 if (country === "ng") {
                     // If an error occurs get articles from db instead
-                    Article.paginate({$or: [{ "source.name": "Thenationonlineng.net" }, { "source.name": "Thisdaylive.com" }, { "source.name": "Aa.com.tr" }, { "source.name": "Pulse.ng" }, { "source.name": "Vanguardngr.com" }, { "source.name": "Naijanews.com" }, { "source.name": "Dailypost.ng" }, { "source.name": "Guardian.ng" }, { "source.name": "Tribuneonlineng.com" }, { "source.name": "Dailytrust.com.ng" }, { "source.name": "Channelstv.com" }, { "source.name": "Premiumtimesng.com" }], hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
+                    Article.paginate({$or: [{ "source.name": "Youtube.com" }, { "source.name": "Thenationonlineng.net" }, { "source.name": "Thisdaylive.com" }, { "source.name": "Aa.com.tr" }, { "source.name": "Pulse.ng" }, { "source.name": "Vanguardngr.com" }, { "source.name": "Naijanews.com" }, { "source.name": "Dailypost.ng" }, { "source.name": "Guardian.ng" }, { "source.name": "Tribuneonlineng.com" }, { "source.name": "Dailytrust.com.ng" }, { "source.name": "Channelstv.com" }, { "source.name": "Premiumtimesng.com" }], country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
                     .then(article => {
                         res.send(article);
                     }).catch(err => {
@@ -189,7 +189,7 @@ exports.findAll = async (req, res) => {
             else {
                 if (country === "ng") {
                     // If an error occurs get articles from db instead
-                    Article.paginate({$or: [{ "source.name": "Thenationonlineng.net" }, { "source.name": "Thisdaylive.com" }, { "source.name": "Aa.com.tr" }, { "source.name": "Pulse.ng" }, { "source.name": "Vanguardngr.com" }, { "source.name": "Naijanews.com" }, { "source.name": "Dailypost.ng" }, { "source.name": "Guardian.ng" }, { "source.name": "Tribuneonlineng.com" }, { "source.name": "Dailytrust.com.ng" }, { "source.name": "Channelstv.com" }, { "source.name": "Premiumtimesng.com" }], hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
+                    Article.paginate({$or: [{ "source.name": "Youtube.com" }, { "source.name": "Thenationonlineng.net" }, { "source.name": "Thisdaylive.com" }, { "source.name": "Aa.com.tr" }, { "source.name": "Pulse.ng" }, { "source.name": "Vanguardngr.com" }, { "source.name": "Naijanews.com" }, { "source.name": "Dailypost.ng" }, { "source.name": "Guardian.ng" }, { "source.name": "Tribuneonlineng.com" }, { "source.name": "Dailytrust.com.ng" }, { "source.name": "Channelstv.com" }, { "source.name": "Premiumtimesng.com" }], country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
                     .then(article => {
                         res.send(article);
                     }).catch(err => {
@@ -248,7 +248,7 @@ exports.findAll = async (req, res) => {
         if (userId) {
             if (country === "ng") {
                 // If an error occurs get articles from db instead
-                Article.paginate({$or: [{ "source.name": "Thenationonlineng.net" }, { "source.name": "Thisdaylive.com" }, { "source.name": "Aa.com.tr" }, { "source.name": "Pulse.ng" }, { "source.name": "Vanguardngr.com" }, { "source.name": "Naijanews.com" }, { "source.name": "Dailypost.ng" }, { "source.name": "Guardian.ng" }, { "source.name": "Tribuneonlineng.com" }, { "source.name": "Dailytrust.com.ng" }, { "source.name": "Channelstv.com" }, { "source.name": "Premiumtimesng.com" }], hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
+                Article.paginate({$or: [{ "source.name": "Youtube.com" }, { "source.name": "Thenationonlineng.net" }, { "source.name": "Thisdaylive.com" }, { "source.name": "Aa.com.tr" }, { "source.name": "Pulse.ng" }, { "source.name": "Vanguardngr.com" }, { "source.name": "Naijanews.com" }, { "source.name": "Dailypost.ng" }, { "source.name": "Guardian.ng" }, { "source.name": "Tribuneonlineng.com" }, { "source.name": "Dailytrust.com.ng" }, { "source.name": "Channelstv.com" }, { "source.name": "Premiumtimesng.com" }], country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
                 .then(article => {
                     res.send(article);
                 }).catch(err => {
@@ -272,7 +272,7 @@ exports.findAll = async (req, res) => {
         else {
             if (country === "ng") {
                 // If an error occurs get articles from db instead
-                Article.paginate({$or: [{ "source.name": "Thenationonlineng.net" }, { "source.name": "Thisdaylive.com" }, { "source.name": "Aa.com.tr" }, { "source.name": "Pulse.ng" }, { "source.name": "Vanguardngr.com" }, { "source.name": "Naijanews.com" }, { "source.name": "Dailypost.ng" }, { "source.name": "Guardian.ng" }, { "source.name": "Tribuneonlineng.com" }, { "source.name": "Dailytrust.com.ng" }, { "source.name": "Channelstv.com" }, { "source.name": "Premiumtimesng.com" }], hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
+                Article.paginate({$or: [{ "source.name": "Youtube.com" }, { "source.name": "Thenationonlineng.net" }, { "source.name": "Thisdaylive.com" }, { "source.name": "Aa.com.tr" }, { "source.name": "Pulse.ng" }, { "source.name": "Vanguardngr.com" }, { "source.name": "Naijanews.com" }, { "source.name": "Dailypost.ng" }, { "source.name": "Guardian.ng" }, { "source.name": "Tribuneonlineng.com" }, { "source.name": "Dailytrust.com.ng" }, { "source.name": "Channelstv.com" }, { "source.name": "Premiumtimesng.com" }], country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
                 .then(article => {
                     res.send(article);
                 }).catch(err => {
@@ -298,7 +298,7 @@ exports.findAll = async (req, res) => {
         if (userId) {
             if (country === "ng") {
                 // If an error occurs get articles from db instead
-                Article.paginate({$or: [{ "source.name": "Thenationonlineng.net" }, { "source.name": "Thisdaylive.com" }, { "source.name": "Aa.com.tr" }, { "source.name": "Pulse.ng" }, { "source.name": "Vanguardngr.com" }, { "source.name": "Naijanews.com" }, { "source.name": "Dailypost.ng" }, { "source.name": "Guardian.ng" }, { "source.name": "Tribuneonlineng.com" }, { "source.name": "Dailytrust.com.ng" }, { "source.name": "Channelstv.com" }, { "source.name": "Premiumtimesng.com" }], hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
+                Article.paginate({$or: [{ "source.name": "Youtube.com" }, { "source.name": "Thenationonlineng.net" }, { "source.name": "Thisdaylive.com" }, { "source.name": "Aa.com.tr" }, { "source.name": "Pulse.ng" }, { "source.name": "Vanguardngr.com" }, { "source.name": "Naijanews.com" }, { "source.name": "Dailypost.ng" }, { "source.name": "Guardian.ng" }, { "source.name": "Tribuneonlineng.com" }, { "source.name": "Dailytrust.com.ng" }, { "source.name": "Channelstv.com" }, { "source.name": "Premiumtimesng.com" }], country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
                 .then(article => {
                     res.send(article);
                 }).catch(err => {
@@ -322,7 +322,7 @@ exports.findAll = async (req, res) => {
         else {
             if (country === "ng") {
                 // If an error occurs get articles from db instead
-                Article.paginate({$or: [{ "source.name": "Thenationonlineng.net" }, { "source.name": "Thisdaylive.com" }, { "source.name": "Aa.com.tr" }, { "source.name": "Pulse.ng" }, { "source.name": "Vanguardngr.com" }, { "source.name": "Naijanews.com" }, { "source.name": "Dailypost.ng" }, { "source.name": "Guardian.ng" }, { "source.name": "Tribuneonlineng.com" }, { "source.name": "Dailytrust.com.ng" }, { "source.name": "Channelstv.com" }, { "source.name": "Premiumtimesng.com" }], hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
+                Article.paginate({$or: [{ "source.name": "Youtube.com" }, { "source.name": "Thenationonlineng.net" }, { "source.name": "Thisdaylive.com" }, { "source.name": "Aa.com.tr" }, { "source.name": "Pulse.ng" }, { "source.name": "Vanguardngr.com" }, { "source.name": "Naijanews.com" }, { "source.name": "Dailypost.ng" }, { "source.name": "Guardian.ng" }, { "source.name": "Tribuneonlineng.com" }, { "source.name": "Dailytrust.com.ng" }, { "source.name": "Channelstv.com" }, { "source.name": "Premiumtimesng.com" }], country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
                 .then(article => {
                     res.send(article);
                 }).catch(err => {
@@ -564,7 +564,7 @@ exports.search = async (req, res) => {
 
                 if (userId) {
                     // If an error occurs get articles from db instead
-                    Article.paginate({$text: {$search: searchString}, country: country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, /*sort: { publishedAt: -1 }*/ })
+                    Article.paginate({$text: {$search: searchString}, country: country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
                     .then(article => {
                         res.send(article);
                     }).catch(err => {
@@ -575,7 +575,7 @@ exports.search = async (req, res) => {
                 }
                 else {
                     // If an error occurs get articles from db instead
-                    Article.paginate({$text: {$search: searchString}, country: country}, { page: page, limit: 10, /*sort: { publishedAt: -1 }*/ })
+                    Article.paginate({$text: {$search: searchString}, country: country}, { page: page, limit: 10, sort: { publishedAt: -1 } })
                     .then(article => {
                         res.send(article);
                     }).catch(err => {
@@ -600,7 +600,7 @@ exports.search = async (req, res) => {
         else if (headlines.data['status'] === "error") {
             if (userId) {
                 // If an error occurs get articles from db instead
-                Article.paginate({$text: {$search: searchString}, country: country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, /*sort: { publishedAt: -1 }*/ })
+                Article.paginate({$text: {$search: searchString}, country: country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
                 .then(article => {
                     res.send(article);
                 }).catch(err => {
@@ -611,7 +611,7 @@ exports.search = async (req, res) => {
             }
             else {
                 // If an error occurs get articles from db instead
-                Article.paginate({$text: {$search: searchString}, country: country}, { page: page, limit: 10, /*sort: { publishedAt: -1 }*/ })
+                Article.paginate({$text: {$search: searchString}, country: country}, { page: page, limit: 10, sort: { publishedAt: -1 } })
                 .then(article => {
                     res.send(article);
                 }).catch(err => {
@@ -657,7 +657,7 @@ exports.search = async (req, res) => {
 
        if (userId) {
             // If an error occurs get articles from db instead
-            Article.paginate({$text: {$search: searchString}, country: country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, /*sort: { publishedAt: -1 }*/ })
+            Article.paginate({$text: {$search: searchString}, country: country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
             .then(article => {
                 res.send(article);
             }).catch(err => {
@@ -681,7 +681,7 @@ exports.search = async (req, res) => {
     else if (page > 1) {
         if (userId) {
             // If an error occurs get articles from db instead
-            Article.paginate({$text: {$search: searchString}, country: country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, /*sort: { publishedAt: -1 }*/ })
+            Article.paginate({$text: {$search: searchString}, country: country, hiddenBy: {$nin: [userId]}}, { page: page, limit: 10, sort: { publishedAt: -1 } })
             .then(article => {
                 res.send(article);
             }).catch(err => {
@@ -692,7 +692,7 @@ exports.search = async (req, res) => {
         }
         else {
             // If an error occurs get articles from db instead
-            Article.paginate({$text: {$search: searchString}, country: country}, { page: page, limit: 10, /*sort: { publishedAt: -1 }*/ })
+            Article.paginate({$text: {$search: searchString}, country: country}, { page: page, limit: 10, sort: { publishedAt: -1 } })
             .then(article => {
                 res.send(article);
             }).catch(err => {
