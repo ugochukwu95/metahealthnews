@@ -187,7 +187,7 @@ export class ArticleDetails extends Component {
 							<div className="row">
 								<div className="col l6 offset-l3 m10 offset-m1 s12">
 									<a href={this.props.article.url} target="_blank" rel="noopener noreferrer">
-										<img alt={this.props.article.source.name} src={this.props.article.urlToImage || `/unavailable-image.jpg`} className="responsive-img cardImageMobile" />
+										<img alt={this.props.article.source.name} src={this.props.article.urlToImage || `/unavailable-image.png`} className="responsive-img cardImageMobile" />
 									</a>
 									<p><strong>{this.props.article.source.name || "Unidentified source"}</strong></p>
 									<h5 className="ugTitle">

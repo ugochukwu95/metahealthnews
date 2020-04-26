@@ -20,7 +20,7 @@ export class ArticleCardsMobile extends Component {
 					</div>
 					<div className="col s4">
 						<Link to={`/article/${cleanUrlText(item.title)}/${item._id}`}>
-							<img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" data-src={item.urlToImage || `/unavailable-image.jpg`} alt={item.source.name || "Unidentified source"} data-srcset={`${item.urlToImage || `/unavailable-image.jpg`} 1x`} className="lazy responsive-img cardImageMobile" />
+							<img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" data-src={item.urlToImage || `/unavailable-image.png`} alt={item.source.name || "Unidentified source"} data-srcset={`${item.urlToImage || `/unavailable-image.png`} 1x`} className="lazy responsive-img cardImageMobile" />
 						</Link>
 					</div>
 				</div>

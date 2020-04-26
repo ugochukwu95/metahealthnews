@@ -58,7 +58,7 @@ export class ArticleList extends Component {
 						</div>
 						<div className="col l4 s5">
 							<Link to={`/article/${cleanUrlText(item.title)}/${item._id}`} className="grey-text text-darken-2">
-								<img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" data-src={item.urlToImage || `/unavailable-image.jpg`} data-srcset={`${item.urlToImage || `/unavailable-image.jpg`} 1x`} className="cover responsive-img cardImage lazy" alt={item.title} />
+								<img src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif" data-src={item.urlToImage || `/unavailable-image.png`} data-srcset={`${item.urlToImage || `/unavailable-image.jpg`} 1x`} className="cover responsive-img cardImage lazy" alt={item.title} />
 							</Link>
 						</div>
 					</div>

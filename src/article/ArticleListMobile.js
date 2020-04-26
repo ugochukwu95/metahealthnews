@@ -206,7 +206,7 @@ export class ArticleListMobile extends Component {
 						<div className="row">
 							<div className="col s12">
 								<Link to={`/article/${cleanUrlText(firstArticle.title)}/${firstArticle._id}`}>
-									<img alt={firstArticle.source.name} src={firstArticle.urlToImage || `/unavailable-image.jpg`} className="responsive-img cardImageMobile" />
+									<img alt={firstArticle.source.name} src={firstArticle.urlToImage || `/unavailable-image.png`} className="responsive-img cardImageMobile" />
 								</Link>
 								<p><strong>{firstArticle.source.name || "Unidentified source"}</strong></p>
 								<h5 className="ugTitle">
