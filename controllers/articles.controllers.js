@@ -217,7 +217,7 @@ exports.findAll = async (req, res) => {
             //results.filter(o => o['new'] === true);
             for (let i=0; i<data.length; i++) {
                 if (data.hasOwnProperty(i)) {
-                    if (data[i]['title'] === null || data[i]['urlToImage'] === null) {
+                    if (data[i]['title'] === null) {
                         continue;
                     }
 

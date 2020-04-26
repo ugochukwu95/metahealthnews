@@ -22,7 +22,6 @@ const ArticleSchema = mongoose.Schema({
     },
     urlToImage: {
         type: String,
-        required: true
     },
     publishedAt: { 
         type: Date, 

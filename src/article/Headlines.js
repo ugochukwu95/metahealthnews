@@ -195,7 +195,7 @@ export class Headlines extends Component {
 						<div className="row">
 							<div className="col l6 offset-l3 m8 offset-m2 s12">
 								<Link to={`/article/${cleanUrlText(firstArticle.title)}/${firstArticle._id}`}>
-									<img alt={firstArticle.source.name} src={firstArticle.urlToImage} className="responsive-img cardImageMobile" />
+									<img alt={firstArticle.source.name} src={firstArticle.urlToImage || `/unavailable-image.jpg`} className="responsive-img cardImageMobile" />
 								</Link>
 								<p><strong>{firstArticle.source.name || "Unidentified source"}</strong></p>
 								<h5 className="ugTitle">
