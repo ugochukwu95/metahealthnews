@@ -98,7 +98,7 @@ exports.findAll = async (req, res) => {
         // Code to get articles from api
         const getArticles = async () => {
             try {
-                return await axios({url: `https://newsapi.org/v2/top-headlines?apiKey=c9eb75a0e19345ccb50fe95a6d25a8af&category=health&country=${country}&pageSize=100`, method: 'get'});
+                return await axios({url: `https://newsapi.org/v2/top-headlines?apiKey=db29f8723d47495ebe84554786889651&category=health&country=${country}&pageSize=100`, method: 'get'});
             } catch(error) {
 
                 if (userId) {
