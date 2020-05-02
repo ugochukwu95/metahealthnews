@@ -1,5 +1,5 @@
 module.exports = {
-    url: 'mongodb://root:xxxxxxxx@cluster0-shard-00-00-62xni.gcp.mongodb.net:27017,cluster0-shard-00-01-62xni.gcp.mongodb.net:27017,cluster0-shard-00-02-62xni.gcp.mongodb.net:27017/xxxxxx?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
+    url: 'mongodb://root:rootAdmin@cluster0-shard-00-00-62xni.gcp.mongodb.net:27017,cluster0-shard-00-01-62xni.gcp.mongodb.net:27017,cluster0-shard-00-02-62xni.gcp.mongodb.net:27017/healthfromugo?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority'
 }
 /*module.exports = {
 	url: 'mongodb://localhost:27017/healthfromugo'
