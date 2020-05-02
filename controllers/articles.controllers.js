@@ -33,60 +33,6 @@ exports.create = (req, res) => {
     });
 }
 
-/*// Retrieving nigerian articles
-exports.findNGArticles = async (req, res) => {
-    async function fetchHTML(url) {
-        const { data } = await axios.get(url)
-        return cheerio.load(data)
-    }
-
-    const items = [];
-    let $ = await fetchHTML("https://www.pulse.ng/lifestyle/beauty-health");
-    $("a.itemWrapper").each(function(i, elem) {
-        items[i] = $(this).attr("href");
-    })
-
-    let pulse = [];
-
-    for (let i = 0; i<items.length; i++) {
-        if (items.hasOwnProperty(i)) {
-
-            try {
-                $ = await fetchHTML(items[i]);
-                let title = $("hi.mainTitle").text();
-
-                /*if (!title) {
-                    continue;
-                }*/
-
-                /*let author = $("span.name, div.authDesc").text() || null;
-                let source = {"id": null, "name": "Pulse.ng"};
-                let description = $("strong.hyphenate, .whitelistPremium").text();
-                let url = items[i];
-                let urlToImage = $("img, figure.mainPhoto").attr("src");
-
-                /*if (!urlToImage) {
-                    continue;
-                }*/
-
-                /*let publishedAt = strtotime($("time.datePublished, div.authDesc").text()); 
-                console.log($("time.datePublished, div.authDesc").text());
-                let country = "ng";
-                //let content = striptags($("p.hyphenate, div#detail").text()) || null;
-
-                let obj = {author, source, title, description, url, urlToImage, publishedAt, country};
-
-                pulse.push(obj);
-            }
-            catch (error) {
-                // do nothing
-            }
-        }
-    }
-    res.send(pulse);
-    .or([])
-}*/
-
 // Retrieving and returning all articles from the database
 exports.findAll = async (req, res) => {
 
@@ -294,6 +240,7 @@ exports.findAll = async (req, res) => {
             }
         }
     }
+    // if getting more pages of data, only get from the database not from the API
     else if (page > 1) {
         if (userId) {
             if (country === "ng") {
