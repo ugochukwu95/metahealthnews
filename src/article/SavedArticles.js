@@ -5,6 +5,10 @@ import {ArticleCardsMobile} from "./ArticleCardsMobile";
 import M from 'materialize-css';
 import { uuid } from 'uuidv4';
 import {Helmet} from "react-helmet";
+import {DesktopNavList} from "./DesktopNavList";
+import {Trends} from "./Trends";
+import {WeatherDesktop} from "./WeatherDesktop";
+import {ArticleCardsDesktop} from "./ArticleCardsDesktop";
 
 export class SavedArticles extends Component {
 
@@ -127,13 +131,28 @@ export class SavedArticles extends Component {
             </Helmet>
 			{
 				(this.props.saved_articles) && <React.Fragment>
-					<div className="row">
-						<div className="col l6 offset-l3 m8 offset-m2 s12">
+					<div className="row hide-on-large-only">
+						<div className="col m8 offset-m2 s12">
 							<h5 className="grey-text text-darken-2 ugBigFont center">
 								<strong>You have {this.props.saved_articles.data.length} articles saved</strong>
 							</h5>
 
 							<ArticleCardsMobile handleBanSource={this.handleBanSource} handleUndoBanSource={this.handleUndoBanSource} userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={this.props.saved_articles['data']} />
+						</div>
+					</div>
+
+					<div className="row hide-on-med-and-down">
+						<div className="col l3">
+							<DesktopNavList {...this.props} />
+						</div>
+						<div className="col l6">
+							<br /><br />
+							<ArticleCardsDesktop items={this.props.saved_articles['data']} />
+						</div>
+						<div className="col l3">
+							<br /><br />
+							<WeatherDesktop {...this.props} />
+							<Trends {...this.props} />
 						</div>
 					</div>
 				</React.Fragment>

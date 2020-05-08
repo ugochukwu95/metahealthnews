@@ -8,6 +8,9 @@ import { FormValidator } from "./FormValidator";
 import { ValidationMessage } from "./ValidationMessage";
 import {ArticleComments} from "./ArticleComments";
 import {Helmet} from "react-helmet";
+import {DesktopNavList} from "./DesktopNavList";
+import {Trends} from "./Trends";
+import {WeatherDesktop} from "./WeatherDesktop";
 
 export class ArticleDetails extends Component {
 	constructor(props) {
@@ -181,117 +184,249 @@ export class ArticleDetails extends Component {
 		                <meta name="description" content={this.props.article.description} />
 		                <link rel="canonical" href={`${document.location.host}${this.props.match.url}`} />
 		            </Helmet>
-            
-					<div className="card white ugDetailsCard z-depth-0">
-						<div className="card-content">
-							<div className="row">
-								<div className="col l6 offset-l3 m10 offset-m1 s12">
-									<a href={this.props.article.url} target="_blank" rel="noopener noreferrer">
-										<img alt={this.props.article.source.name} src={this.props.article.urlToImage || `/unavailable-image.png`} className="responsive-img cardImageMobile" />
-									</a>
-									<p><strong>{this.props.article.source.name || "Unidentified source"}</strong></p>
-									<h5 className="ugTitle">
-										<a href={this.props.article.url} target="_blank" rel="noopener noreferrer" className="grey-text text-darken-2 ugCardLink"><strong>{this.props.article.title}</strong></a>
-									</h5>
-									<div>
-										<small className="grey-text text-darken-2">
-											<span><ReactTimeAgo date={Date.parse(this.props.article.publishedAt)}/></span>
-										</small>
+            		
+            		<div className="hide-on-large-only">
+						<div className="card white ugDetailsCard z-depth-0">
+							<div className="card-content">
+								<div className="row">
+									<div className="col l6 offset-l3 m10 offset-m1 s12">
+										<a href={this.props.article.url} target="_blank" rel="noopener noreferrer">
+											<img alt={this.props.article.source.name} src={this.props.article.urlToImage || `/unavailable-image.png`} className="responsive-img cardImageMobile" />
+										</a>
+										<p><strong>{this.props.article.source.name || "Unidentified source"}</strong></p>
+										<h5 className="ugTitle">
+											<a href={this.props.article.url} target="_blank" rel="noopener noreferrer" className="grey-text text-darken-2 ugCardLink"><strong>{this.props.article.title}</strong></a>
+										</h5>
+										<div>
+											<small className="grey-text text-darken-2">
+												<span><ReactTimeAgo date={Date.parse(this.props.article.publishedAt)}/></span>
+											</small>
+										</div>
+										<div>
+											<br />
+											<p className="grey-text text-darken-2">
+												{this.props.article.content || this.props.article.description}
+											</p>
+											<br />
+
+											<ul className="ugMoreLinks">
+												<li>
+													<a href={this.props.article.url} target="_blank" rel="noopener noreferrer" className="teal-text text-darken-2 btn white ugArticleDetailsBtn">
+														Go to {this.props.article.source.name || "Unidentified source"}
+													</a> 
+												</li>
+												<li id={`save_${this.props.article._id}`} onClick={this.handleSaveForLater(this.props.article._id)} className={((this.props.article.savedBy.find(val => val.userId === userId)) ? "hide" : "show")}>
+													<a href="#!" className="teal-text text-darken-2 btn white ugArticleDetailsBtn"><i className="far fa-bookmark"></i> Save for later</a>
+												</li> 
+												<li id={`remove_${this.props.article._id}`} className={((this.props.article.savedBy.find(val => val.userId === userId)) ? "show" : "hide")} onClick={this.handleRemoveSavedArticle(this.props.article._id)}>
+													<a href="#!" className="teal-text text-darken-2 btn white ugArticleDetailsBtn"><i className="fas fa-bookmark"></i> Saved</a>
+												</li>
+												<li id="undoBan" className={((this.props.article.hiddenBy.find(val => val === userId)) ? "show" : "hide")} onClick={this.handleUndoBanSource(this.props.article.source.name)}>
+													<a href="#!" className="teal-text text-darken-2 btn white ugArticleDetailsBtn" target="_blank" rel="noopener noreferrer">
+														<i className="fas fa-ban grey-text text-darken-2"></i> Undo ban
+													</a>
+												</li>
+												<li id="banSource" className={((this.props.article.hiddenBy.find(val => val === userId)) ? "hide" : "show")} onClick={this.handleBanSource(this.props.article.source.name)}>
+													<a href="#!" className="teal-text text-darken-2 btn white ugArticleDetailsBtn" target="_blank" rel="noopener noreferrer">
+														<i className="fas fa-ban red-text"></i> Hide stories from {this.props.article.source.name || "Unidentified source"}
+													</a>
+													<br />
+													<div id="progress" className="progress hide">
+		      											<div className="indeterminate"></div>
+		  											</div>
+												</li>
+											</ul>
+										</div>
 									</div>
-									<div>
+								</div>
+							</div>
+						</div>
+						<br />
+						<div className="divider"></div>
+						<div className="card white ugDetailsCard z-depth-0">
+							<div className="card-content">
+								<div className="row">
+									<div className="col l6 offset-l3 m10 offset-m1 s12">
+										<h5 className="grey-text text-darken-2 ugBigFont">
+											<strong>Comments - {this.props.comments && this.props.comments.total.toLocaleString("en")}</strong>
+										</h5>
 										<br />
-										<p className="grey-text text-darken-2">
-											{this.props.article.content || this.props.article.description}
-										</p>
+										{
+											(this.props.comments && this.props.comments.data.length === 0 && !this.state.switchToTextField) && <div className="center">
+												<button onClick={this.switchToTextField(this.props.article['_id'])} className={`btn btn-large btn-flat white ugStartCommentBtn`}>
+													Be the first to comment
+												</button>
+											</div>
+										}
+										{
+											(this.props.comments && this.props.comments.data.length !== 0 && !this.state.switchToTextField) && <div className="center">
+												<button onClick={this.switchToTextField(this.props.article['_id'])} className={`btn btn-large btn-flat white ugStartCommentBtn`}>
+													Join the conversation
+												</button>
+											</div>
+										}
+
+										{
+											this.state.sendingComment && <div class="progress">
+											    <div class="indeterminate"></div>
+											</div>
+										}
+
+										{
+											(this.props.comments && this.state.switchToTextField) && <FormValidator data={ {name: this.state.name, comment: this.state.comment} } rules={ this.rules } submit={ this.handleCommentSubmit } cancel={this.handleCancel}>
+												<div>
+													<input type="text" placeholder="Your name" name="name" className="browser-default ugCommentName" value={this.state.name} onChange={ this.updateFormValue } />
+													<ValidationMessage field="name" />
+												</div>
+												<div>
+													<textarea placeholder="Comment ..." onChange={ this.updateFormValue } value={this.state.comment} name="comment" className="browser-default ugCommentBox" />
+													<ValidationMessage field="comment" />
+												</div>
+											</FormValidator>
+										}
+										<br />
+										<div className="divider"></div>
 										<br />
 
-										<ul className="ugMoreLinks">
-											<li>
-												<a href={this.props.article.url} target="_blank" rel="noopener noreferrer" className="teal-text text-darken-2 btn white ugArticleDetailsBtn">
-													Go to {this.props.article.source.name || "Unidentified source"}
-												</a> 
-											</li>
-											<li id={`save_${this.props.article._id}`} onClick={this.handleSaveForLater(this.props.article._id)} className={((this.props.article.savedBy.find(val => val.userId === userId)) ? "hide" : "show")}>
-												<a href="#!" className="teal-text text-darken-2 btn white ugArticleDetailsBtn"><i className="far fa-bookmark"></i> Save for later</a>
-											</li> 
-											<li id={`remove_${this.props.article._id}`} className={((this.props.article.savedBy.find(val => val.userId === userId)) ? "show" : "hide")} onClick={this.handleRemoveSavedArticle(this.props.article._id)}>
-												<a href="#!" className="teal-text text-darken-2 btn white ugArticleDetailsBtn"><i className="fas fa-bookmark"></i> Saved</a>
-											</li>
-											<li id="undoBan" className={((this.props.article.hiddenBy.find(val => val === userId)) ? "show" : "hide")} onClick={this.handleUndoBanSource(this.props.article.source.name)}>
-												<a href="#!" className="teal-text text-darken-2 btn white ugArticleDetailsBtn" target="_blank" rel="noopener noreferrer">
-													<i className="fas fa-ban grey-text text-darken-2"></i> Undo ban
-												</a>
-											</li>
-											<li id="banSource" className={((this.props.article.hiddenBy.find(val => val === userId)) ? "hide" : "show")} onClick={this.handleBanSource(this.props.article.source.name)}>
-												<a href="#!" className="teal-text text-darken-2 btn white ugArticleDetailsBtn" target="_blank" rel="noopener noreferrer">
-													<i className="fas fa-ban red-text"></i> Hide stories from {this.props.article.source.name || "Unidentified source"}
-												</a>
+										{
+											this.props.comments && <ArticleComments handeleDeleteComment={this.handeleDeleteComment} comments={this.props.comments} userId={userId} />
+										}
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					{
+						// Desktop design
+					}
+
+					<div className="hide-on-med-and-down">
+						<div className="row">
+							<div className="col l3">
+								<DesktopNavList {...this.props} />
+							</div>
+							<div className="col l6">
+								<div className="card white ugDetailsCard z-depth-0">
+									<div className="card-content">
+										<div className="row">
+											<div className="col l12">
 												<br />
-												<div id="progress" className="progress hide">
-	      											<div className="indeterminate"></div>
-	  											</div>
-											</li>
-										</ul>
+												<a href={this.props.article.url} target="_blank" rel="noopener noreferrer">
+													<img alt={this.props.article.source.name} src={this.props.article.urlToImage || `/unavailable-image.png`} className="responsive-img cardImageMobile" />
+												</a>
+												<p><strong>{this.props.article.source.name || "Unidentified source"}</strong></p>
+												<h5 className="ugTitle">
+													<a href={this.props.article.url} target="_blank" rel="noopener noreferrer" className="grey-text text-darken-2 ugCardLink"><strong>{this.props.article.title}</strong></a>
+												</h5>
+												<div>
+													<small className="grey-text text-darken-2">
+														<span><ReactTimeAgo date={Date.parse(this.props.article.publishedAt)}/></span>
+													</small>
+												</div>
+												<div>
+													<br />
+													<p className="grey-text text-darken-2">
+														{this.props.article.content || this.props.article.description}
+													</p>
+													<br />
+
+													<ul className="ugMoreLinks">
+														<li>
+															<a href={this.props.article.url} target="_blank" rel="noopener noreferrer" className="teal-text text-darken-2 btn white ugArticleDetailsBtn">
+																Go to {this.props.article.source.name || "Unidentified source"}
+															</a> 
+														</li>
+														<li id={`save_${this.props.article._id}`} onClick={this.handleSaveForLater(this.props.article._id)} className={((this.props.article.savedBy.find(val => val.userId === userId)) ? "hide" : "show")}>
+															<a href="#!" className="teal-text text-darken-2 btn white ugArticleDetailsBtn"><i className="far fa-bookmark"></i> Save for later</a>
+														</li> 
+														<li id={`remove_${this.props.article._id}`} className={((this.props.article.savedBy.find(val => val.userId === userId)) ? "show" : "hide")} onClick={this.handleRemoveSavedArticle(this.props.article._id)}>
+															<a href="#!" className="teal-text text-darken-2 btn white ugArticleDetailsBtn"><i className="fas fa-bookmark"></i> Saved</a>
+														</li>
+														<li id="undoBan" className={((this.props.article.hiddenBy.find(val => val === userId)) ? "show" : "hide")} onClick={this.handleUndoBanSource(this.props.article.source.name)}>
+															<a href="#!" className="teal-text text-darken-2 btn white ugArticleDetailsBtn" target="_blank" rel="noopener noreferrer">
+																<i className="fas fa-ban grey-text text-darken-2"></i> Undo ban
+															</a>
+														</li>
+														<li id="banSource" className={((this.props.article.hiddenBy.find(val => val === userId)) ? "hide" : "show")} onClick={this.handleBanSource(this.props.article.source.name)}>
+															<a href="#!" className="teal-text text-darken-2 btn white ugArticleDetailsBtn" target="_blank" rel="noopener noreferrer">
+																<i className="fas fa-ban red-text"></i> Hide stories from {this.props.article.source.name || "Unidentified source"}
+															</a>
+															<br />
+															<div id="progress" className="progress hide">
+				      											<div className="indeterminate"></div>
+				  											</div>
+														</li>
+													</ul>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+								<br />
+								<div className="divider"></div>
+								<div className="card white ugDetailsCard z-depth-0">
+									<div className="card-content">
+										<div className="row">
+											<div className="col l12">
+												<h5 className="grey-text text-darken-2 ugBigFont">
+													<strong>Comments - {this.props.comments && this.props.comments.total.toLocaleString("en")}</strong>
+												</h5>
+												<br />
+												{
+													(this.props.comments && this.props.comments.data.length === 0 && !this.state.switchToTextField) && <div className="center">
+														<button onClick={this.switchToTextField(this.props.article['_id'])} className={`btn btn-large btn-flat white ugStartCommentBtn`}>
+															Be the first to comment
+														</button>
+													</div>
+												}
+												{
+													(this.props.comments && this.props.comments.data.length !== 0 && !this.state.switchToTextField) && <div className="center">
+														<button onClick={this.switchToTextField(this.props.article['_id'])} className={`btn btn-large btn-flat white ugStartCommentBtn`}>
+															Join the conversation
+														</button>
+													</div>
+												}
+
+												{
+													this.state.sendingComment && <div class="progress">
+													    <div class="indeterminate"></div>
+													</div>
+												}
+
+												{
+													(this.props.comments && this.state.switchToTextField) && <FormValidator data={ {name: this.state.name, comment: this.state.comment} } rules={ this.rules } submit={ this.handleCommentSubmit } cancel={this.handleCancel}>
+														<div>
+															<input type="text" placeholder="Your name" name="name" className="browser-default ugCommentName" value={this.state.name} onChange={ this.updateFormValue } />
+															<ValidationMessage field="name" />
+														</div>
+														<div>
+															<textarea placeholder="Comment ..." onChange={ this.updateFormValue } value={this.state.comment} name="comment" className="browser-default ugCommentBox" />
+															<ValidationMessage field="comment" />
+														</div>
+													</FormValidator>
+												}
+												<br />
+												<div className="divider"></div>
+												<br />
+
+												{
+													this.props.comments && <ArticleComments handeleDeleteComment={this.handeleDeleteComment} comments={this.props.comments} userId={userId} />
+												}
+
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</div>
-					<br />
-					<div className="divider"></div>
-					<div className="card white ugDetailsCard z-depth-0">
-						<div className="card-content">
-							<div className="row">
-								<div className="col l6 offset-l3 m10 offset-m1 s12">
-									<h5 className="grey-text text-darken-2 ugBigFont">
-										<strong>Comments - {this.props.comments && this.props.comments.total.toLocaleString("en")}</strong>
-									</h5>
-									<br />
-									{
-										(this.props.comments && this.props.comments.data.length === 0 && !this.state.switchToTextField) && <div className="center">
-											<button onClick={this.switchToTextField(this.props.article['_id'])} className={`btn btn-large btn-flat white ugStartCommentBtn`}>
-												Be the first to comment
-											</button>
-										</div>
-									}
-									{
-										(this.props.comments && this.props.comments.data.length !== 0 && !this.state.switchToTextField) && <div className="center">
-											<button onClick={this.switchToTextField(this.props.article['_id'])} className={`btn btn-large btn-flat white ugStartCommentBtn`}>
-												Join the conversation
-											</button>
-										</div>
-									}
-
-									{
-										this.state.sendingComment && <div class="progress">
-										    <div class="indeterminate"></div>
-										</div>
-									}
-
-									{
-										(this.props.comments && this.state.switchToTextField) && <FormValidator data={ {name: this.state.name, comment: this.state.comment} } rules={ this.rules } submit={ this.handleCommentSubmit } cancel={this.handleCancel}>
-											<div>
-												<input type="text" placeholder="Your name" name="name" className="browser-default ugCommentName" value={this.state.name} onChange={ this.updateFormValue } />
-												<ValidationMessage field="name" />
-											</div>
-											<div>
-												<textarea placeholder="Comment ..." onChange={ this.updateFormValue } value={this.state.comment} name="comment" className="browser-default ugCommentBox" />
-												<ValidationMessage field="comment" />
-											</div>
-										</FormValidator>
-									}
-									<br />
-									<div className="divider"></div>
-									<br />
-
-									{
-										this.props.comments && <ArticleComments handeleDeleteComment={this.handeleDeleteComment} comments={this.props.comments} userId={userId} />
-									}
-
-								</div>
+							<div className="col l3">
+								<br /><br />
+								<WeatherDesktop {...this.props} />
+								<Trends {...this.props} />
 							</div>
 						</div>
-					</div>
+					</div>					
 				</React.Fragment>
 			}
 

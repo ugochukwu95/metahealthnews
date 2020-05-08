@@ -12,8 +12,25 @@ code {
     monospace;
 }
 
+.desktopNav {
+    margin-bottom: 30px !important;
+}
+
+.desktopNav .right a {
+    font-weight: 700;
+}
+
+.sidenav.sidenav-fixed.right-aligned {
+    left: 0 !important;
+}
+
 .ugTextTransform {
 	text-transform: none !important;
+}
+
+.ugFrontPageLocationText {
+    font-weight: 300 !important;
+    font-size: 12px;
 }
 
 .logoFont {
@@ -22,14 +39,43 @@ code {
 
 .myLogo {
 	font-size: 1.5em;
+    font-weight: 700;
 }
 
 .nav-wrapper {
 	margin-left: 20px;
 }
 
-nav {
-	box-shadow: 0 2px 4px rgba(0,0,0,0.1), 0 -1px 1px rgba(0,0,0,0.05) !important;
+.sidenav.desktop {
+    top: 84px !important;
+    box-shadow: none !important;
+    overflow-y: hidden !important;
+}
+
+.sidenav.desktop li {
+    border: none !important;
+}
+
+.sidenav.desktop li.active {
+    background-color: #e0f2f1 !important;
+}
+
+.sidenav.desktop li.active a, .sidenav.desktop li.active i {
+    color: #009688 !important;
+}
+
+.sidenav.desktop li>a>i, .sidenav.desktop li>a>[class^="mdi-"], .sidenav.desktop li>a li>a>[class*="mdi-"], .sidenav.desktop li>a>i.material-icons {
+    float: left;
+    height: 48px !important;
+    line-height: 48px !important;
+    margin: 0 32px 0 0;
+    width: 24px;
+    color: rgba(0,0,0,0.54);
+    font-size: 16px !important;
+}
+
+.sidenav.desktop:hover {
+    overflow-y: scroll !important;
 }
 
 .ugInputField {
@@ -140,6 +186,31 @@ nav {
     font-size: 1rem;
 }
 
+.firstArticleDesktopCard {
+    border: 1px solid lightgrey;
+    border-radius: 8px !important;
+    padding: 0 !important;
+}
+
+.firstArticleDesktopCard .card-content {
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+}
+
+.firstArticleDesktop ul:not(.browser-default)>li {
+    list-style-type: circle !important;
+}
+
+.firstArticleDesktop ul {
+    padding-left: 20px !important;
+}
+
+.ugTitleSmall {
+    font-size: .9rem;
+}
+
 .ugTitle {
     font-size: 1.125rem;
 }
@@ -187,7 +258,7 @@ nav {
 }
 
 .titleCardSamePadding {
-	margin-left: 10px !important;
+	margin-left: 20px !important;
 }
 
 .searchTitlePadding {
@@ -410,6 +481,10 @@ table {
 	.nav_input_field {
 		width: 500px !important;
 	}
+    .myLogo {
+        font-size: 1.2em;
+        font-weight: 800 !important;
+    }
 }
 
 @media only screen and (max-width: 414px) {
@@ -432,9 +507,6 @@ table {
 }
 
 @media only screen and (max-width: 320px) {
-	.myLogo {
-	    font-size: 1.2em;
-	}
 
 	nav ul a {
 		padding: 0 10px !important;

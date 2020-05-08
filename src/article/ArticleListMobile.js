@@ -176,13 +176,13 @@ export class ArticleListMobile extends Component {
 	}
 
 	render() {
-		let firstArticle = (this.props.articles && this.props.articles.data && (/Mobi|Android/i.test(navigator.userAgent))) && this.props.articles.data.slice(0,1)[0];
-		let otherArticles = (this.props.articles && this.props.articles.data && (/Mobi|Android/i.test(navigator.userAgent))) && this.props.articles.data.slice(1);
+		let firstArticle = (this.props.articles && this.props.articles.data) && this.props.articles.data.slice(0,1)[0];
+		let otherArticles = (this.props.articles && this.props.articles.data) && this.props.articles.data.slice(1);
 
 		// unique user id
 		let userId = this.props.cookies && this.props.cookies.get("user_id");
 
-		return (/Mobi|Android/i.test(navigator.userAgent)) && <React.Fragment>
+		return <React.Fragment>
 			{
 				(this.props.articles && this.props.match && (this.props.articles.error)) && <div className="row">
 					<div className="col s12">

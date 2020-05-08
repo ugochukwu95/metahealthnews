@@ -10,6 +10,10 @@ import { uuid } from 'uuidv4';
 import {cleanUrlText} from "../utilities/cleanUrlText";
 import { Link } from "react-router-dom";
 import {Helmet} from "react-helmet";
+import {DesktopNavList} from "./DesktopNavList";
+import {Trends} from "./Trends";
+import {WeatherDesktop} from "./WeatherDesktop";
+import {ArticleCardsDesktop} from "./ArticleCardsDesktop";
 
 export class Headlines extends Component {
 	constructor(props) {
@@ -149,6 +153,9 @@ export class Headlines extends Component {
 		let firstArticle = (this.props.articles && this.props.articles.data) && this.props.articles.data.slice(0,1)[0];
 		let otherArticles = (this.props.articles  && this.props.articles.data) && this.props.articles.data.slice(1);
 
+		let secondFiveArticles = (this.props.articles && this.props.articles.data) && this.props.articles.data.slice(1,6);
+		let sixOtherArticles = (this.props.articles && this.props.articles.data) && this.props.articles.data.slice(6);
+
 		// unique user id
 		let userId = this.props.cookies && this.props.cookies.get("user_id");
 
@@ -159,38 +166,43 @@ export class Headlines extends Component {
                 <meta name="description" content={`Get the latest health related news such as the Coronavirus, Cancer research, etc., from ${CountryData.find(obj => obj.code === this.props.match.params['countryCode'].toUpperCase())['value']}.`} />
                 <link rel="canonical" href={`${document.location.host}${this.props.match.url}`} />
             </Helmet>
-			{(this.props.articles  && this.props.articles.data && this.props.match && (this.props.articles.data.length === 0)) && <div className="row">
-				<div className="col l6 offset-l3 m8 offset-m2 s12">
-					<br />
-					<div className="container">
-						<div className="card-panel white">
-							<h3 className="center grey-text text-darken-2">:(</h3>
-							<p className="center">We cannot find health articles for this country: {CountryData.find(obj => obj.code === this.props.match.params['countryCode'].toUpperCase())['value']}.</p>
-							<p className="center">
-								<button onClick={this.handleTryAgain} className="btn btn-small white-text teal darken-2 ugTextTransform">Try again</button>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>}
-
-			{(this.props.articles && this.props.match && (this.props.articles.error)) && <div className="row">
-				<div className="col l6 offset-l3 m8 offset-m2 s12">
-					<br />
-					<div className="container">
-						<div className="card-panel white">
-							<h3 className="center grey-text text-darken-2">:(</h3>
-							<p className="center">{this.props.articles.error}</p>
-							<p className="center">
-								<button onClick={this.handleTryAgain} className="btn btn-small white-text teal darken-2 ugTextTransform">Try again</button>
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>}
 
 			{
-				firstArticle && <div className="card white z-depth-0 ugMobileCard">
+				(this.props.articles  && this.props.articles.data && this.props.match && (this.props.articles.data.length === 0)) && <div className="row">
+					<div className="col l6 offset-l3 m8 offset-m2 s12">
+						<br />
+						<div className="container">
+							<div className="card-panel white">
+								<h3 className="center grey-text text-darken-2">:(</h3>
+								<p className="center">We cannot find health articles for this country: {CountryData.find(obj => obj.code === this.props.match.params['countryCode'].toUpperCase())['value']}.</p>
+								<p className="center">
+									<button onClick={this.handleTryAgain} className="btn btn-small white-text teal darken-2 ugTextTransform">Try again</button>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			}
+
+			{
+				(this.props.articles && this.props.match && (this.props.articles.error)) && <div className="row">
+					<div className="col l6 offset-l3 m8 offset-m2 s12">
+						<br />
+						<div className="container">
+							<div className="card-panel white">
+								<h3 className="center grey-text text-darken-2">:(</h3>
+								<p className="center">{this.props.articles.error}</p>
+								<p className="center">
+									<button onClick={this.handleTryAgain} className="btn btn-small white-text teal darken-2 ugTextTransform">Try again</button>
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			}
+
+			{
+				firstArticle && <div className="card white z-depth-0 ugMobileCard hide-on-large-only">
 					<div className="card-content">
 						<div className="row">
 							<div className="col l6 offset-l3 m8 offset-m2 s12">
@@ -245,15 +257,111 @@ export class Headlines extends Component {
 				</div>
 			}
 
-			{otherArticles && <div className="row">
-				<div className="col l6 offset-l3 m8 offset-m2 s12">
-					<h5 className="center grey-text text-darken-2 hide-on-med-and-down">
-						<strong>{CountryData.find(obj => obj.code === this.props.match.params['countryCode'].toUpperCase())['value']} Health News.</strong>
-						<br />
-					</h5>
-					<ArticleCardsMobile handleBanSource={this.handleBanSource} handleUndoBanSource={this.handleUndoBanSource} userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={otherArticles} />
+			{
+				otherArticles && <div className="row hide-on-large-only">
+					<div className="col l6 offset-l3 m8 offset-m2 s12">
+						<h5 className="center grey-text text-darken-2 hide-on-med-and-down">
+							<strong>{CountryData.find(obj => obj.code === this.props.match.params['countryCode'].toUpperCase())['value']} Health News.</strong>
+							<br />
+						</h5>
+						<ArticleCardsMobile handleBanSource={this.handleBanSource} handleUndoBanSource={this.handleUndoBanSource} userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={otherArticles} />
+					</div>
 				</div>
-			</div>}
+			}
+
+			{
+				// Desktop section
+				//
+				//
+				//
+				//
+				//
+			}
+
+			{
+				firstArticle && <div className="hide-on-med-and-down">
+					<div className="row">
+						<div className="col l3">
+							<DesktopNavList {...this.props} />
+						</div>
+						<div className="col l6">
+							<h5 className="grey-text text-darken-2 ugBigFont">
+								<strong>
+									{
+										this.props.match && CountryData.find(obj => obj.code === this.props.match.params.countryCode.toUpperCase())['value']
+									} Health News
+								</strong>
+							</h5>
+
+							{
+								// News at a glasce
+							}
+							<div className="card white z-depth-0 firstArticleDesktopCard">
+								<div className="card-content">
+									<div className="row">
+										<div className="col l9 firstArticleDesktop">
+											<h5 className="ugTitle">
+												<Link to={`/article/${cleanUrlText(firstArticle.title)}/${firstArticle._id}`} className="grey-text text-darken-2 ugCardLink">
+													<strong>{firstArticle.title}</strong>
+												</Link>
+											</h5>
+											<p>
+												<small>
+													{firstArticle.source.name || "Unidentified source"}
+												</small> - &nbsp; 
+												<small className="grey-text text-darken-2">
+													<span>
+														<ReactTimeAgo date={Date.parse(firstArticle.publishedAt)}/>
+													</span>
+												</small>
+											</p>
+
+											<ul>
+												{
+													secondFiveArticles.map(obj => <li key={obj._id}>
+														<h6 className="ugTitleSmall">
+															<Link to={`/article/${cleanUrlText(obj.title)}/${obj._id}`} className="grey-text text-darken-2 ugCardLink">
+																<strong>{obj.title}</strong>
+															</Link>
+														</h6>
+														<p>
+															<small>
+																{obj.source.name || "Unidentified source"}
+															</small> - &nbsp; 
+															<small className="grey-text text-darken-2">
+																<span>
+																	<ReactTimeAgo date={Date.parse(obj.publishedAt)}/>
+																</span>
+															</small>
+														</p>
+													</li>)
+												}
+											</ul>
+										</div>
+										<div className="col l3">
+											<Link to={`/article/${cleanUrlText(firstArticle.title)}/${firstArticle._id}`}>
+												<img alt={firstArticle.source.name} src={firstArticle.urlToImage || `/unavailable-image.png`} className="responsive-img cardImageMobile" />
+											</Link>
+										</div>
+									</div>
+								</div>
+							</div>
+
+							{
+								// News cards
+							}
+							{
+								sixOtherArticles && <ArticleCardsDesktop items={sixOtherArticles} />
+							}
+						</div>
+						<div className="col l3">
+							<br /><br />
+							<WeatherDesktop {...this.props} />
+							<Trends {...this.props} />
+						</div>
+					</div>
+				</div>			
+			}
 
 			{(!this.props.articles || this.state.loading) && <Preloader />}
 		</React.Fragment>
