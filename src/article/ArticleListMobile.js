@@ -23,52 +23,50 @@ export class ArticleListMobile extends Component {
 	}
 
 	handleOnScroll = (event) => {
-		if ((/Mobi|Android/i.test(navigator.userAgent))) {
-			let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
-	  		let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
-	 		let clientHeight = document.documentElement.clientHeight || window.innerHeight;
-	  		let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= (scrollHeight - 300);
+		let scrollTop = (document.documentElement && document.documentElement.scrollTop) || document.body.scrollTop;
+  		let scrollHeight = (document.documentElement && document.documentElement.scrollHeight) || document.body.scrollHeight;
+ 		let clientHeight = document.documentElement.clientHeight || window.innerHeight;
+  		let scrolledToBottom = Math.ceil(scrollTop + clientHeight) >= (scrollHeight - 300);
 
-	  		let { cookies } = this.props;
-	  		let userId = cookies.get("user_id") || null;
+  		let { cookies } = this.props;
+  		let userId = cookies.get("user_id") || null;
 
-	  		// Load search results for coronavirus
-	  		if (scrolledToBottom && (this.state.page === 1)) {
-	     		
-	     		this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadSearchResults(DataTypes.ARTICLES_SEARCH_RESULTS, {country: this.props.cookies.get('country_code').toLowerCase(), page: 1, searchString: "Coronavirus", userId: userId}))
-			}
-
-			// load search results for cancer
-			if (scrolledToBottom && (this.state.page === 2)) {
-				this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadCancerSearchResults(DataTypes.CANCER, {country: this.props.cookies.get('country_code').toLowerCase(), page: 1, searchString: "Cancer", userId: userId}))
-			}
-
-			// load search results for DIABETES
-			if (scrolledToBottom && (this.state.page === 3)) {
-				this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadDiabetesSearchResults(DataTypes.DIABETES, {country: this.props.cookies.get('country_code').toLowerCase(), page: 1, searchString: "Diabetes", userId: userId}))
-			}
-
-			// load search results for Heart Disease
-			if (scrolledToBottom && (this.state.page === 4)) {
-				this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadHeartDiseaseSearchResults(DataTypes.HEART_DISEASE, {country: this.props.cookies.get('country_code').toLowerCase(), page: 1, searchString: "Heart Disease", userId: userId}))
-			}
-
-			if (scrolledToBottom && (this.state.page === 5)) {
-				// get articles from the us if not a us citizen
-				(this.props.articles_search_results) && this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadArticlesForUSData(DataTypes.ARTICLES, {country: "us", page: 1, userId: userId}))
-
-			}
-
-			if (scrolledToBottom && (this.state.page === 6)) {
-				// get articles from the uk if not a uk citizen
-				(this.props.articles_search_results && this.props.articles_for_us) && this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadArticlesForUKData(DataTypes.ARTICLES, {country: "gb", page: 1, userId: userId}))
-			}
-
-			if (scrolledToBottom && (this.state.page > 6)) {
-     			this.setState({loading:false});
-     			return;
-     		}
+  		// Load search results for coronavirus
+  		if (scrolledToBottom && (this.state.page === 1)) {
+     		
+     		this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadSearchResults(DataTypes.ARTICLES_SEARCH_RESULTS, {country: this.props.cookies.get('country_code').toLowerCase(), page: 1, searchString: "Coronavirus", userId: userId}))
 		}
+
+		// load search results for cancer
+		if (scrolledToBottom && (this.state.page === 2)) {
+			this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadCancerSearchResults(DataTypes.CANCER, {country: this.props.cookies.get('country_code').toLowerCase(), page: 1, searchString: "Cancer", userId: userId}))
+		}
+
+		// load search results for DIABETES
+		if (scrolledToBottom && (this.state.page === 3)) {
+			this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadDiabetesSearchResults(DataTypes.DIABETES, {country: this.props.cookies.get('country_code').toLowerCase(), page: 1, searchString: "Diabetes", userId: userId}))
+		}
+
+		// load search results for Heart Disease
+		if (scrolledToBottom && (this.state.page === 4)) {
+			this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadHeartDiseaseSearchResults(DataTypes.HEART_DISEASE, {country: this.props.cookies.get('country_code').toLowerCase(), page: 1, searchString: "Heart Disease", userId: userId}))
+		}
+
+		if (scrolledToBottom && (this.state.page === 5)) {
+			// get articles from the us if not a us citizen
+			(this.props.articles_search_results) && this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadArticlesForUSData(DataTypes.ARTICLES, {country: "us", page: 1, userId: userId}))
+
+		}
+
+		if (scrolledToBottom && (this.state.page === 6)) {
+			// get articles from the uk if not a uk citizen
+			(this.props.articles_search_results && this.props.articles_for_us) && this.setState({loading:true, page: Number(this.state.page) + 1}, () => this.props.loadArticlesForUKData(DataTypes.ARTICLES, {country: "gb", page: 1, userId: userId}))
+		}
+
+		if (scrolledToBottom && (this.state.page > 6)) {
+ 			this.setState({loading:false});
+ 			return;
+ 		}
 	}
 
 	handleTryAgain = (ev) => {
@@ -249,7 +247,11 @@ export class ArticleListMobile extends Component {
 				</div>
 			}
 			
-			{otherArticles && <ArticleCardsMobile handleBanSource={this.handleBanSource} handleUndoBanSource={this.handleUndoBanSource} userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={otherArticles} />}
+			{otherArticles && <div className="row">
+				<div className="col s12">
+					<ArticleCardsMobile handleBanSource={this.handleBanSource} handleUndoBanSource={this.handleUndoBanSource} userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={otherArticles} />
+				</div>
+			</div>}
 
 			{(otherArticles && this.props.current_location) && <div className="center">
 				<p><Link to={`/headlines/${this.props.current_location['country_code'].toLowerCase()}`} className="teal-text text-darken-2"><strong>Read more stories from Headlines</strong></Link></p>
@@ -264,7 +266,11 @@ export class ArticleListMobile extends Component {
 					<b>Coronavirus</b>
 				</h5>
 				<br />
-				<ArticleCardsMobile handleBanSource={this.handleBanSource} handleUndoBanSource={this.handleUndoBanSource} userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={this.props.articles_search_results.data} />
+				<div className="row">
+					<div className="col s12">
+						<ArticleCardsMobile handleBanSource={this.handleBanSource} handleUndoBanSource={this.handleUndoBanSource} userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={this.props.articles_search_results.data} />
+					</div>
+				</div>
 			</React.Fragment>}
 			{(this.props.articles_search_results && this.props.articles_search_results.data) && <div className="center">
 				<p><Link to="/search/coronavirus" onClick={this.clearSearchData} className="teal-text text-darken-2"><strong>Read more stories about the Coronavirus</strong></Link></p>
@@ -279,7 +285,11 @@ export class ArticleListMobile extends Component {
 					<b>Cancer</b>
 				</h5>
 				<br />
-				<ArticleCardsMobile handleBanSource={this.handleBanSource} handleUndoBanSource={this.handleUndoBanSource} userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={this.props.cancer.data} />
+				<div className="row">
+					<div className="col s12">
+						<ArticleCardsMobile handleBanSource={this.handleBanSource} handleUndoBanSource={this.handleUndoBanSource} userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={this.props.cancer.data} />
+					</div>
+				</div>
 			</React.Fragment>}
 			{(this.props.cancer && this.props.cancer.data) && <div className="center">
 				<p><Link to="/search/cancer" onClick={this.clearSearchData} className="teal-text text-darken-2"><strong>Read more stories about Cancer</strong></Link></p>
@@ -293,7 +303,11 @@ export class ArticleListMobile extends Component {
 					<b>Diabetes</b>
 				</h5>
 				<br />
-				<ArticleCardsMobile handleBanSource={this.handleBanSource} handleUndoBanSource={this.handleUndoBanSource} userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={this.props.diabetes.data} />
+				<div className="row">
+					<div className="col s12">
+						<ArticleCardsMobile handleBanSource={this.handleBanSource} handleUndoBanSource={this.handleUndoBanSource} userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={this.props.diabetes.data} />
+					</div>
+				</div>
 			</React.Fragment>}
 			{(this.props.diabetes && this.props.diabetes.data) && <div className="center">
 				<p><Link to="/search/diabetes" onClick={this.clearSearchData} className="teal-text text-darken-2"><strong>Read more stories about Diabetes</strong></Link></p>
@@ -308,7 +322,11 @@ export class ArticleListMobile extends Component {
 					<b>Heart Disease</b>
 				</h5>
 				<br />
-				<ArticleCardsMobile handleBanSource={this.handleBanSource} handleUndoBanSource={this.handleUndoBanSource} userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={this.props.heart_disease.data} />
+				<div className="row">
+					<div className="col s12">
+						<ArticleCardsMobile handleBanSource={this.handleBanSource} handleUndoBanSource={this.handleUndoBanSource} userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={this.props.heart_disease.data} />
+					</div>
+				</div>
 			</React.Fragment>}
 			{(this.props.heart_disease && this.props.heart_disease.data) && <div className="center">
 				<p><Link to="/search/heart%20disease" onClick={this.clearSearchData} className="teal-text text-darken-2"><strong>Read more stories about Heart Diseases</strong></Link></p>
@@ -323,7 +341,11 @@ export class ArticleListMobile extends Component {
 					<b>United States of America</b>
 				</h5>
 				<br />
-				<ArticleCardsMobile handleBanSource={this.handleBanSource} handleUndoBanSource={this.handleUndoBanSource} userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={this.props.articles_for_us.data} />
+				<div className="row">
+					<div className="col s12">
+						<ArticleCardsMobile handleBanSource={this.handleBanSource} handleUndoBanSource={this.handleUndoBanSource} userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={this.props.articles_for_us.data} />
+					</div>
+				</div>
 			</React.Fragment>}
 			{(this.props.articles_for_us && this.props.articles_for_us.data) && <div className="center">
 				<p><Link to="/headlines/us" className="teal-text text-darken-2"><strong>Read more health news from the United States of America</strong></Link></p>
@@ -339,7 +361,11 @@ export class ArticleListMobile extends Component {
 					<b>United Kingdom</b>
 				</h5>
 				<br />
-				<ArticleCardsMobile handleBanSource={this.handleBanSource} handleUndoBanSource={this.handleUndoBanSource} userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={this.props.articles_for_uk.data} />
+				<div className="row">
+					<div className="col s12">
+						<ArticleCardsMobile handleBanSource={this.handleBanSource} handleUndoBanSource={this.handleUndoBanSource} userId={userId} saveArticle={this.handleSaveForLater} removeSavedArticle={this.handleRemoveSavedArticle} items={this.props.articles_for_uk.data} />
+					</div>
+				</div>
 			</React.Fragment>}
 			{(this.props.articles_for_uk && this.props.articles_for_uk.data) && <div className="center">
 				<p><Link to="/headlines/gb" className="teal-text text-darken-2"><strong>Read more health news from the United Kingdom</strong></Link></p>
