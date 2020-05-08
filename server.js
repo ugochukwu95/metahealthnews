@@ -3,13 +3,13 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require("cors");
 const port = process.env.PORT || 3500;
-const history = require("connect-history-api-fallback");
+// const history = require("connect-history-api-fallback");
 
 
 const app = express();
 
-app.use(history());
-app.use("/", express.static("./build"));
+// app.use(history());
+// app.use("/", express.static("./build"));
 
 app.use(cors());
 app.use(bodyParser.urlencoded({extended:true}));

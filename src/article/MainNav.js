@@ -114,7 +114,7 @@ export class MainNav extends Component {
 				        	{(this.props.current_location['country_code'] !== "GB") && <li className="tab col l3"><Link onClick={this.clearData} to="/headlines/gb" className={`btn white teal-text text-darken-2 ${(this.props.match.url === "/headlines/gb") ? "disabled" : ""}`}>United Kingdom</Link></li>}
 				        	{(this.props.current_location['country_code'] !== "AU") && <li className="tab col l3"><Link onClick={this.clearData} to="/headlines/au" className={`btn white teal-text text-darken-2 ${(this.props.match.url === "/headlines/au") ? "disabled" : ""}`}>Australia</Link></li>}
 				        	{(this.props.current_location['country_code'] !== "CA") && <li className="tab col l3"><Link onClick={this.clearData} to="/headlines/ca" className={`btn white teal-text text-darken-2 ${(this.props.match.url === "/headlines/ca") ? "disabled" : ""}`}>Canada</Link></li>}
-				        	<li className="tab col l3"><a data-target="slide-out" href="#!" className="btn white teal-text text-darken-2 sidenav-trigger"><i className="fas fa-plus"></i> More</a></li>
+				        	<li className="tab col l3"><a data-target="moreSlide" href="#!" className="btn white teal-text text-darken-2 sidenav-trigger"><i className="fas fa-plus"></i> More</a></li>
 				      </ul>
 				    </div>
 				</div>
@@ -122,7 +122,7 @@ export class MainNav extends Component {
 
 			{(/Mobi|Android/i.test(navigator.userAgent)) && <Weather {...this.props} closeNav={this.closeNav} />}
 
-			<ul id="slide-out" className="sidenav">
+			<ul id="moreSlide" className="sidenav">
 				{CountryData.map(item => <li key={item.code}>
 					<Link className={`btn btn-flat ugTextTransform sidenav-close ${(this.props.match.url === `/headlines/${item.code.toLowerCase()}`) ? "disabled" : ""}`} onClick={this.clearData} to={`/headlines/${item.code.toLowerCase()}`}>{item.value}</Link>
 				</li>)}
@@ -132,7 +132,7 @@ export class MainNav extends Component {
 
 	componentDidMount() {
 
-	    let elems = document.querySelectorAll('.sidenav');
+	    let elems = document.getElementById('moreSlide');
 		let options = {edge: "right", preventScrolling: "false"};
     	M.Sidenav.init(elems, options);
 	}

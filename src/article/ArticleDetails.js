@@ -190,21 +190,19 @@ export class ArticleDetails extends Component {
 							<div className="card-content">
 								<div className="row">
 									<div className="col l6 offset-l3 m10 offset-m1 s12">
+										<br />
+										<h5 className="ugmyTitle">
+											<a href={this.props.article.url} target="_blank" rel="noopener noreferrer" className="grey-text text-darken-2 ugCardLink"><strong>{this.props.article.title}</strong></a>
+										</h5>
+										<p>Last updated: <span><ReactTimeAgo date={Date.parse(this.props.article.publishedAt)}/></span></p>
+										<br />
 										<a href={this.props.article.url} target="_blank" rel="noopener noreferrer">
 											<img alt={this.props.article.source.name} src={this.props.article.urlToImage || `/unavailable-image.png`} className="responsive-img cardImageMobile" />
 										</a>
 										<p><strong>{this.props.article.source.name || "Unidentified source"}</strong></p>
-										<h5 className="ugTitle">
-											<a href={this.props.article.url} target="_blank" rel="noopener noreferrer" className="grey-text text-darken-2 ugCardLink"><strong>{this.props.article.title}</strong></a>
-										</h5>
-										<div>
-											<small className="grey-text text-darken-2">
-												<span><ReactTimeAgo date={Date.parse(this.props.article.publishedAt)}/></span>
-											</small>
-										</div>
 										<div>
 											<br />
-											<p className="grey-text text-darken-2">
+											<p className="grey-text text-darken-2 flow-text">
 												{this.props.article.content || this.props.article.description}
 											</p>
 											<br />
@@ -313,21 +311,18 @@ export class ArticleDetails extends Component {
 										<div className="row">
 											<div className="col l12">
 												<br />
+												<h5 className="ugmyTitle">
+													<a href={this.props.article.url} target="_blank" rel="noopener noreferrer" className="grey-text text-darken-2 ugCardLink"><strong>{this.props.article.title}</strong></a>
+												</h5>
+												<p>Last updated: <span><ReactTimeAgo date={Date.parse(this.props.article.publishedAt)}/></span></p>
+												<br />
 												<a href={this.props.article.url} target="_blank" rel="noopener noreferrer">
 													<img alt={this.props.article.source.name} src={this.props.article.urlToImage || `/unavailable-image.png`} className="responsive-img cardImageMobile" />
 												</a>
 												<p><strong>{this.props.article.source.name || "Unidentified source"}</strong></p>
-												<h5 className="ugTitle">
-													<a href={this.props.article.url} target="_blank" rel="noopener noreferrer" className="grey-text text-darken-2 ugCardLink"><strong>{this.props.article.title}</strong></a>
-												</h5>
-												<div>
-													<small className="grey-text text-darken-2">
-														<span><ReactTimeAgo date={Date.parse(this.props.article.publishedAt)}/></span>
-													</small>
-												</div>
 												<div>
 													<br />
-													<p className="grey-text text-darken-2">
+													<p className="grey-text text-darken-2 flow-text">
 														{this.props.article.content || this.props.article.description}
 													</p>
 													<br />

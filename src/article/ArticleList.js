@@ -153,7 +153,7 @@ export class ArticleList extends Component {
 									<h5 className="ugTitle">
 										<Link to={`/article/${cleanUrlText(item.title)}/${item._id}`} className="grey-text text-darken-2 ugCardLink"><strong>{item.title}</strong></Link>
 									</h5>
-									<small className="grey-text">{item.source.name} - <span><ReactTimeAgo date={item.publishedAt}/></span></small>
+									<small className="grey-text">{item.source.name} - <span><ReactTimeAgo date={Date.parse(item.publishedAt)}/></span></small>
 								</div>
 								<div className="col l3">
 									<Link to={`/article/${cleanUrlText(item.title)}/${item._id}`} className="grey-text text-darken-2">

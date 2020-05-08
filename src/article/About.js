@@ -12,6 +12,7 @@ export class About extends Component {
 					<p className="grey-text text-darken-2">MetaHealth News is an automated healh news aggregator that curates a list of top health articles from 50+ countries.</p>
 					<p className="grey-text text-darken-2">The thinking is that you can get information about what the top news oulets in a location (or your country) are reporting about a specific topic (eg: Coronavirus).</p>
 					<br /><br />
+					<p className="grey-text text-darken-2">If this website has been helpful in any way, and you want to treat me a cup of coffee, please donate :)</p>
 					<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 					<input type="hidden" name="cmd" value="_s-xclick" />
 					<input type="hidden" name="hosted_button_id" value="DRLST4JRU6JHN" />

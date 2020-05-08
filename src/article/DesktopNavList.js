@@ -44,7 +44,7 @@ export class DesktopNavList extends Component {
 	}
 
 	componentDidMount() {
-		let elems = document.querySelectorAll('.sidenav');
+		let elems = document.getElementById('slide-out');
 		let options = {edge: "left"};
     	M.Sidenav.init(elems, options);
 	}
