@@ -25,7 +25,7 @@ export class About extends Component {
 						<strong>Credit</strong>
 					</h6>
 					<p>
-						Built by <a target="_blank" rel="noopener noreferrer" className="teal-text text-darken-2" href="https://ugooguejiofor.herokuapp.com/">Ugo.</a>
+						Built by <a target="_blank" rel="noopener noreferrer" className="teal-text text-darken-2" href="https://www.ugooguejiofor.com/">Ugo.</a>
 					</p>
 				</div>
 			</div>
