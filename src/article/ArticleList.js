@@ -99,7 +99,7 @@ export class ArticleList extends Component {
 									<div className="col l9 firstArticleDesktop">
 										<h5 className="ugTitle">
 											<Link to={`/article/${cleanUrlText(firstArticle.title)}/${firstArticle._id}`} className="grey-text text-darken-4 ugCardLink">
-												<strong>{firstArticle.title}</strong>
+												<b>{firstArticle.title}</b>
 											</Link>
 										</h5>
 										<p>
@@ -118,7 +118,7 @@ export class ArticleList extends Component {
 												firstOtherArticles.map(obj => <li key={obj._id}>
 													<h6 className="ugTitleSmall">
 														<Link to={`/article/${cleanUrlText(obj.title)}/${obj._id}`} className="grey-text text-darken-4 ugCardLink">
-															<strong>{obj.title}</strong>
+															<b>{obj.title}</b>
 														</Link>
 													</h6>
 													<p>
@@ -151,7 +151,7 @@ export class ArticleList extends Component {
 							<div className="row">
 								<div className="col l9">
 									<h5 className="ugTitle">
-										<Link to={`/article/${cleanUrlText(item.title)}/${item._id}`} className="grey-text text-darken-4 ugCardLink"><strong>{item.title}</strong></Link>
+										<Link to={`/article/${cleanUrlText(item.title)}/${item._id}`} className="grey-text text-darken-4 ugCardLink"><b>{item.title}</b></Link>
 									</h5>
 									<small className="grey-text">{item.source.name} - <span><ReactTimeAgo date={Date.parse(item.publishedAt)}/></span></small>
 								</div>

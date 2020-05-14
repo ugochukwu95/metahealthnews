@@ -12,7 +12,7 @@ export class ArticleCardsDesktop extends Component {
 						<div className="row">
 							<div className="col l9">
 								<h5 className="ugTitle">
-									<Link to={`/article/${cleanUrlText(item.title)}/${item._id}`} className="grey-text text-darken-4 ugCardLink"><strong>{item.title}</strong></Link>
+									<Link to={`/article/${cleanUrlText(item.title)}/${item._id}`} className="grey-text text-darken-4 ugCardLink"><b>{item.title}</b></Link>
 								</h5>
 								<small className="grey-text">{item.source.name} - <span><ReactTimeAgo date={Date.parse(item.publishedAt)}/></span></small>
 							</div>
