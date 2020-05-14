@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import { Link } from "react-router-dom";
 import {Weather} from "./Weather";
-import { DataTypes } from "../data/Types";
+//import { DataTypes } from "../data/Types";
 import CountryData from "../utilities/CountryData";
 import M from 'materialize-css';
 
@@ -32,7 +32,7 @@ export class MainNav extends Component {
 	}
 
 	clearData = (ev) => {
-		this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES);
+		//this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES);
 	}
 
 	clearHomeData = (ev) => {
@@ -69,7 +69,7 @@ export class MainNav extends Component {
 				    <div className="nav-wrapper">
 				    	<ul className="hide-on-large-only">
 				    		<li>
-				    			<Link to="/" className="logoFont myLogo" onClick={this.clearData}><strong>MetaHealth News</strong></Link>
+				    			<Link to="/" className="logoFont myLogo" onClick={this.clearHomeData}><strong>MetaHealth News</strong></Link>
 				    		</li>
 				    	</ul>
 				    	<ul className="hide-on-large-only right">
@@ -87,7 +87,7 @@ export class MainNav extends Component {
 				<nav className="blue darken-1 z-depth-2">
 					<ul>
 			    		<li>
-			    			<Link to="/" className="logoFont myLogo" onClick={this.clearData}>MetaHealth News</Link>
+			    			<Link to="/" className="logoFont myLogo" onClick={this.clearHomeData}>MetaHealth News</Link>
 			    		</li>
 			    		<li className="search_icon_container">
 					        <form method="post">

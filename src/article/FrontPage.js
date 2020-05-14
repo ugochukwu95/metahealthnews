@@ -74,13 +74,13 @@ export class FrontPage extends Component {
 		if (countryCode) {
 			// console.log("hi");
 			// this.props.loadLocationData(DataTypes.CURRENT_LOCATION);
-			/*this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES);
+			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES);
 			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES_SEARCH_RESULTS);
 			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.CANCER);
 			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.DIABETES);
 			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.HEART_DISEASE);
 			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES_FOR_UK);
-			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES_FOR_US);*/
+			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES_FOR_US);
 			if (userId) {
 				this.props.loadData && this.props.loadData(DataTypes.ARTICLES, {country: countryCode.toLowerCase(), page: 1, userId: userId});
 			}
@@ -93,7 +93,7 @@ export class FrontPage extends Component {
 		else if (!countryCode) {
 			// set expiry in 7 days
 			let expire = (new Date().getTime() / 1000) + 604800;
-			// this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES);
+			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES);
 
 			if (userId) {
 				this.props.current_location && this.props.loadData(DataTypes.ARTICLES, {country: this.props.current_location['country_code'].toLowerCase(), page: 1, userId: userId});
