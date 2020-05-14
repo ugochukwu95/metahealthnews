@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import { Link } from "react-router-dom";
 import {Weather} from "./Weather";
-//import { DataTypes } from "../data/Types";
+import { DataTypes } from "../data/Types";
 import CountryData from "../utilities/CountryData";
 import M from 'materialize-css';
 
