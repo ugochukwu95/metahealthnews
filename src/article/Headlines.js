@@ -211,7 +211,7 @@ export class Headlines extends Component {
 								</Link>
 								<p><strong>{firstArticle.source.name || "Unidentified source"}</strong></p>
 								<h5 className="ugTitle">
-									<Link to={`/article/${cleanUrlText(firstArticle.title)}/${firstArticle._id}`} className="grey-text text-darken-2 ugCardLink">
+									<Link to={`/article/${cleanUrlText(firstArticle.title)}/${firstArticle._id}`} className="grey-text text-darken-4 ugCardLink">
 										<strong>{firstArticle.title}</strong>
 									</Link>
 								</h5>
@@ -301,7 +301,7 @@ export class Headlines extends Component {
 									<div className="row">
 										<div className="col l9 firstArticleDesktop">
 											<h5 className="ugTitle">
-												<Link to={`/article/${cleanUrlText(firstArticle.title)}/${firstArticle._id}`} className="grey-text text-darken-2 ugCardLink">
+												<Link to={`/article/${cleanUrlText(firstArticle.title)}/${firstArticle._id}`} className="grey-text text-darken-4 ugCardLink">
 													<strong>{firstArticle.title}</strong>
 												</Link>
 											</h5>
@@ -320,7 +320,7 @@ export class Headlines extends Component {
 												{
 													secondFiveArticles.map(obj => <li key={obj._id}>
 														<h6 className="ugTitleSmall">
-															<Link to={`/article/${cleanUrlText(obj.title)}/${obj._id}`} className="grey-text text-darken-2 ugCardLink">
+															<Link to={`/article/${cleanUrlText(obj.title)}/${obj._id}`} className="grey-text text-darken-4 ugCardLink">
 																<strong>{obj.title}</strong>
 															</Link>
 														</h6>

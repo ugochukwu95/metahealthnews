@@ -208,7 +208,7 @@ export class ArticleListMobile extends Component {
 								</Link>
 								<p><strong>{firstArticle.source.name || "Unidentified source"}</strong></p>
 								<h5 className="ugTitle">
-									<Link to={`/article/${cleanUrlText(firstArticle.title)}/${firstArticle._id}`} className="grey-text text-darken-2 ugCardLink">
+									<Link to={`/article/${cleanUrlText(firstArticle.title)}/${firstArticle._id}`} className="grey-text text-darken-4 ugCardLink">
 										<strong>{firstArticle.title}</strong>
 									</Link>
 								</h5>
