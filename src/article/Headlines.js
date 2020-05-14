@@ -396,7 +396,6 @@ export class Headlines extends Component {
 
 		// run this if you are switchong betweem headlines components
 		if (prevProps.match.params['countryCode'] !== this.props.match.params['countryCode']) {
-			this.props.clearArticlesData && this.props.clearArticlesData(DataTypes.ARTICLES);
 			this.props.loadData(DataTypes.ARTICLES, {country: this.props.match.params['countryCode'], page: 1, userId: userId});
 			(this.props.articles  && this.props.articles.data) && this.setState({page: this.props.articles['page'], pages: this.props.articles['pages']});
 		}
