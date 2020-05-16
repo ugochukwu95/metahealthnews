@@ -209,7 +209,7 @@ export class ArticleListMobile extends Component {
 								<p><strong>{firstArticle.source.name || "Unidentified source"}</strong></p>
 								<h5 className="ugTitle">
 									<Link to={`/article/${cleanUrlText(firstArticle.title)}/${firstArticle._id}`} className="grey-text text-darken-4 ugCardLink">
-										<b>{firstArticle.title}</b>
+										<strong>{firstArticle.title}</strong>
 									</Link>
 								</h5>
 								<div>
@@ -263,7 +263,7 @@ export class ArticleListMobile extends Component {
 			{(this.props.articles_search_results && this.props.articles_search_results.data) && <React.Fragment>
 				<br />
 				<h5 className="grey-text text-darken-2 ugBigFont titleCardSamePadding">
-					<b>Coronavirus</b>
+					<strong>Coronavirus</strong>
 				</h5>
 				<br />
 				<div className="row">
@@ -282,7 +282,7 @@ export class ArticleListMobile extends Component {
 			{(this.props.cancer && this.props.cancer.data) && <React.Fragment>
 				<br />
 				<h5 className="grey-text text-darken-2 ugBigFont titleCardSamePadding">
-					<b>Cancer</b>
+					<strong>Cancer</strong>
 				</h5>
 				<br />
 				<div className="row">
@@ -300,7 +300,7 @@ export class ArticleListMobile extends Component {
 			{(this.props.diabetes && this.props.diabetes.data) && <React.Fragment>
 				<br />
 				<h5 className="grey-text text-darken-2 ugBigFont titleCardSamePadding">
-					<b>Diabetes</b>
+					<strong>Diabetes</strong>
 				</h5>
 				<br />
 				<div className="row">
@@ -319,7 +319,7 @@ export class ArticleListMobile extends Component {
 			{(this.props.heart_disease && this.props.heart_disease.data) && <React.Fragment>
 				<br />
 				<h5 className="grey-text text-darken-2 ugBigFont titleCardSamePadding">
-					<b>Heart Disease</b>
+					<strong>Heart Disease</strong>
 				</h5>
 				<br />
 				<div className="row">
@@ -338,7 +338,7 @@ export class ArticleListMobile extends Component {
 			{(this.props.articles_for_us && this.props.articles_for_us.data) && <React.Fragment>
 				<br />
 				<h5 className="grey-text text-darken-2 ugBigFont titleCardSamePadding">
-					<b>United States of America</b>
+					<strong>United States of America</strong>
 				</h5>
 				<br />
 				<div className="row">
@@ -358,7 +358,7 @@ export class ArticleListMobile extends Component {
 			{(this.props.articles_for_uk && this.props.articles_for_uk.data) && <React.Fragment>
 				<br />
 				<h5 className="grey-text text-darken-2 ugBigFont titleCardSamePadding">
-					<b>United Kingdom</b>
+					<strong>United Kingdom</strong>
 				</h5>
 				<br />
 				<div className="row">

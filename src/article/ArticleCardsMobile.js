@@ -14,7 +14,7 @@ export class ArticleCardsMobile extends Component {
 						<strong>{item.source.name || "Unidentified source"}</strong>
 						<h5 className="ugTitleMobile">
 							<Link to={`/article/${cleanUrlText(item.title)}/${item._id}`} className="grey-text text-darken-4 ugCardLink">
-								<b>{item.title}</b>
+								<strong>{item.title}</strong>
 							</Link>
 						</h5>
 					</div>
