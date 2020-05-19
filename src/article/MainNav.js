@@ -11,10 +11,13 @@ export class MainNav extends Component {
 		super(props);
 		this.state = {
 			SearchString: "",
-			ShowSearchBox: false
+			ShowSearchBox: false,
+			countryData: CountryData,
+			searchString: "",
 		}
 
 		this.nameRef = React.createRef();
+		this.searchRef = React.createRef();
 	}
 	
 	openWeatherNav = (ev) => {
@@ -57,6 +60,27 @@ export class MainNav extends Component {
 		if (text) {
 			this.props.history.push(`/search/${text}`);
 		}
+	}
+
+	handleSearch = ev => {
+		this.setState({searchString: ev.target.value}, () => {
+			if (!this.state.searchString) {
+				this.setState({countryData: CountryData, searchString: ""});
+				return;
+			}
+
+			let result = this.textSearch(CountryData, this.state.searchString.toLowerCase());
+			this.setState({countryData: result});
+		})
+	}
+
+	textSearch = (items, text) => {
+		text = text.split(' ');
+  		return items.filter(function(item) {
+		    return text.every(function(el) {
+		        return item.value.toLowerCase().indexOf(el) > -1;
+		    });
+  		});
 	}
 
 	render() {
@@ -123,7 +147,10 @@ export class MainNav extends Component {
 			{(/Mobi|Android/i.test(navigator.userAgent)) && <Weather {...this.props} closeNav={this.closeNav} />}
 
 			<ul id="moreSlide" className="sidenav">
-				{CountryData.map(item => <li key={item.code}>
+				<li>
+					<input type="text" ref={this.searchRef} placeholder="Find country" className="browser-default mobileSearchField" onChange={this.handleSearch} value={this.state.searchString} />
+				</li>
+				{this.state.countryData.map(item => <li key={item.code}>
 					<Link className={`btn btn-flat ugTextTransform sidenav-close ${(this.props.match.url === `/headlines/${item.code.toLowerCase()}`) ? "disabled" : ""}`} onClick={this.clearData} to={`/headlines/${item.code.toLowerCase()}`}>{item.value}</Link>
 				</li>)}
 			</ul>
@@ -131,9 +158,11 @@ export class MainNav extends Component {
 	}
 
 	componentDidMount() {
-
+		let that = this;
 	    let elems = document.getElementById('moreSlide');
-		let options = {edge: "right", preventScrolling: "false"};
+		let options = {edge: "right", preventScrolling: "false", onOpenEnd: () => {
+			that.searchRef.current.focus();
+		}};
     	M.Sidenav.init(elems, options);
 	}
 }

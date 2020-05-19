@@ -13,6 +13,46 @@ code {
     monospace;
 }
 
+.mobileSearchField {
+    background-color: white;
+    outline: none;
+    width: 100%;
+    text-align: center;
+    height: 2.5rem;
+    margin: 0;
+    border: 0;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    background-position: left 6em center;
+    background-image: url('/iconfinder.png');
+}
+
+.mainNavSearchField {
+    background-color: white;
+    outline: none;
+    border: 0;
+    padding: 0px;
+    width: 110%;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    background-position: left 0.6em center;
+    padding-left: 67px;
+    background-image: url('/iconfinder.png');
+    margin-left: 7%
+}
+
+.mainNavSearchField::placeholder, .mobileSearchField::placeholder {
+    color: #616161;
+}
+
+.mainNavSearchField:-ms-input-placeholder, .mobileSearchField:-ms-input-placeholder {
+    color: #616161;
+}
+
+.mainNavSearchField::-webkit-input-placeholder, .mobileSearchField::-webkit-input-placeholder {
+    color: #616161;
+}
+
 .desktopNav {
     margin-bottom: 30px !important;
 }
