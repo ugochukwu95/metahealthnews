@@ -21,12 +21,12 @@ export class About extends Component {
 					</form>
 					<br /><br />
 
-					{/*<h6 className="grey-text text-darken-2">
+					<h6 className="grey-text text-darken-2">
 						<strong>Credit</strong>
 					</h6>
 					<p>
 						Built by <a target="_blank" rel="noopener noreferrer" className="teal-text text-darken-2" href="https://www.ugooguejiofor.com/">Ugo.</a>
-					</p>*/}
+					</p>
 				</div>
 			</div>
 		</React.Fragment>
