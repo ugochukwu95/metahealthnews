@@ -8,7 +8,9 @@ export class Trends extends Component {
 					<h6 className="grey-text text-darken-2 ugMediumFont">In the news</h6>
 					<div className="divider"></div>
 					<br />
-					{this.props.trends.default.trendingSearchesDays.map(obj => obj.trendingSearches.map(item => <div className="chip" key={item.title['query']}>{item.title['query']}</div>))}
+					{this.props.trends.default.trendingSearchesDays.map(obj => obj.trendingSearches.map(item => <div className="chip" key={item.title['query']}>
+							<a href={item.articles[0]['url']} className="grey-text text-darken-2" target="_blank" rel="noopener noreferrer">{item.title['query']}</a>
+						</div>))}
 				</div>
 			}
 

@@ -6,6 +6,7 @@ const port = 3500;*/
 
 export const RestUrls = {
 	[DataTypes.ARTICLES]: `/api/articles`,
+	[DataTypes.SOCKET_DATA]: `/api/articles/socket`,
 	[DataTypes.ARTICLE]: `/api/article`,
 	[DataTypes.CURRENT_LOCATION]: `/api/getlocation`,
 	[DataTypes.TRENDS]: `/api/trends`,

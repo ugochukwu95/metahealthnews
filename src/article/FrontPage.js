@@ -6,6 +6,7 @@ import {WeatherDesktop} from "./WeatherDesktop";
 import { DataTypes } from "../data/Types";
 import {Preloader} from "../utilities/Preloader";
 import {Helmet} from "react-helmet";
+import {DesktopNavList} from "./DesktopNavList";
 
 export class FrontPage extends Component {
 
@@ -17,39 +18,50 @@ export class FrontPage extends Component {
                 <meta name="description" content="Get the latest health related news such as the Coronavirus, Cancer research, etc., from 50+ countries from around the world." />
                 <link rel="canonical" href={`${document.location.host}${this.props.match.url}`} />
             </Helmet>
+
 			{!this.props.articles && <Preloader />}
-			{this.props.articles && <div className="" id="infinite-list">
-				<div className="row">
-					<div className=" col l2 m2 hide-on-med-and-down">
 
-					</div>
-					<div className="col l5 m8 offset-m2 s12">
-						<div>
-							<h5 className="grey-text text-darken-2 ugBigFont hide-on-small-only">
-								<br />
-								<strong>Headlines</strong>
-							</h5>
-							<h5 className="grey-text text-darken-2 ugBigFont hide-on-med-and-up titleCardSamePadding">
-								<strong>Headlines</strong>
-							</h5>
-						</div>
-						<div className="hide-on-med-and-down">
-							{(!(/Mobi|Android/i.test(navigator.userAgent))) && <ArticleList {...this.props} />}
-						</div>
-						<div className="hide-on-large-only">
-							<ArticleListMobile {...this.props} />
+			{
+				this.props.articles && <React.Fragment>
+					<div className="hide-on-large-only" id="infinite-list">
+						<div className="row">
+							<div className="m8 offset-m2 s12">
+								<div>
+									<h5 className="grey-text text-darken-2 ugBigFont titleCardSamePadding">
+										<br />
+										<strong>Headlines</strong>
+									</h5>
+								</div>
+								<ArticleListMobile {...this.props} />
+							</div>
 						</div>
 					</div>
-					<div className="col l3 m1 s12 hide-on-med-and-down">
-						<br />
-						<WeatherDesktop {...this.props} />
-						<Trends {...this.props} />
-					</div>
-					<div className="col l2 m2 hide-on-med-and-down">
 
+					<div className="hide-on-med-and-down">
+						<div className="row">
+							<div className="col l3">
+								<DesktopNavList {...this.props} />
+							</div>
+							<div className="col l6">
+								<h5 className="grey-text text-darken-2 ugBigFont">
+									<strong>
+										Headlines
+										<span className="right">
+											<small className="ugFrontPageLocationText">{this.props.current_location && `Based on the location - ${this.props.current_location.country_name}`}</small>
+										</span>
+									</strong>
+								</h5>
+								<ArticleList {...this.props} />
+							</div>
+							<div className="col l3">
+								<br /><br />
+								<WeatherDesktop {...this.props} />
+								<Trends {...this.props} />
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>}
+				</React.Fragment>
+			}
 		</React.Fragment>
 	}
 
@@ -57,6 +69,7 @@ export class FrontPage extends Component {
 		let { cookies } = this.props;
 		let countryCode = cookies.get("country_code");
 		let userId = cookies.get("user_id");
+
 
 		if (countryCode) {
 			// console.log("hi");

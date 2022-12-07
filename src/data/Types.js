@@ -20,6 +20,7 @@ export const DataTypes = {
 	REPLIES_LIKE: "replies_like",
 	COMMENTS_DISLIKE: "comments_dislike",
 	REPLIES_DISLIKE: "replies_dislike",
+	SOCKET_DATA: "socket_data",
 }
 
 export const ActionTypes = {

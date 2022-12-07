@@ -15,6 +15,9 @@ module.exports = (app) => {
 	// get sources hidden by user
 	app.get('/api/articles/hide', articles.findHiddenSources);
 
+	// check for new articles 
+	app.get('/api/articles/socket.io', articles.socket);
+
 	// Hide article from user
 	app.post('/api/articles/hide', articles.hideArticleFromUser);
 

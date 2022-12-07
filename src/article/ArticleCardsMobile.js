@@ -13,7 +13,7 @@ export class ArticleCardsMobile extends Component {
 					<div className="col s8">
 						<strong>{item.source.name || "Unidentified source"}</strong>
 						<h5 className="ugTitleMobile">
-							<Link to={`/article/${cleanUrlText(item.title)}/${item._id}`} className="grey-text text-darken-2 ugCardLink">
+							<Link to={`/article/${cleanUrlText(item.title)}/${item._id}`} className="grey-text text-darken-4 ugCardLink">
 								<strong>{item.title}</strong>
 							</Link>
 						</h5>

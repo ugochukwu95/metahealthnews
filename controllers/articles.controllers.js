@@ -33,6 +33,47 @@ exports.create = (req, res) => {
     });
 }
 
+exports.socket = (req, res) => {
+    let data = []; 
+    const country = req.query.country;
+    const page = req.query.page;
+    const userId = req.query.userId
+
+    // validate request
+    if (!req.query.country) {
+        return res.status(400).send({
+            error: "Country code cannot be empty"
+        })
+    }
+
+    const http = require("http");
+    const socketIo = require("socket.io");
+    const server = http.createServer(app);
+
+    const io = socketIo(server);
+    let interval;
+
+    io.on("connection", (socket) => {
+        console.log("New client connected");
+        if (interval) {
+            clearInterval(interval);
+        }
+        
+        interval = setInterval(() => getApiAndEmit(socket, req, res), 1000);
+        
+        socket.on("disconnect", () => {
+            console.log("Client disconnected");
+            clearInterval(interval);
+        });
+    });
+
+    const getApiAndEmit = (socket, req, res) => {
+        const response = exports.findAll(req, res);
+        // Emitting a new message. Will be consumed by the client
+        socket.emit("FromAPI", response);
+    };
+}
+
 // Retrieving and returning all articles from the database
 exports.findAll = async (req, res) => {
 
